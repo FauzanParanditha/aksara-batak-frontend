@@ -141,7 +141,7 @@ const Hero = () => {
             </span>
           </h1> */}
           <Image
-            src={"/images/logo/logo.png"}
+            src={"/images/logo/logo2.png"}
             alt="Logo"
             height={600}
             width={600}
