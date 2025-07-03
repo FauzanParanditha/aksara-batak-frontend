@@ -42,8 +42,8 @@ const About = () => {
               </h3>
               <p className="text-gray-300">
                 Access workshops, mentorship sessions, and cutting-edge
-                technologies. Whether you're a beginner or expert, there's
-                something for everyone.
+                technologies. Whether you&apos;re a beginner or expert,
+                there&apos;s something for everyone.
               </p>
             </div>
           </div>

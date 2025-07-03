@@ -4,28 +4,20 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 
 const Registration = () => {
   const { toast } = useToast();
+  const [show, setShow] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
-    university: "",
-    experience: "",
-    interests: "",
-    teamStatus: "",
-    dietary: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -35,17 +27,15 @@ const Registration = () => {
       description:
         "Welcome to Hack the Future! Check your email for confirmation.",
     });
+    console.log("Form submitted:", formData);
 
     // Reset form
     setFormData({
       name: "",
       email: "",
       phone: "",
-      university: "",
-      experience: "",
-      interests: "",
-      teamStatus: "",
-      dietary: "",
+      password: "",
+      confirmPassword: "",
     });
   };
 
@@ -61,21 +51,21 @@ const Registration = () => {
             Register Now
           </h2>
           <p className="text-xl text-gray-300">
-            Secure your spot in the most exciting hackathon of 2024
+            Secure your spot in the most exciting hackathon of 2025
           </p>
         </div>
 
         <Card className="bg-white/5 backdrop-blur-sm border-white/10">
           <CardHeader>
             <CardTitle className="text-2xl text-center text-white">
-              Join Hack the Future 2024
+              Join Hack the Future 2025
             </CardTitle>
           </CardHeader>
 
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Personal Information */}
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid md:grid-cols-1 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-white">
                     Full Name *
@@ -105,9 +95,7 @@ const Registration = () => {
                     required
                   />
                 </div>
-              </div>
 
-              <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <Label htmlFor="phone" className="text-white">
                     Phone Number
@@ -123,98 +111,54 @@ const Registration = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="university" className="text-white">
-                    University/Organization
+                  <Label htmlFor="password" className="text-white">
+                    Password
                   </Label>
-                  <Input
-                    id="university"
-                    type="text"
-                    value={formData.university}
-                    onChange={(e) => handleChange("university", e.target.value)}
-                    className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-400"
-                    placeholder="Your university or company"
-                  />
+                  <div className="relative">
+                    <Input
+                      id="password"
+                      type={show ? "text" : "password"}
+                      value={formData.password}
+                      onChange={(e) => handleChange("password", e.target.value)}
+                      className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-400 pr-10"
+                      placeholder="Create a secure password"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShow((prev) => !prev)}
+                      className="absolute top-2.5 right-3 text-gray-500"
+                      tabIndex={-1}
+                    >
+                      {show ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                  </div>
                 </div>
-              </div>
 
-              {/* Experience Level */}
-              <div className="space-y-2">
-                <Label htmlFor="experience" className="text-white">
-                  Experience Level *
-                </Label>
-                <Select
-                  value={formData.experience}
-                  onValueChange={(value) => handleChange("experience", value)}
-                >
-                  <SelectTrigger className="bg-white/10 border-white/20 text-white">
-                    <SelectValue placeholder="Select your experience level" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-gray-900 border-white/20">
-                    <SelectItem value="beginner">
-                      Beginner (0-1 years)
-                    </SelectItem>
-                    <SelectItem value="intermediate">
-                      Intermediate (2-4 years)
-                    </SelectItem>
-                    <SelectItem value="advanced">
-                      Advanced (5+ years)
-                    </SelectItem>
-                    <SelectItem value="expert">Expert (10+ years)</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Team Status */}
-              <div className="space-y-2">
-                <Label htmlFor="teamStatus" className="text-white">
-                  Team Status *
-                </Label>
-                <Select
-                  value={formData.teamStatus}
-                  onValueChange={(value) => handleChange("teamStatus", value)}
-                >
-                  <SelectTrigger className="bg-white/10 border-white/20 text-white">
-                    <SelectValue placeholder="Select your team status" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-gray-900 border-white/20">
-                    <SelectItem value="solo">
-                      I want to participate solo
-                    </SelectItem>
-                    <SelectItem value="team">I have a team already</SelectItem>
-                    <SelectItem value="looking">
-                      I'm looking for teammates
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Interests */}
-              <div className="space-y-2">
-                <Label htmlFor="interests" className="text-white">
-                  Areas of Interest
-                </Label>
-                <Textarea
-                  id="interests"
-                  value={formData.interests}
-                  onChange={(e) => handleChange("interests", e.target.value)}
-                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-400 min-h-[100px]"
-                  placeholder="Tell us about your technical interests, skills, or what you'd like to work on..."
-                />
-              </div>
-
-              {/* Dietary Requirements */}
-              <div className="space-y-2">
-                <Label htmlFor="dietary" className="text-white">
-                  Dietary Requirements
-                </Label>
-                <Input
-                  id="dietary"
-                  type="text"
-                  value={formData.dietary}
-                  onChange={(e) => handleChange("dietary", e.target.value)}
-                  className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-400"
-                  placeholder="Any allergies or dietary restrictions?"
-                />
+                <div className="space-y-2">
+                  <Label htmlFor="confirmPassword" className="text-white">
+                    Confirm Password
+                  </Label>
+                  <div className="relative">
+                    <Input
+                      id="confirmPassword"
+                      type={showConfirm ? "text" : "password"}
+                      value={formData.confirmPassword}
+                      onChange={(e) =>
+                        handleChange("confirmPassword", e.target.value)
+                      }
+                      className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-400 pr-10"
+                      placeholder="Re-enter your password"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirm((prev) => !prev)}
+                      className="absolute top-2.5 right-3 text-gray-500"
+                      tabIndex={-1}
+                    >
+                      {showConfirm ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                  </div>
+                </div>
               </div>
 
               {/* Submit Button */}
@@ -223,13 +167,13 @@ const Registration = () => {
                   type="submit"
                   className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white py-4 text-lg font-semibold rounded-full shadow-lg transform hover:scale-105 transition-all duration-300"
                 >
-                  Register for Hack the Future 2024 🚀
+                  Register for Hack the Future 2025 🚀
                 </Button>
               </div>
 
               <p className="text-center text-gray-400 text-sm">
-                By registering, you agree to our terms and conditions. We'll
-                send you important updates about the event.
+                By registering, you agree to our terms and conditions.
+                We&apos;ll send you important updates about the event.
               </p>
             </form>
           </CardContent>
