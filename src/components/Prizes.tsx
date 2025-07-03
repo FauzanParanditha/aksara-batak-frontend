@@ -1,38 +1,37 @@
-
 const Prizes = () => {
   const prizes = [
     {
       place: "1st Place",
-      amount: "$20,000",
-      description: "Grand prize + internship opportunities",
+      amount: "IDR 30,000,000",
+      description: "Grand prize",
       color: "from-yellow-400 to-orange-500",
       icon: "🏆",
-      features: ["Cash Prize", "Mentorship Program", "Startup Incubation", "Tech Gear"]
+      features: ["Certificate, Merchandise"],
     },
     {
-      place: "2nd Place", 
-      amount: "$15,000",
-      description: "Runner-up prize + networking opportunities",
+      place: "2nd Place",
+      amount: "IDR 15,000,000",
+      description: "Runner-up prize",
       color: "from-gray-300 to-gray-500",
       icon: "🥈",
-      features: ["Cash Prize", "Industry Connections", "Workshop Access", "Swag Package"]
+      features: ["Certificate, Merchandise"],
     },
     {
       place: "3rd Place",
-      amount: "$10,000", 
-      description: "Third place + learning resources",
+      amount: "IDR 10,000,000",
+      description: "Third place",
       color: "from-orange-400 to-red-500",
       icon: "🥉",
-      features: ["Cash Prize", "Online Courses", "Community Access", "Recognition"]
-    }
+      features: ["Certificate, Merchandise"],
+    },
   ];
 
-  const specialPrizes = [
-    { name: "Best AI Solution", prize: "$2,500", icon: "🤖" },
-    { name: "Most Innovative", prize: "$2,500", icon: "💡" },
-    { name: "Best Design", prize: "$2,500", icon: "🎨" },
-    { name: "People's Choice", prize: "$2,500", icon: "❤️" }
-  ];
+  // const specialPrizes = [
+  //   { name: "Best AI Solution", prize: "$2,500", icon: "🤖" },
+  //   { name: "Most Innovative", prize: "$2,500", icon: "💡" },
+  //   { name: "Best Design", prize: "$2,500", icon: "🎨" },
+  //   { name: "People's Choice", prize: "$2,500", icon: "❤️" },
+  // ];
 
   return (
     <section className="py-20 px-4 relative">
@@ -49,27 +48,36 @@ const Prizes = () => {
         {/* Main Prizes */}
         <div className="grid md:grid-cols-3 gap-8 mb-16">
           {prizes.map((prize, index) => (
-            <div 
+            <div
               key={index}
-              className={`relative group ${index === 0 ? 'md:scale-110 md:-mt-8' : ''}`}
+              className={`relative group ${
+                index === 0 ? "md:scale-110 md:-mt-8" : ""
+              }`}
             >
               <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10 hover:border-purple-400/50 transition-all duration-500 transform hover:scale-105 h-full">
                 <div className="text-center">
                   <div className="text-6xl mb-4 group-hover:scale-110 transition-transform duration-300">
                     {prize.icon}
                   </div>
-                  
-                  <h3 className="text-2xl font-bold text-white mb-2">{prize.place}</h3>
-                  
-                  <div className={`text-4xl font-bold bg-gradient-to-r ${prize.color} bg-clip-text text-transparent mb-4`}>
+
+                  <h3 className="text-2xl font-bold text-white mb-2">
+                    {prize.place}
+                  </h3>
+
+                  <div
+                    className={`text-4xl font-bold bg-gradient-to-r ${prize.color} bg-clip-text text-transparent mb-4`}
+                  >
                     {prize.amount}
                   </div>
-                  
+
                   <p className="text-gray-300 mb-6">{prize.description}</p>
-                  
+
                   <div className="space-y-2">
                     {prize.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-center justify-center gap-2 text-gray-400">
+                      <div
+                        key={idx}
+                        className="flex items-center justify-center gap-2 text-gray-400"
+                      >
                         <span className="w-2 h-2 bg-purple-400 rounded-full"></span>
                         <span>{feature}</span>
                       </div>
@@ -82,12 +90,14 @@ const Prizes = () => {
         </div>
 
         {/* Special Prizes */}
-        <div className="bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-3xl p-8 backdrop-blur-sm border border-white/10">
-          <h3 className="text-3xl font-bold text-center text-white mb-8">Special Category Awards</h3>
-          
+        {/* <div className="bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-3xl p-8 backdrop-blur-sm border border-white/10">
+          <h3 className="text-3xl font-bold text-center text-white mb-8">
+            Special Category Awards
+          </h3>
+
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {specialPrizes.map((special, index) => (
-              <div 
+              <div
                 key={index}
                 className="bg-white/5 rounded-2xl p-6 text-center hover:bg-white/10 transition-all duration-300 group"
               >
@@ -95,11 +105,13 @@ const Prizes = () => {
                   {special.icon}
                 </div>
                 <h4 className="font-bold text-white mb-2">{special.name}</h4>
-                <div className="text-2xl font-bold text-purple-400">{special.prize}</div>
+                <div className="text-2xl font-bold text-purple-400">
+                  {special.prize}
+                </div>
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
 
         <div className="text-center mt-12">
           <p className="text-lg text-gray-400 mb-4">

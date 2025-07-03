@@ -1,49 +1,45 @@
 const Timeline = () => {
   const events = [
     {
-      time: "March 15, 6:00 PM",
-      title: "Opening Ceremony",
+      time: "July 1, 2025",
+      title: "Launch of .id Hackathon",
       description:
-        "Welcome reception, team formation, and problem statement reveal",
+        "Official announcement and publication of the .id Hackathon 2025, inviting innovators across Indonesia to participate.",
       color: "purple",
     },
     {
-      time: "March 15, 8:00 PM",
-      title: "Hacking Begins",
-      description: "48 hours of intensive coding and innovation starts now!",
+      time: "July 1–10, 2025",
+      title: "Registration Period",
+      description:
+        "Participants register and submit their initial proposals to join the hackathon.",
       color: "blue",
     },
     {
-      time: "March 16, 10:00 AM",
-      title: "Workshop Sessions",
+      time: "August 10–20, 2025",
+      title: "Proposal Selection Phase",
       description:
-        "Technical workshops on AI, blockchain, and emerging technologies",
+        "Judges and mentors evaluate submitted proposals to shortlist the most promising ideas.",
       color: "pink",
     },
     {
-      time: "March 16, 2:00 PM",
-      title: "Mentor Check-ins",
-      description: "One-on-one sessions with industry experts and advisors",
+      time: "August 25, 2025",
+      title: "Announcement of Top 10 .id Hackathon Teams",
+      description:
+        "Top 10 selected teams are announced and will advance to the final hackathon stage.",
       color: "green",
     },
     {
-      time: "March 17, 6:00 AM",
-      title: "Final Sprint",
-      description:
-        "Last 12 hours to polish your project and prepare presentation",
-      color: "orange",
-    },
-    {
-      time: "March 17, 6:00 PM",
-      title: "Project Submissions",
-      description: "Submit your final project and demo video",
-      color: "red",
-    },
-    {
-      time: "March 17, 8:00 PM",
-      title: "Awards Ceremony",
-      description: "Project presentations, judging, and winner announcements",
+      time: "September 2–3, 2025",
+      title: ".id Hackathon Day",
+      description: "Finalists gather presentation their projects on-site.",
       color: "purple",
+    },
+    {
+      time: "September 4, 2025",
+      title: "Project Presentations & Winner Announcement",
+      description:
+        "Each team presents their final product to the jury panel. Winners of the .id Hackathon 2025 are officially announced.",
+      color: "blue",
     },
   ];
 
@@ -54,9 +50,7 @@ const Timeline = () => {
           <h2 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-6">
             Event Timeline
           </h2>
-          <p className="text-xl text-gray-300">
-            Your 48-hour journey to innovation
-          </p>
+          <p className="text-xl text-gray-300">Your journey to innovation</p>
         </div>
 
         <div className="relative">

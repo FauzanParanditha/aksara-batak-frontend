@@ -13,6 +13,7 @@ import {
   Wifi,
   Zap,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 const Hero = () => {
@@ -132,18 +133,26 @@ const Hero = () => {
 
       {/* Content */}
       <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
-        <div className="animate-fade-in">
-          <h1 className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent mb-6 leading-tight">
-            HACK
-            <span className="block text-5xl md:text-7xl mt-2">THE FUTURE</span>
-          </h1>
+        <div className="animate-fade-in flex items-center flex-col justify-center h-full space-y-6">
+          {/* <h1 className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent mb-6 leading-tight">
+            ID
+            <span className="block text-5xl md:text-7xl mt-2">
+              DEVELOPER DAY
+            </span>
+          </h1> */}
+          <Image
+            src={"/images/logo/logo.png"}
+            alt="Logo"
+            height={600}
+            width={600}
+          />
 
           <p className="text-xl md:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto">
-            Join the most innovative hackathon of 2025
+            Join the developer day road to APTICA Chinese Taipei
           </p>
 
           <p className="text-lg text-gray-400 mb-8 max-w-2xl mx-auto">
-            48 hours of coding, collaboration, and creativity. Build
+            10 days of coding, collaboration, and creativity. Build
             tomorrow&apos;s solutions today.
           </p>
 
@@ -159,7 +168,7 @@ const Hero = () => {
             </div>
             <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
               <Book className="w-5 h-5 text-pink-400" />
-              <span>$50K Prize Pool</span>
+              <span>IDR 55M Prize Pool</span>
             </div>
           </div>
 

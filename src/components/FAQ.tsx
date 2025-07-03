@@ -15,17 +15,17 @@ const FAQ = () => {
     {
       question: "Do I need to have a team?",
       answer:
-        "Not necessarily! You can participate solo, come with a pre-formed team (max 4 people), or join our team formation session during the opening ceremony to find teammates.",
+        "Of course! You are required to participate as a team, come with a pre-formed team (maximum 3 people)",
     },
     {
       question: "What should I bring?",
       answer:
-        "Bring your laptop, chargers, any hardware you might need, and your creativity! We'll provide meals, snacks, drinks, and a comfortable workspace. Don't forget a sleeping bag if you plan to stay overnight!",
+        "Bring your laptop, chargers, any hardware you might need, and your creativity!",
     },
     {
       question: "Is there a registration fee?",
       answer:
-        "No! The hackathon is completely free to attend. We believe in making innovation accessible to everyone. Just register online and show up ready to hack!",
+        "To be able to take part in the Hackathon participants / teams are required to pay a registration fee of IDR 200,000",
     },
     {
       question: "What technologies can we use?",
@@ -38,14 +38,9 @@ const FAQ = () => {
         "Projects are evaluated on innovation, technical implementation, design, and potential impact. Our panel includes industry experts, investors, and technical leaders who will provide valuable feedback.",
     },
     {
-      question: "What if I'm a beginner?",
-      answer:
-        "Perfect! We have workshops, mentors, and resources specifically for beginners. The hackathon is as much about learning as it is about building. Don't hesitate to ask for help!",
-    },
-    {
       question: "Can I work on an existing project?",
       answer:
-        "Projects must be started during the hackathon period. However, you can use existing libraries, frameworks, and APIs. The key is that the core innovation happens during the event.",
+        "Projects that have been submitted to other hackathons but have not previously won any prizes are allowed to be reused for this event.",
     },
   ];
 
@@ -107,14 +102,14 @@ const FAQ = () => {
                 href="mailto:hello@hackthefuture.com"
                 className="text-purple-400 hover:text-purple-300 font-semibold transition-colors duration-300"
               >
-                📧 hello@hackthefuture.com
+                📧 soskom@pandi.id
               </a>
-              <a
+              {/* <a
                 href="#"
                 className="text-blue-400 hover:text-blue-300 font-semibold transition-colors duration-300"
               >
                 💬 Join our Discord
-              </a>
+              </a> */}
             </div>
           </div>
         </div>

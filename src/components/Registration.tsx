@@ -91,7 +91,7 @@ const Registration = () => {
                     value={formData.email}
                     onChange={(e) => handleChange("email", e.target.value)}
                     className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-400"
-                    placeholder="your.email@example.com"
+                    placeholder="your.email@domain.id"
                     required
                   />
                 </div>
@@ -106,7 +106,7 @@ const Registration = () => {
                     value={formData.phone}
                     onChange={(e) => handleChange("phone", e.target.value)}
                     className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-400"
-                    placeholder="+1 (555) 123-4567"
+                    placeholder="+62 8123-4567"
                   />
                 </div>
 
@@ -180,7 +180,7 @@ const Registration = () => {
         </Card>
 
         {/* Registration Stats */}
-        <div className="mt-12 grid grid-cols-3 gap-4 text-center">
+        {/* <div className="mt-12 grid grid-cols-3 gap-4 text-center">
           <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
             <div className="text-2xl font-bold text-purple-400">347</div>
             <div className="text-gray-400">Registered</div>
@@ -193,7 +193,7 @@ const Registration = () => {
             <div className="text-2xl font-bold text-pink-400">72</div>
             <div className="text-gray-400">Universities</div>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

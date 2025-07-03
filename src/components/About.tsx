@@ -7,47 +7,57 @@ const About = () => {
             About the Event
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            The ultimate playground for innovators, creators, and
-            problem-solvers
+            Advancing national digital collaboration for a sovereign future.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
+          <div className="space-y-6 text-gray-300">
+            {/* National Digital Empowerment */}
             <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/20">
               <h3 className="text-2xl font-bold text-purple-400 mb-3">
-                Innovation Unleashed
+                National Digital Empowerment
               </h3>
-              <p className="text-gray-300">
-                Dive into 48 hours of non-stop coding, where groundbreaking
-                ideas come to life. Our hackathon brings together the brightest
-                minds to solve real-world challenges.
+              <p>
+                To strengthen Indonesia’s digital ecosystem, PANDI is launching{" "}
+                <strong>.idFest 2025</strong> as a center of excellence for
+                Indonesian digital innovation. This initiative brings together
+                stakeholders from the public sector, private industry,
+                communities, and academia.
               </p>
             </div>
 
+            {/* Strategic Collaboration & Digital Literacy */}
             <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-blue-500/20">
               <h3 className="text-2xl font-bold text-blue-400 mb-3">
-                Collaborative Spirit
+                Strategic Collaboration & Digital Literacy
               </h3>
-              <p className="text-gray-300">
-                Form teams, share knowledge, and build lasting connections with
-                fellow developers, designers, and entrepreneurs from around the
-                globe.
+              <p>
+                The event aims to become a strategic collaboration platform for
+                enhancing digital literacy and promoting the use of the{" "}
+                <strong>.id</strong> domain as a core element of digital
+                identity aligned with national sovereignty.
               </p>
             </div>
 
+            {/* Driving Innovation through .id Hackathon */}
             <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-pink-500/20">
               <h3 className="text-2xl font-bold text-pink-400 mb-3">
-                Learning & Growth
+                Driving Innovation through .id Hackathon
               </h3>
-              <p className="text-gray-300">
-                Access workshops, mentorship sessions, and cutting-edge
-                technologies. Whether you&apos;re a beginner or expert,
-                there&apos;s something for everyone.
+              <p>
+                As part of the .idFest 2025 series, the{" "}
+                <strong>.id Hackathon</strong> encourages digital innovation and
+                fosters collaboration among Indonesia’s tech talents. It serves
+                as a platform for developers, designers, and young innovators to
+                showcase their best ideas and build impactful, relevant
+                solutions in response to the country’s accelerating digital
+                transformation.
               </p>
             </div>
           </div>
 
+          {/* Statistics */}
           <div className="relative">
             <div className="bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-3xl p-8 backdrop-blur-sm border border-white/10">
               <div className="grid grid-cols-2 gap-4 text-center">
@@ -56,11 +66,13 @@ const About = () => {
                   <div className="text-gray-300">Participants</div>
                 </div>
                 <div className="bg-white/10 rounded-2xl p-4">
-                  <div className="text-3xl font-bold text-blue-400">48</div>
-                  <div className="text-gray-300">Hours</div>
+                  <div className="text-3xl font-bold text-blue-400">10</div>
+                  <div className="text-gray-300">Days</div>
                 </div>
                 <div className="bg-white/10 rounded-2xl p-4">
-                  <div className="text-3xl font-bold text-pink-400">$50K</div>
+                  <div className="text-3xl font-bold text-pink-400">
+                    IDR 55M
+                  </div>
                   <div className="text-gray-300">Prize Pool</div>
                 </div>
                 <div className="bg-white/10 rounded-2xl p-4">

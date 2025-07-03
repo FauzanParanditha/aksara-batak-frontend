@@ -70,12 +70,12 @@ const ProblemStatement = () => {
                 {challenge.description}
               </p>
 
-              <div className="mt-6 flex items-center text-purple-400 font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              {/* <div className="mt-6 flex items-center text-purple-400 font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <span>Choose this challenge</span>
                 <span className="ml-2 transform group-hover:translate-x-2 transition-transform duration-300">
                   →
                 </span>
-              </div>
+              </div> */}
             </div>
           ))}
         </div>
