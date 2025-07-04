@@ -78,10 +78,10 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-gray-400">
-              <li>📧 hello@hackthefuture.com</li>
-              <li>📱 +1 (555) 123-4567</li>
-              <li>📍 San Francisco, CA</li>
-              <li>💬 Join our Discord</li>
+              <li>📧 soskom@pandi.id</li>
+              {/* <li>📱 +1 (555) 123-4567</li> */}
+              <li>📍 Tangerang, Indonesia</li>
+              {/* <li>💬 Join our Discord</li> */}
             </ul>
           </div>
         </div>

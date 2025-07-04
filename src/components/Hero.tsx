@@ -1,18 +1,5 @@
 import { Button } from "@/components/ui/button";
-import {
-  Book,
-  Calendar,
-  Code,
-  Cpu,
-  Database,
-  Laptop,
-  Microchip,
-  Monitor,
-  Terminal,
-  Users,
-  Wifi,
-  Zap,
-} from "lucide-react";
+import { Book, Calendar, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -27,109 +14,109 @@ const Hero = () => {
       </div>
 
       {/* Floating Tech Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Code Icon */}
-        <div
+      {/* <div className="absolute inset-0 pointer-events-none"> */}
+      {/* Code Icon */}
+      {/* <div
           className="absolute top-20 left-10 animate-float"
           style={{ animationDelay: "0s" }}
         >
           <Code className="w-8 h-8 text-purple-400/60" />
-        </div>
+        </div> */}
 
-        {/* Database Icon */}
-        <div
+      {/* Database Icon */}
+      {/* <div
           className="absolute top-32 right-20 animate-float"
           style={{ animationDelay: "1s" }}
         >
           <Database className="w-10 h-10 text-blue-400/60" />
-        </div>
+        </div> */}
 
-        {/* Zap Icon */}
-        <div
+      {/* Zap Icon */}
+      {/* <div
           className="absolute top-1/4 left-1/4 animate-float"
           style={{ animationDelay: "2s" }}
         >
           <Zap className="w-6 h-6 text-yellow-400/60" />
-        </div>
+        </div> */}
 
-        {/* CPU Icon */}
-        <div
+      {/* CPU Icon */}
+      {/* <div
           className="absolute top-1/3 right-1/3 animate-float"
           style={{ animationDelay: "0.5s" }}
         >
           <Cpu className="w-12 h-12 text-green-400/60" />
-        </div>
+        </div> */}
 
-        {/* Terminal Icon */}
-        <div
+      {/* Terminal Icon */}
+      {/* <div
           className="absolute bottom-1/4 left-16 animate-float"
           style={{ animationDelay: "1.5s" }}
         >
           <Terminal className="w-8 h-8 text-pink-400/60" />
-        </div>
+        </div> */}
 
-        {/* Monitor Icon */}
-        <div
+      {/* Monitor Icon */}
+      {/* <div
           className="absolute bottom-1/3 right-16 animate-float"
           style={{ animationDelay: "2.5s" }}
         >
           <Monitor className="w-10 h-10 text-cyan-400/60" />
-        </div>
+        </div> */}
 
-        {/* WiFi Icon */}
-        <div
+      {/* WiFi Icon */}
+      {/* <div
           className="absolute top-1/2 left-8 animate-float"
           style={{ animationDelay: "3s" }}
         >
           <Wifi className="w-7 h-7 text-indigo-400/60" />
-        </div>
+        </div> */}
 
-        {/* Microchip Icon */}
-        <div
+      {/* Microchip Icon */}
+      {/* <div
           className="absolute top-3/4 right-8 animate-float"
           style={{ animationDelay: "1.8s" }}
         >
           <Microchip className="w-9 h-9 text-orange-400/60" />
-        </div>
+        </div> */}
 
-        {/* Laptop Icon */}
-        <div
+      {/* Laptop Icon */}
+      {/* <div
           className="absolute bottom-20 left-1/3 animate-float"
           style={{ animationDelay: "2.2s" }}
         >
           <Laptop className="w-8 h-8 text-teal-400/60" />
-        </div>
+        </div> */}
 
-        {/* Computer Icon */}
-        <div
+      {/* Computer Icon */}
+      {/* <div
           className="absolute top-16 right-1/4 animate-float"
           style={{ animationDelay: "0.8s" }}
         >
           <Code className="w-6 h-6 text-red-400/60" />
-        </div>
+        </div> */}
 
-        {/* Geometric Shapes */}
-        <div
+      {/* Geometric Shapes */}
+      {/* <div
           className="absolute top-1/5 right-1/5 animate-float"
           style={{ animationDelay: "1.2s" }}
         >
           <div className="w-4 h-4 bg-purple-400/40 rounded-full"></div>
-        </div>
+        </div> */}
 
-        <div
+      {/* <div
           className="absolute bottom-1/5 left-1/5 animate-float"
           style={{ animationDelay: "2.8s" }}
         >
           <div className="w-3 h-3 bg-blue-400/40 rotate-45"></div>
-        </div>
+        </div> */}
 
-        <div
+      {/* <div
           className="absolute top-2/3 right-1/6 animate-float"
           style={{ animationDelay: "0.3s" }}
         >
           <div className="w-2 h-8 bg-gradient-to-b from-pink-400/40 to-transparent rounded-full"></div>
         </div>
-      </div>
+      </div> */}
 
       {/* Content */}
       <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
