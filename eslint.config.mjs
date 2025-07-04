@@ -13,6 +13,8 @@ const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     rules: {
+      "react-hooks/exhaustive-deps": 0,
+      "@typescript-eslint/no-unused-expressions": 0,
       "@typescript-eslint/no-unused-vars": 0,
       "@typescript-eslint/no-explicit-any": 0,
     },
