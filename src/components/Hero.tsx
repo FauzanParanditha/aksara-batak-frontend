@@ -13,6 +13,20 @@ const Hero = () => {
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl animate-pulse delay-500"></div>
       </div>
 
+      {/* Video Background */}
+      <div className="absolute inset-0 z-0">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="h-full w-full object-cover opacity-40"
+        >
+          <source src="/videos/hero.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/40"></div>
+      </div>
+
       {/* Floating Tech Elements */}
       {/* <div className="absolute inset-0 pointer-events-none"> */}
       {/* Code Icon */}
@@ -127,12 +141,21 @@ const Hero = () => {
               DEVELOPER DAY
             </span>
           </h1> */}
-          <Image
-            src={"/images/logo/logo2.png"}
-            alt="Logo"
-            height={600}
-            width={600}
-          />
+          <div className="relative group">
+            <Image
+              src="/images/logo/logo2.png"
+              alt="Logo"
+              width={420}
+              height={420}
+              className="object-contain transition-opacity duration-200 group-hover:opacity-0"
+            />
+            <Image
+              src="/images/logo/logo.png"
+              alt="Logo Hover"
+              fill
+              className="object-contain opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+            />
+          </div>
 
           <p className="text-xl md:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto">
             Join the developer day road to APTICA Chinese Taipei

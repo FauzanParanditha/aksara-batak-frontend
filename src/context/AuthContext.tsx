@@ -40,7 +40,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setToken(newToken);
       setUser(user);
       setIsAuthenticated(true);
-      router.push("/admin/dashboard");
+
+      switch (user?.role) {
+        case "admin":
+          router.push("/admin/dashboard");
+          break;
+        case "leader":
+          router.push("/user/dashboard");
+          break;
+        default:
+          router.push("/"); // fallback
+      }
     } else {
       logout(); // Tidak seharusnya terjadi, tapi jaga-jaga
     }

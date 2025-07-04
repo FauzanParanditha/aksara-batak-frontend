@@ -5,42 +5,63 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import clientAxios from "@/lib/axios/client";
+import { useHandleAxiosError } from "@/lib/handleError";
+import { registrationSchema } from "@/schemas/registrationSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+type FormData = z.infer<typeof registrationSchema>;
 
 const Registration = () => {
   const { toast } = useToast();
+  const handleAxiosError = useHandleAxiosError();
   const [show, setShow] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast({
-      title: "Registration Successful! 🎉",
-      description:
-        "Welcome to Hack the Future! Check your email for confirmation.",
-    });
-    console.log("Form submitted:", formData);
-
-    // Reset form
-    setFormData({
-      name: "",
+  const form = useForm<FormData>({
+    resolver: zodResolver(registrationSchema),
+    defaultValues: {
+      fullName: "",
       email: "",
       phone: "",
       password: "",
       confirmPassword: "",
-    });
-  };
+    },
+  });
 
-  const handleChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = form;
+
+  const onSubmit = async (data: FormData) => {
+    // console.log("Form Data:", data);
+    try {
+      const res = await clientAxios.post("/v1/auth/register", data);
+
+      if (res.status !== 201) {
+        toast({
+          title: "Registration Failed",
+          description: "Please check your details and try again.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      toast({
+        title: "Registration Successful! 🎉",
+        description:
+          "Welcome to Hack the Future! Check your email for confirmation.",
+      });
+      form.reset();
+    } catch (error) {
+      handleAxiosError(error);
+    }
   };
 
   return (
@@ -63,7 +84,7 @@ const Registration = () => {
           </CardHeader>
 
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               {/* Personal Information */}
               <div className="grid md:grid-cols-1 gap-6">
                 <div className="space-y-2">
@@ -73,12 +94,15 @@ const Registration = () => {
                   <Input
                     id="name"
                     type="text"
-                    value={formData.name}
-                    onChange={(e) => handleChange("name", e.target.value)}
+                    {...form.register("fullName")}
                     className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-400"
                     placeholder="Enter your full name"
-                    required
                   />
+                  {errors.fullName && (
+                    <p className="text-red-500 text-sm">
+                      {errors.fullName.message}
+                    </p>
+                  )}
                 </div>
 
                 <div className="space-y-2">
@@ -88,12 +112,15 @@ const Registration = () => {
                   <Input
                     id="email"
                     type="email"
-                    value={formData.email}
-                    onChange={(e) => handleChange("email", e.target.value)}
+                    {...form.register("email")}
                     className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-400"
                     placeholder="your.email@domain.id"
-                    required
                   />
+                  {errors.email && (
+                    <p className="text-red-500 text-sm">
+                      {errors.email.message}
+                    </p>
+                  )}
                 </div>
 
                 <div className="space-y-2">
@@ -103,11 +130,15 @@ const Registration = () => {
                   <Input
                     id="phone"
                     type="tel"
-                    value={formData.phone}
-                    onChange={(e) => handleChange("phone", e.target.value)}
+                    {...form.register("phone")}
                     className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-400"
                     placeholder="+62 8123-4567"
                   />
+                  {errors.phone && (
+                    <p className="text-red-500 text-sm">
+                      {errors.phone.message}
+                    </p>
+                  )}
                 </div>
 
                 <div className="space-y-2">
@@ -118,11 +149,15 @@ const Registration = () => {
                     <Input
                       id="password"
                       type={show ? "text" : "password"}
-                      value={formData.password}
-                      onChange={(e) => handleChange("password", e.target.value)}
+                      {...form.register("password")}
                       className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-400 pr-10"
                       placeholder="Create a secure password"
                     />
+                    {errors.password && (
+                      <p className="text-red-500 text-sm">
+                        {errors.password.message}
+                      </p>
+                    )}
                     <button
                       type="button"
                       onClick={() => setShow((prev) => !prev)}
@@ -142,13 +177,15 @@ const Registration = () => {
                     <Input
                       id="confirmPassword"
                       type={showConfirm ? "text" : "password"}
-                      value={formData.confirmPassword}
-                      onChange={(e) =>
-                        handleChange("confirmPassword", e.target.value)
-                      }
+                      {...form.register("confirmPassword")}
                       className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-purple-400 pr-10"
                       placeholder="Re-enter your password"
                     />
+                    {errors.confirmPassword && (
+                      <p className="text-red-500 text-sm">
+                        {errors.confirmPassword.message}
+                      </p>
+                    )}
                     <button
                       type="button"
                       onClick={() => setShowConfirm((prev) => !prev)}
