@@ -158,7 +158,7 @@ const Hero = () => {
           </div>
 
           <p className="text-xl md:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto">
-            Join the developer day road to APTICA Chinese Taipei
+            Join the developer day road to APICTA Chinese Taipei
           </p>
 
           <p className="text-lg text-gray-400 mb-8 max-w-2xl mx-auto">
