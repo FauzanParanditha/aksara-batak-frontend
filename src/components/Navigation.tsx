@@ -58,15 +58,15 @@ const Navigation = () => {
                 <Image
                   src="/images/logo/aspiluki2.png"
                   alt="Hackathon Logo"
-                  width={110}
-                  height={110}
+                  width={60}
+                  height={60}
                   className="rounded-full transition-transform duration-300 hover:scale-110"
                 />
                 <Image
                   src="/images/logo/ftii2.png"
                   alt="Hackathon Logo"
-                  width={110}
-                  height={110}
+                  width={90}
+                  height={90}
                   className="rounded-full transition-transform duration-300 hover:scale-110"
                 />
               </div>
