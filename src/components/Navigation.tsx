@@ -49,7 +49,7 @@ const Navigation = () => {
             <div className="flex items-center space-x-2 cursor-pointer">
               <div className="flex flex-row gap-2 items-center space-y-2">
                 <Image
-                  src="/images/logo/logo2.png"
+                  src="/images/logo/pandi2.png"
                   alt="Hackathon Logo"
                   width={130}
                   height={170}
