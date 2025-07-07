@@ -7,8 +7,14 @@ export const loginForm = async (email: string, password: string) => {
 
   const { token, user } = res.data;
 
-  // Simpan token ke cookie
-  setCookie(jwtConfig.admin.accessTokenName, token, {
+  // Gunakan nama cookie sesuai role
+  const accessTokenName =
+    user.accessTokenName ?? // Jika disediakan langsung oleh backend
+    (user.role === "admin"
+      ? jwtConfig.admin.accessTokenName
+      : jwtConfig.user?.accessTokenName ?? "token");
+
+  setCookie(accessTokenName, token, {
     maxAge: 60 * 60 * 24,
     path: "/",
     secure: process.env.NODE_ENV === "production",

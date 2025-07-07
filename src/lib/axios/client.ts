@@ -10,7 +10,12 @@ const clientAxios = axios.create({
 });
 
 clientAxios.interceptors.request.use((config) => {
-  const token = getCookie(jwtConfig.admin.accessTokenName);
+  const pathname =
+    typeof window !== "undefined" ? window.location.pathname : "";
+  const isAdmin = pathname.startsWith("/admin");
+  const token = getCookie(
+    isAdmin ? jwtConfig.admin.accessTokenName : jwtConfig.user.accessTokenName
+  );
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -21,21 +26,23 @@ clientAxios.interceptors.response.use(
   (res) => res,
   (error) => {
     if (typeof window !== "undefined") {
-      const path = window.location.pathname;
-      if (path.startsWith("/dashboard")) {
-        const status = error?.response?.status;
-        switch (status) {
-          case 401:
-            deleteCookie(jwtConfig.admin.accessTokenName);
-            toast.error("Unauthorized");
-            break;
-          default:
-            toast.error(error?.response?.data?.message || "Server Error");
-        }
+      const pathname = window.location.pathname;
+      const isAdmin = pathname.startsWith("/admin");
+      const status = error?.response?.status;
+
+      if (status === 401) {
+        deleteCookie(
+          isAdmin
+            ? jwtConfig.admin.accessTokenName
+            : jwtConfig.user.accessTokenName
+        );
+        toast.error(isAdmin ? "Admin Unauthorized" : "User Unauthorized");
+      } else {
+        toast.error(error?.response?.data?.message || "Server Error");
       }
     }
     return Promise.reject(error);
-  },
+  }
 );
 
 export default clientAxios;

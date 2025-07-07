@@ -8,6 +8,7 @@ export const useHandleAxiosError = () => {
     const message =
       error.response?.data?.message ||
       error.response?.data?.errors ||
+      error?.response?.data?.error ||
       "Unknown error occurred.";
 
     if (error.response) {

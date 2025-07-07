@@ -12,6 +12,11 @@ import {
   useState,
 } from "react";
 
+export enum UserRole {
+  Admin = "admin",
+  Leader = "leader",
+}
+
 interface AuthContextType {
   user: DecodedToken | null;
   token: string | null;
@@ -19,6 +24,17 @@ interface AuthContextType {
   login: (token: string) => void;
   logout: () => void;
 }
+
+const getAccessTokenNameForRole = (role?: string): string => {
+  switch (role) {
+    case UserRole.Admin:
+      return jwtConfig.admin.accessTokenName;
+    case UserRole.Leader:
+      return jwtConfig.user?.accessTokenName ?? "leader-token";
+    default:
+      return "token"; // fallback
+  }
+};
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -29,35 +45,41 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   const login = (newToken: string) => {
-    setCookie(jwtConfig.admin.accessTokenName, newToken, {
-      maxAge: 60 * 60 * 24,
-      path: "/",
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-    });
     const { user, isExpired } = parseAuthToken(newToken);
-    if (!isExpired) {
+    if (!isExpired && user?.role) {
+      const accessTokenName = getAccessTokenNameForRole(user.role);
+
+      setCookie(accessTokenName, newToken, {
+        maxAge: 60 * 60 * 24,
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+      });
+
       setToken(newToken);
       setUser(user);
       setIsAuthenticated(true);
 
-      switch (user?.role) {
-        case "admin":
+      switch (user.role) {
+        case UserRole.Admin:
           router.push("/admin/dashboard");
           break;
-        case "leader":
+        case UserRole.Leader:
           router.push("/user/dashboard");
           break;
         default:
-          router.push("/"); // fallback
+          router.push("/");
       }
     } else {
-      logout(); // Tidak seharusnya terjadi, tapi jaga-jaga
+      logout(); // token tidak valid
     }
   };
 
   const logout = useCallback(() => {
+    // Hapus semua kemungkinan token
     deleteCookie(jwtConfig.admin.accessTokenName);
+    deleteCookie(jwtConfig.user?.accessTokenName ?? "leader-token");
+
     setToken(null);
     setUser(null);
     setIsAuthenticated(false);
@@ -65,18 +87,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, [router]);
 
   useEffect(() => {
-    const tokenFromCookie = getCookie(jwtConfig.admin.accessTokenName);
-    if (typeof tokenFromCookie === "string") {
-      const { user, isExpired } = parseAuthToken(tokenFromCookie);
-      if (!isExpired) {
-        setToken(tokenFromCookie);
-        setUser(user);
-        setIsAuthenticated(true);
-      } else {
-        logout();
+    // Coba baca token dari semua kemungkinan lokasi
+    const tryTokens = [
+      jwtConfig.admin.accessTokenName,
+      jwtConfig.user?.accessTokenName ?? "leader-token",
+    ];
+
+    for (const name of tryTokens) {
+      const tokenFromCookie = getCookie(name);
+      if (typeof tokenFromCookie === "string") {
+        const { user, isExpired } = parseAuthToken(tokenFromCookie);
+        if (!isExpired) {
+          setToken(tokenFromCookie);
+          setUser(user);
+          setIsAuthenticated(true);
+          break; // langsung stop di token pertama yang valid
+        }
       }
     }
   }, [logout]);
+
   return (
     <AuthContext.Provider
       value={{ user, token, isAuthenticated, login, logout }}

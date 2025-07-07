@@ -1,26 +1,31 @@
 "use client";
 
+import { ProtectedRoute } from "@/app/user/components/ProtectedRole";
 import FullScreenLoader from "@/components/frontend/FullScreenLoader";
-import { Users } from "lucide-react";
+import { User, Users } from "lucide-react";
 import useSWR from "swr";
-import { ProtectedRoute } from "../components/ProtectedRole";
 import StatCard from "./components/StatCard";
 
-export default function UserDashboard() {
-  const { data, isLoading } = useSWR("/v1/dashboard/stats");
+export default function AdminDashboard() {
+  const { data, isLoading } = useSWR("/v1/dashboard/stats/admin");
 
   if (isLoading || !data) {
     return <FullScreenLoader />;
   }
 
   return (
-    <ProtectedRoute allowedRoles={["leader"]}>
+    <ProtectedRoute allowedRoles={["admin"]}>
       <div className="space-y-4">
         <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
           <StatCard
-            title="Members"
-            value={data.totalMembers}
+            title="Total Teams"
+            value={data.totalTeams}
+            icon={<User />}
+          />
+          <StatCard
+            title="Total Member"
+            value={data.totalMember}
             icon={<Users />}
           />
         </div>

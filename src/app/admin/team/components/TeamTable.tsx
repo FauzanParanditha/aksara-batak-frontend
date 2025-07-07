@@ -1,6 +1,7 @@
 "use client";
 
 import FormInput from "@/components/frontend/FormInput";
+import Pagination from "@/components/frontend/Pagination";
 import { toast } from "@/hooks/use-toast";
 import clientAxios from "@/lib/axios/client";
 import { useHandleAxiosError } from "@/lib/handleError";
@@ -25,11 +26,18 @@ interface Meta {
 }
 
 interface TeamTableProps {
-  team: Team;
+  teams: Team[];
+  meta: Meta;
+  onPageChange: (page: number) => void;
   onSearch?: (query: string) => void;
 }
 
-export default function TeamTable({ team, onSearch }: TeamTableProps) {
+export default function TeamTable({
+  teams,
+  meta,
+  onPageChange,
+  onSearch,
+}: TeamTableProps) {
   const [showForm, setShowForm] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -100,16 +108,17 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 bg-white">
-            {!team ? (
+            {teams?.length == 0 && (
               <tr>
                 <td
                   colSpan={3}
                   className="whitespace-nowrap px-6 py-4 text-center"
                 >
-                  Data not found
+                  Data not Found
                 </td>
               </tr>
-            ) : (
+            )}
+            {teams.map((team) => (
               <tr key={team.id}>
                 <td className="px-6 py-4 text-sm font-medium text-gray-900">
                   {team.teamName}
@@ -118,7 +127,7 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
                   {team.category || "-"}
                 </td>
                 <td className="px-6 py-4 text-right space-x-2">
-                  <Link href={`/user/team/${team.id}`}>
+                  <Link href={`/admin/team/${team.id}`}>
                     <button className="text-blue-600 hover:text-blue-900">
                       <Pencil size={16} />
                     </button>
@@ -131,10 +140,23 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
                   </button>
                 </td>
               </tr>
-            )}
+            ))}
           </tbody>
         </table>
       </div>
+
+      {meta.totalPages > 1 && (
+        <Pagination
+          paginate={{
+            currentPage: meta.page,
+            totalPages: meta.totalPages,
+            perPage: meta.limit,
+            totalRecords: meta.totalCount,
+          }}
+          onPageChange={onPageChange}
+          limit={1}
+        />
+      )}
 
       {showForm && (
         <TeamForm
