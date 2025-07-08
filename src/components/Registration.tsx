@@ -68,7 +68,7 @@ const Registration = () => {
     <section className="py-20 px-4 relative" id="register">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-6">
+          <h2 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-6 h-[70px]">
             Register Now
           </h2>
           <p className="text-xl text-gray-300">
