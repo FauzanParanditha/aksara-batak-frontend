@@ -4,196 +4,314 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Clock, FileText, Shield, Upload } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { CheckCircle, Clock, FileText, Shield, Users } from "lucide-react";
 import Link from "next/link";
 
-const RulesGuidelines = () => {
-  const sections = [
-    {
-      id: "registration",
-      title: "Registration",
-      icon: <FileText className="w-5 h-5" />,
-      content: (
-        <div className="space-y-4">
-          <div>
-            <ul className="space-y-2 text-gray-300">
-              <li>• Each team may consist of up to 3 members.</li>
-              <li>
-                • Registration fee: IDR 200,000 per team. Registration via:{" "}
-                <Link href={"https://domain.id/idfest2025/hackathon"}>
-                  https://domain.id/idfest2025/hackathon before deadline.
-                </Link>
-                video
-              </li>
-              <li>• Include demo via s.id shortlink.</li>
-              <li>• Only one proposal per team.</li>
-              <li>• Projects must not have won or been published before.</li>
-              <li>
-                • Projects must be in development phase (not just an idea).
-              </li>
-              <li>
-                • Provide accurate registration info, or risk disqualification.
-              </li>
-              <li>• Teams may represent institutions or individuals.</li>
-              <li>• Team members can come from different backgrounds.</li>
-            </ul>
-          </div>
-        </div>
-      ),
-    },
-    {
-      id: "deadlines",
-      title: "Deadlines",
-      icon: <Clock className="w-5 h-5" />,
-      content: (
-        <div className="space-y-4">
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="bg-purple-500/10 rounded-lg p-4 border border-purple-500/20">
-              <h4 className="font-semibold text-purple-400 mb-2">
-                Registration Deadline
-              </h4>
-              <p className="text-white text-lg font-bold">August 10, 2025</p>
-            </div>
-            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
-              <h4 className="font-semibold text-blue-400 mb-2">
-                Proposal Deadline
-              </h4>
-              <p className="text-white text-lg font-bold">August 10, 2025</p>
-            </div>
-          </div>
-          <div>
-            <h4 className="font-semibold text-white mb-2">
-              Important Milestones
-            </h4>
-            <ul className="space-y-2 text-gray-300">
-              <li>
-                • <span className="text-purple-400">August 25:</span> Finalists
-                Announced via @pandi.id & @domain.id
-              </li>
-              <li>
-                • <span className="text-blue-400">September 2-3:</span> Final
-                Presentation Offline pitch in front of judges
-              </li>
-            </ul>
-          </div>
-        </div>
-      ),
-    },
-    {
-      id: "submission",
-      title: "Paper Submission Instructions",
-      icon: <Upload className="w-5 h-5" />,
-      content: (
-        <div className="space-y-4">
-          <div>
-            <h4 className="font-semibold text-white mb-2">
-              Submission Requirements
-            </h4>
-            <ul className="space-y-2 text-gray-300">
-              <li>• Language: English</li>
-              <li>• Format: PDF with demo video shortlink (s.id)</li>
-              <li>• Max 15 pages</li>
-              <div className="ml-6">
-                <h4 className="font-semibold text-white mb-2">Structure</h4>
-                <ul className="space-y-2 text-gray-300">
-                  <li>1. Title Slide (Innovation Name)</li>
-                  <li>2. Problem Statement</li>
-                  <li>3. Target Users & Market</li>
-                  <li>4. Proposed Solution</li>
-                  <li>5. Key Features & Tech Stack</li>
-                  <li>6. Screenshots or Product Demo (optional link)</li>
-                  <li>7. Competitive Advantage</li>
-                  <li>8. Current Status & Development Plan</li>
-                  <li>9. Business Model</li>
-                  <li>10. Impact Plan</li>
-                  <li>11. Roadmap & Future Direction</li>
-                  <li>12. Team Profile & Contact</li>
-                  <li>13. References</li>
-                </ul>
-              </div>
-            </ul>
-          </div>
-        </div>
-      ),
-    },
-    {
-      id: "intellectual-property",
-      title: "Intellectual Property",
-      icon: <Shield className="w-5 h-5" />,
-      content: (
-        <div className="space-y-4">
-          <div>
-            {/* <h4 className="font-semibold text-white mb-2">Ownership Rights</h4> */}
-            <ul className="space-y-2 text-gray-300">
-              <li>Projects must be original.</li>
-              <li>IP violations will result in disqualification.</li>
-              <li>
-                Organizer may publish or promote submitted works with credit.
-              </li>
-              <li>Open source usage allowed with proper attribution.</li>
-            </ul>
-          </div>
-          {/* <div className="bg-yellow-500/10 rounded-lg p-4 border border-yellow-500/20">
-            <p className="text-yellow-400 text-sm">
-              <strong>Note:</strong> Ensure all third-party libraries and assets
-              used comply with their respective licenses and are properly
-              attributed.
-            </p>
-          </div> */}
-        </div>
-      ),
-    },
-  ];
+const datas = [
+  "Title Slide (Innovation Name)",
+  "Problem Statement",
+  "Target Users & Market",
+  "Proposed Solution",
+  "Key Features & Tech Stack",
+  "Screenshots or Product Demo (optional link)",
+  "Competitive Advantage",
+  " Current Status & Development Plan",
+  " Business Model",
+  "Impact Plan",
+  "Roadmap & Future Direction",
+  "Team Profile & Contact",
+  "References",
+];
 
+const RulesGuidelines = () => {
   return (
-    <section className="py-20 px-4 relative" id="rules">
-      <div className="max-w-6xl mx-auto">
+    <section className="py-20 px-4 sm:px-6 lg:px-8" id="rules">
+      <div className="max-w-4xl mx-auto">
+        {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
             Competition Rules & Guidelines
           </h2>
-          <p className="text-xl text-gray-300">
-            Everything you need to know to participate and succeed
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            Everything you need to know to participate in HackFuture. Please
+            read through all guidelines carefully.
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto">
-          <Accordion type="single" collapsible className="space-y-4">
-            {sections.map((section) => (
+        {/* Rules Accordion */}
+        <Card className="bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl">
+          <CardContent className="p-8">
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              {/* Registration */}
               <AccordionItem
-                key={section.id}
-                value={section.id}
-                className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-purple-400/30 transition-all duration-300"
+                value="registration"
+                className="border border-white/10 rounded-lg bg-white/5 backdrop-blur-sm"
               >
                 <AccordionTrigger className="px-6 py-4 hover:no-underline group">
-                  <div className="flex items-center gap-3 text-left">
-                    <div className="text-purple-400 group-hover:text-purple-300 transition-colors">
-                      {section.icon}
+                  <div className="flex items-center space-x-4 text-left">
+                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                      <Users className="w-6 h-6 text-white" />
                     </div>
-                    <span className="text-lg font-semibold text-white group-hover:text-purple-300 transition-colors">
-                      {section.title}
-                    </span>
+                    <div>
+                      <h3 className="text-xl font-semibold text-white group-hover:text-purple-300 transition-colors">
+                        Registration Requirements
+                      </h3>
+                      <p className="text-gray-400 text-sm">
+                        Eligibility and team formation guidelines
+                      </p>
+                    </div>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="px-6 pb-6">
-                  {section.content}
+                <AccordionContent className="px-6 pb-6 pt-2">
+                  <div className="space-y-4 text-gray-300">
+                    <div className="flex items-start space-x-3">
+                      <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                      <p>Each team may consist of up to 3 members.</p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                      <p>
+                        Registration fee: IDR 200,000 per team. Registration
+                        via:{" "}
+                        <Link href={"https://domain.id/idfest2025/hackathon"}>
+                          https://domain.id/idfest2025/hackathon before
+                          deadline.
+                        </Link>
+                        video
+                      </p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                      <p>Include demo via s.id shortlink.</p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                      <p>Only one proposal per team.</p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                      <p>
+                        Projects must not have won or been published before.
+                      </p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                      <p>
+                        Projects must be in development phase (not just an
+                        idea).
+                      </p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                      <p>
+                        Provide accurate registration info, or risk
+                        disqualification.
+                      </p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                      <p>Teams may represent institutions or individuals.</p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                      <p>Team members can come from different backgrounds.</p>
+                    </div>
+                  </div>
                 </AccordionContent>
               </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
 
-        <div className="text-center mt-12">
-          <p className="text-gray-400 mb-4">
-            Questions about the rules? Contact us at{" "}
-            <a
-              href="mailto:rules@hackfuture.com"
-              className="text-purple-400 hover:text-purple-300 transition-colors"
-            >
-              soskom@pandi.id
-            </a>
-          </p>
-        </div>
+              {/* Deadlines */}
+              <AccordionItem
+                value="deadlines"
+                className="border border-white/10 rounded-lg bg-white/5 backdrop-blur-sm"
+              >
+                <AccordionTrigger className="px-6 py-4 hover:no-underline group">
+                  <div className="flex items-center space-x-4 text-left">
+                    <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                      <Clock className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-white group-hover:text-pink-300 transition-colors">
+                        Important Deadlines
+                      </h3>
+                      <p className="text-gray-400 text-sm">
+                        Key dates and submission timelines
+                      </p>
+                    </div>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-6 pt-2">
+                  <div className="space-y-4 text-gray-300">
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                        <h4 className="font-semibold text-purple-300 mb-2">
+                          Registration Phase
+                        </h4>
+                        <p className="text-sm">
+                          <strong>Opens:</strong> July 7, 2025
+                        </p>
+                        <p className="text-sm">
+                          <strong>Closes:</strong> July 11, 2025
+                        </p>
+                      </div>
+                      <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                        <h4 className="font-semibold text-pink-300 mb-2">
+                          Competition Period
+                        </h4>
+                        <p className="text-sm">
+                          <strong>Start:</strong> July 7, 2025
+                        </p>
+                        <p className="text-sm">
+                          <strong>End:</strong> August 15, 2025
+                        </p>
+                      </div>
+                      <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                        <h4 className="font-semibold text-blue-300 mb-2">
+                          Submission Deadline
+                        </h4>
+                        <p className="text-sm">
+                          <strong>Final Deadline:</strong> August 16, 2026
+                        </p>
+                        <p className="text-xs text-gray-400">
+                          No extensions will be granted
+                        </p>
+                      </div>
+                      <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                        <h4 className="font-semibold text-green-300 mb-2">
+                          Results
+                        </h4>
+                        <p className="text-sm">
+                          <strong>Judging:</strong> August 18-22, 2025
+                        </p>
+                        <p className="text-sm">
+                          <strong>Winners:</strong> August 25-29, 2025
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* Paper Submission */}
+              <AccordionItem
+                value="submission"
+                className="border border-white/10 rounded-lg bg-white/5 backdrop-blur-sm"
+              >
+                <AccordionTrigger className="px-6 py-4 hover:no-underline group">
+                  <div className="flex items-center space-x-4 text-left">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                      <FileText className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-white group-hover:text-blue-300 transition-colors">
+                        Submission Instructions
+                      </h3>
+                      <p className="text-gray-400 text-sm">
+                        Project deliverables and submission format
+                      </p>
+                    </div>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-6 pt-2">
+                  <div className="space-y-6 text-gray-300">
+                    <div>
+                      <h4 className="font-semibold text-blue-300 mb-3">
+                        Structure
+                      </h4>
+                      <div className="space-y-3">
+                        {datas.map((item, index) => (
+                          <div
+                            className="flex items-start space-x-3"
+                            key={index}
+                          >
+                            <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                            <div>
+                              <p>{item}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                      <h4 className="font-semibold text-cyan-300 mb-2">
+                        Submission Format
+                      </h4>
+                      <p className="text-sm">• Language English</p>
+                      <p className="text-sm">
+                        • PDF with demo video shortlink (s.id)
+                      </p>
+                      <p className="text-sm">• Max 15 pages</p>
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* Intellectual Property */}
+              <AccordionItem
+                value="ip"
+                className="border border-white/10 rounded-lg bg-white/5 backdrop-blur-sm"
+              >
+                <AccordionTrigger className="px-6 py-4 hover:no-underline group">
+                  <div className="flex items-center space-x-4 text-left">
+                    <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                      <Shield className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-white group-hover:text-cyan-300 transition-colors">
+                        Intellectual Property
+                      </h3>
+                      <p className="text-gray-400 text-sm">
+                        Rights, ownership, and usage terms
+                      </p>
+                    </div>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-6 pt-2">
+                  <div className="space-y-4 text-gray-300">
+                    <div className="flex items-start space-x-3">
+                      <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p>Projects must be original.</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                      <div>IP violations will result in disqualification.</div>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p>
+                          Organizer may publish or promote submitted works with
+                          credit.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p>
+                          Open source usage allowed with proper attribution.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4 mt-4">
+                      <h4 className="font-semibold text-yellow-300 mb-2">
+                        Important Note
+                      </h4>
+                      <p className="text-sm">
+                        Projects using proprietary or copyrighted materials
+                        without permission will be disqualified. When in doubt,
+                        contact our support team before submission.
+                      </p>
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </CardContent>
+        </Card>
       </div>
     </section>
   );
