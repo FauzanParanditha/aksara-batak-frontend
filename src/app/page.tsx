@@ -6,6 +6,7 @@ import Navigation from "@/components/Navigation";
 import Prizes from "@/components/Prizes";
 import ProblemStatement from "@/components/ProblemStatement";
 import Registration from "@/components/Registration";
+import RulesGuidelines from "@/components/RulesGuidelines";
 import Timeline from "@/components/Timeline";
 
 export default function Home() {
@@ -16,6 +17,7 @@ export default function Home() {
       <About />
       <Timeline />
       <ProblemStatement />
+      <RulesGuidelines />
       <Prizes />
       <FAQ />
       <Registration />

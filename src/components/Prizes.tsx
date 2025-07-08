@@ -6,7 +6,12 @@ const Prizes = () => {
       description: "Grand prize",
       color: "from-yellow-400 to-orange-500",
       icon: "🏆",
-      features: ["Certificate, Merchandise"],
+      features: [
+        "Certificate, Merchandise",
+        "Incubation opportunity",
+        "Coaching & mentoring sessions",
+        "Represent Indonesia at APICTA 2025 in Taipei",
+      ],
     },
     {
       place: "2nd Place",
@@ -14,7 +19,11 @@ const Prizes = () => {
       description: "Runner-up prize",
       color: "from-gray-300 to-gray-500",
       icon: "🥈",
-      features: ["Certificate, Merchandise"],
+      features: [
+        "Certificate, Merchandise",
+        "Coaching & mentoring sessions",
+        "Represent Indonesia at APICTA 2025 in Taipei",
+      ],
     },
     {
       place: "3rd Place",
@@ -22,7 +31,11 @@ const Prizes = () => {
       description: "Third place",
       color: "from-orange-400 to-red-500",
       icon: "🥉",
-      features: ["Certificate, Merchandise"],
+      features: [
+        "Certificate, Merchandise",
+        "Coaching & mentoring sessions",
+        "Represent Indonesia at APICTA 2025 in Taipei",
+      ],
     },
   ];
 
@@ -41,7 +54,7 @@ const Prizes = () => {
             Prizes & Rewards
           </h2>
           <p className="text-xl text-gray-300">
-            $50K total prize pool waiting for you
+            IDR 55M total prize pool waiting for you
           </p>
         </div>
 
@@ -79,7 +92,7 @@ const Prizes = () => {
                         className="flex items-center justify-center gap-2 text-gray-400"
                       >
                         <span className="w-2 h-2 bg-purple-400 rounded-full"></span>
-                        <span>{feature}</span>
+                        <span className="text-sm">{feature}</span>
                       </div>
                     ))}
                   </div>

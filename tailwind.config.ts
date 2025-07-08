@@ -8,6 +8,10 @@ export default {
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
   ],
+  safelist: [
+    "data-[state=open]:animate-accordion-down",
+    "data-[state=closed]:animate-accordion-up",
+  ],
   prefix: "",
   theme: {
     container: {
