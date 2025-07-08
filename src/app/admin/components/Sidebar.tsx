@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
-import { CreditCard, Home, LogOut, Mail, Users } from "lucide-react";
+import { Banknote, CreditCard, Home, LogOut, Mail, Users } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -14,6 +14,11 @@ const links = [
     href: "/admin/email-logs",
     label: "Email Log",
     icon: <Mail size={18} />,
+  },
+  {
+    href: "/admin/payment-logs",
+    label: "Verified Payment Log",
+    icon: <Banknote size={18} />,
   },
 ];
 

@@ -187,7 +187,7 @@ export default function PaymentTable({
                   <td className="px-6 py-4 text-sm text-gray-500">
                     {pay.status}
                   </td>
-                  {pay.paidAt && (
+                  {pay.paidAt && pay.status != "paid" && (
                     <td className="space-x-2 whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
                       <button
                         className="text-blue-600 hover:text-blue-900"
