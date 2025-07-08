@@ -1,21 +1,28 @@
 const Timeline = () => {
   const events = [
     {
-      time: "July 1, 2025",
+      time: "July 7-11, 2025",
       title: "Launch of .id Hackathon",
       description:
         "Official announcement and publication of the .id Hackathon 2025, inviting innovators across Indonesia to participate.",
       color: "purple",
     },
     {
-      time: "July 1–10, 2025",
+      time: "July 7–11, 2025",
       title: "Registration Period",
       description:
         "Participants register and submit their initial proposals to join the hackathon.",
       color: "blue",
     },
     {
-      time: "August 10–20, 2025",
+      time: "July 7 - August 15, 2025",
+      title: "Hacking Begins",
+      description:
+        "Judges and mentors evaluate submitted proposals to shortlist the most promising ideas.",
+      color: "pink",
+    },
+    {
+      time: "August 18–22, 2025",
       title: "Proposal Selection Phase",
       description:
         "Judges and mentors evaluate submitted proposals to shortlist the most promising ideas.",
