@@ -2,13 +2,14 @@
 
 import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
-import { Home, LogOut, Mail, Users } from "lucide-react";
+import { CreditCard, Home, LogOut, Mail, Users } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const links = [
   { href: "/admin/dashboard", label: "Dashboard", icon: <Home size={18} /> },
   { href: "/admin/team", label: "Teams", icon: <Users size={18} /> },
+  { href: "/admin/payment", label: "Payment", icon: <CreditCard size={18} /> },
   {
     href: "/admin/email-logs",
     label: "Email Log",

@@ -1,0 +1,246 @@
+"use client";
+
+import FormInput from "@/components/frontend/FormInput";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { toast } from "@/hooks/use-toast";
+import clientAxios from "@/lib/axios/client";
+import { useHandleAxiosError } from "@/lib/handleError";
+import { Plus, Search, X } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
+import { mutate } from "swr";
+import PaymentForm from "./PaymentForm";
+
+interface Payment {
+  id: string;
+  team: {
+    teamName: string;
+  };
+  method: string;
+  amount: string;
+  paidAt: string;
+  status: string;
+  manualProofUrl?: string;
+}
+
+interface PaymentTableProps {
+  payments: Payment[];
+  onSearch?: (query: string) => void;
+}
+
+export default function PaymentTable({
+  payments,
+  onSearch,
+}: PaymentTableProps) {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showForm, setShowForm] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [vaNumber] = useState("1234567890123456");
+  const [amount] = useState(200000);
+  const handleAxiosError = useHandleAxiosError();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (onSearch) onSearch(searchQuery);
+  };
+
+  const handlePaymentClick = () => {
+    setShowForm(true);
+  };
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <form onSubmit={handleSearch} className="flex items-center gap-2">
+          <FormInput
+            type="text"
+            placeholder="Search payment..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full rounded border border-blue-600 px-3 py-2 md:w-64"
+          />
+          <button
+            type="submit"
+            className="rounded bg-blue-600 p-2 text-white hover:bg-blue-700"
+          >
+            <Search size={16} />
+          </button>
+        </form>
+        <button
+          onClick={handlePaymentClick}
+          className="flex items-center gap-2 rounded bg-blue-600 px-3 py-2 text-white hover:bg-blue-700"
+        >
+          <Plus size={16} /> Upload Payment
+        </button>
+      </div>
+
+      {/* INFO */}
+      <Card className="max-w-2xl mx-auto mt-10 shadow-lg">
+        <CardHeader className="flex flex-col items-start gap-2">
+          <CardTitle className="text-xl">Manual Payment</CardTitle>
+          <div className="flex items-center gap-3">
+            <Image
+              src="/images/bank/bca.png"
+              alt="Bank BCA"
+              width={48}
+              height={48}
+            />
+            <div>
+              <p className="font-medium text-sm">
+                Transfer to BCA Bank virtual account
+              </p>
+              <p className="text-sm text-gray-500">
+                Please make payment to the following VA number and upload proof
+                of payment for verification.
+              </p>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div>
+            <Label>Virtual Account Number (VA)</Label>
+            <Input
+              value={vaNumber}
+              readOnly
+              className="bg-gray-100 font-mono cursor-not-allowed"
+            />
+          </div>
+          <div>
+            <Label>Payment Amount</Label>
+            <Input
+              value={`Rp ${amount.toLocaleString()}`}
+              readOnly
+              className="bg-gray-100 cursor-not-allowed"
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      <div className="overflow-x-auto rounded-lg bg-white shadow">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                Photo
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                Team Name
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                Method
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                Amount
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                Paid At
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                Status
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200 bg-white">
+            {payments.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={6}
+                  className="whitespace-nowrap px-6 py-4 text-center"
+                >
+                  Data not found
+                </td>
+              </tr>
+            ) : (
+              payments.map((pay) => (
+                <tr key={pay.id}>
+                  <td className="whitespace-nowrap px-6 py-4">
+                    {pay.manualProofUrl ? (
+                      <button
+                        onClick={() =>
+                          setPreviewUrl(
+                            `${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${pay.manualProofUrl}`
+                          )
+                        }
+                        className="h-10 w-10 overflow-hidden rounded-full border"
+                      >
+                        <Image
+                          src={`${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${pay.manualProofUrl}`}
+                          alt={pay.team.teamName}
+                          width={40}
+                          height={40}
+                          className="rounded-full object-cover"
+                        />
+                      </button>
+                    ) : (
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 text-xs text-gray-400">
+                        N/A
+                      </div>
+                    )}
+                  </td>
+                  <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                    {pay.team.teamName}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-500">
+                    {pay.method}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-500">
+                    {pay.amount}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-500">
+                    {pay.paidAt}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-500">
+                    {pay.status}
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {showForm && (
+        <PaymentForm
+          onClose={() => setShowForm(false)}
+          onSubmit={async (formData) => {
+            // console.log("Submit speaker", formData);
+            try {
+              await clientAxios.post("/v1/payments/manual", formData);
+
+              toast({
+                title: `Bukti pembayaran atas VA ${vaNumber} sejumlah Rp${amount.toLocaleString()} berhasil diunggah.`,
+              });
+
+              await mutate(`/v1/payments?&search=${searchQuery}`);
+              setShowForm(false);
+            } catch (err) {
+              handleAxiosError(err);
+            }
+          }}
+        />
+      )}
+
+      {previewUrl && (
+        <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black bg-opacity-80">
+          <div className="relative max-h-full max-w-full">
+            <button
+              onClick={() => setPreviewUrl(null)}
+              className="absolute right-2 top-2 rounded-full bg-white p-1 hover:bg-gray-200"
+            >
+              <X size={20} />
+            </button>
+            <Image
+              src={previewUrl}
+              alt="Preview"
+              width={600}
+              height={600}
+              className="max-h-[90vh] max-w-[90vw] rounded object-contain shadow-lg"
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
