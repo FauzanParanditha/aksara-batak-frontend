@@ -11,7 +11,6 @@ export default function TeamDashboard() {
   const [page, setPage] = useState(1);
 
   const { data, isLoading } = useSWR(`/v1/teams?&search=${search}`);
-  console.log(data);
 
   if (isLoading) {
     return <FullScreenLoader />;

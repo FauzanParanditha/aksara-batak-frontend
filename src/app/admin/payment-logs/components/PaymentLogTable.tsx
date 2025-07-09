@@ -128,7 +128,7 @@ export default function PaymentVerifiedLogTable({
               <tr>
                 <td
                   className="whitespace-nowrap px-6 py-4 text-center"
-                  colSpan={6}
+                  colSpan={5}
                 >
                   Data Not Found
                 </td>

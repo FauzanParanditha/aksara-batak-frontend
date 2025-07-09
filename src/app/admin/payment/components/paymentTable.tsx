@@ -139,7 +139,7 @@ export default function PaymentTable({
             {payments.length === 0 ? (
               <tr>
                 <td
-                  colSpan={6}
+                  colSpan={7}
                   className="whitespace-nowrap px-6 py-4 text-center"
                 >
                   Data not found

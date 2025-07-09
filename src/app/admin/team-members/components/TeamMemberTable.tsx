@@ -2,20 +2,21 @@
 
 import FormInput from "@/components/frontend/FormInput";
 import Pagination from "@/components/frontend/Pagination";
-import { toast } from "@/hooks/use-toast";
 import clientAxios from "@/lib/axios/client";
 import { useHandleAxiosError } from "@/lib/handleError";
-import { Pencil, Search, Trash2, X } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import { Pencil, Search, Trash2 } from "lucide-react";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { mutate } from "swr";
-import TeamForm from "./TeamForm";
+import TeamMemberForm from "./TeamMemberForm";
 
-interface Team {
+interface TeamMember {
   id: string;
-  teamName: string;
-  category: string;
+  teamId: string;
+  fullName: string;
+  email: string;
+  institution: string;
+  roleInTeam: string;
 }
 
 interface Meta {
@@ -25,22 +26,23 @@ interface Meta {
   totalPages: number;
 }
 
-interface TeamTableProps {
-  teams: Team[];
+interface TeamMemberTableProps {
+  teamMembers: TeamMember[];
   meta: Meta;
   onPageChange: (page: number) => void;
+  onStatusFilter?: (status: string) => void;
   onSearch?: (query: string) => void;
 }
 
-export default function TeamTable({
-  teams,
+export default function TeamMemberTable({
+  teamMembers,
   meta,
   onPageChange,
   onSearch,
-}: TeamTableProps) {
-  const [showForm, setShowForm] = useState(false);
+}: TeamMemberTableProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [showForm, setShowForm] = useState(false);
+  const [editData, setEditData] = useState<TeamMember | null>(null);
   const handleAxiosError = useHandleAxiosError();
 
   const handleSearch = (e: React.FormEvent) => {
@@ -48,19 +50,15 @@ export default function TeamTable({
     if (onSearch) onSearch(searchQuery);
   };
 
-  const handleAddClick = () => {
-    setShowForm(true);
-  };
-
   const handleDelete = async (id: string) => {
     const confirm = window.confirm(
-      "Are you sure you want to delete this team?"
+      "Are you sure you want to delete this team member?"
     );
     if (!confirm) return;
     try {
-      await clientAxios.delete(`/v1/teams/${id}`);
-      await mutate(`/v1/teams?&search=${searchQuery}`);
-      toast({ title: "Team delete successfully" });
+      await clientAxios.delete(`/v1/team-members/${id}`);
+      await mutate(`/v1/team-members?page=${meta.page}&search=${searchQuery}`);
+      toast.success("Team member delete successfully");
     } catch (error) {
       handleAxiosError(error);
     }
@@ -72,7 +70,7 @@ export default function TeamTable({
         <form onSubmit={handleSearch} className="flex items-center gap-2">
           <FormInput
             type="text"
-            placeholder="Search team..."
+            placeholder="Search team member..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full rounded border border-blue-600 px-3 py-2 md:w-64"
@@ -84,12 +82,6 @@ export default function TeamTable({
             <Search size={16} />
           </button>
         </form>
-        {/* <button
-          onClick={handleAddClick}
-          className="flex items-center gap-2 rounded bg-blue-600 px-3 py-2 text-white hover:bg-blue-700"
-        >
-          <Plus size={16} /> Add Team
-        </button> */}
       </div>
 
       <div className="overflow-x-auto rounded-lg bg-white shadow">
@@ -97,16 +89,16 @@ export default function TeamTable({
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
-                Team Name
+                fullName
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
-                Category
+                Email
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
-                Team Number
+                Institution
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
-                Payment Status
+                Role in Team
               </th>
               <th className="px-6 py-3 text-right text-xs font-medium uppercase text-gray-500">
                 Actions
@@ -114,33 +106,44 @@ export default function TeamTable({
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 bg-white">
-            {teams?.length == 0 && (
+            {teamMembers.length == 0 && (
               <tr>
                 <td
-                  colSpan={5}
                   className="whitespace-nowrap px-6 py-4 text-center"
+                  colSpan={5}
                 >
-                  Data not Found
+                  Data Not Found
                 </td>
               </tr>
             )}
-            {teams.map((team) => (
-              <tr key={team.id}>
-                <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                  {team.teamName}
+            {teamMembers.map((teamMember) => (
+              <tr key={teamMember.id}>
+                <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
+                  {teamMember.fullName}
                 </td>
-                <td className="px-6 py-4 text-sm text-gray-500">
-                  {team.category || "-"}
+                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                  {teamMember.email}
                 </td>
-                <td className="px-6 py-4 text-right space-x-2">
-                  <Link href={`/admin/team/${team.id}`}>
-                    <button className="text-blue-600 hover:text-blue-900">
-                      <Pencil size={16} />
-                    </button>
-                  </Link>
+                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                  {teamMember.institution}
+                </td>
+
+                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                  {teamMember.roleInTeam}
+                </td>
+                <td className="space-x-2 whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
+                  <button
+                    className="text-blue-600 hover:text-blue-900"
+                    onClick={() => {
+                      setEditData(teamMember);
+                      setShowForm(true);
+                    }}
+                  >
+                    <Pencil size={16} />
+                  </button>
                   <button
                     className="text-red-600 hover:text-red-900"
-                    onClick={() => handleDelete(team.id)}
+                    onClick={() => handleDelete(teamMember.id)}
                   >
                     <Trash2 size={16} />
                   </button>
@@ -151,6 +154,28 @@ export default function TeamTable({
         </table>
       </div>
 
+      {showForm && (
+        <TeamMemberForm
+          initialData={editData || undefined}
+          onClose={() => setShowForm(false)}
+          onSubmit={async (formData) => {
+            // console.log("Submit sponsor", formData);
+            try {
+              if (editData?.id) {
+                await clientAxios.put(`/v1/users/${editData.id}`, formData);
+                toast.success("Successfully edited user");
+              } else {
+                await clientAxios.post(`/v1/users`, formData);
+                toast.success("Successfully added user");
+              }
+              await mutate(`/v1/users?page=${meta.page}&search=${searchQuery}`);
+              setShowForm(false);
+            } catch (err) {
+              handleAxiosError(err);
+            }
+          }}
+        />
+      )}
       {meta.totalPages > 1 && (
         <Pagination
           paginate={{
@@ -162,42 +187,6 @@ export default function TeamTable({
           onPageChange={onPageChange}
           limit={1}
         />
-      )}
-
-      {showForm && (
-        <TeamForm
-          onClose={() => setShowForm(false)}
-          onSubmit={async (formData) => {
-            try {
-              await clientAxios.post(`/v1/teams`, formData);
-              toast({ title: "Successfully added team" });
-              await mutate(`/v1/teams?&search=${searchQuery}`);
-              setShowForm(false);
-            } catch (err) {
-              handleAxiosError(err);
-            }
-          }}
-        />
-      )}
-
-      {previewUrl && (
-        <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black bg-opacity-80">
-          <div className="relative max-h-full max-w-full">
-            <button
-              onClick={() => setPreviewUrl(null)}
-              className="absolute right-2 top-2 rounded-full bg-white p-1 hover:bg-gray-200"
-            >
-              <X size={20} />
-            </button>
-            <Image
-              src={previewUrl}
-              alt="Preview"
-              width={600}
-              height={600}
-              className="max-h-[90vh] max-w-[90vw] rounded object-contain shadow-lg"
-            />
-          </div>
-        </div>
       )}
     </div>
   );

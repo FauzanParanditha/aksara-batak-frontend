@@ -15,6 +15,8 @@ interface Team {
   id: string;
   teamName: string;
   category: string;
+  queueNumber: string;
+  paymentStatus: string;
 }
 
 interface Meta {
@@ -94,6 +96,12 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
                 Category
               </th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                Team number
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                Payment Status
+              </th>
               <th className="px-6 py-3 text-right text-xs font-medium uppercase text-gray-500">
                 Actions
               </th>
@@ -103,7 +111,7 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
             {!team ? (
               <tr>
                 <td
-                  colSpan={3}
+                  colSpan={4}
                   className="whitespace-nowrap px-6 py-4 text-center"
                 >
                   Data not found
@@ -115,7 +123,13 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
                   {team.teamName}
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-500">
-                  {team.category || "-"}
+                  {team.category}
+                </td>
+                <td className="px-6 py-4 text-sm text-gray-500">
+                  {team.queueNumber || 0}
+                </td>
+                <td className="px-6 py-4 text-sm text-gray-500">
+                  {team.paymentStatus}
                 </td>
                 <td className="px-6 py-4 text-right space-x-2">
                   <Link href={`/user/team/${team.id}`}>
