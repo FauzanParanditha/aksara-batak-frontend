@@ -192,13 +192,15 @@ const Hero = () => {
                 Register Now
               </Button>
             </Link>
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-2 border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white px-8 py-4 text-lg font-semibold rounded-full backdrop-blur-sm bg-white/5 transform hover:scale-105 transition-all duration-300"
-            >
-              Learn More
-            </Button>
+            <Link href={"#rules"}>
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-2 border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white px-8 py-4 text-lg font-semibold rounded-full backdrop-blur-sm bg-white/5 transform hover:scale-105 transition-all duration-300"
+              >
+                Learn More
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
