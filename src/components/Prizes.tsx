@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const Prizes = () => {
   const prizes = [
     {
@@ -9,7 +11,7 @@ const Prizes = () => {
       features: [
         "Certificate, Merchandise",
         "Coaching & mentoring sessions",
-        "Represent Indonesia at APICTA 2025 in Taipei",
+        // "Represent Indonesia at APICTA 2025 in Taipei",
       ],
       position: "second",
     },
@@ -18,12 +20,12 @@ const Prizes = () => {
       amount: "IDR 30,000,000",
       description: "Grand prize",
       color: "from-yellow-400 to-orange-500",
-      icon: "🏆",
+      icon: "/images/icon/trophy.png",
       features: [
         "Certificate, Merchandise",
         "Incubation opportunity",
         "Coaching & mentoring sessions",
-        "Represent Indonesia at APICTA 2025 in Taipei",
+        // "Represent Indonesia at APICTA 2025 in Taipei",
       ],
       position: "first",
     },
@@ -36,7 +38,7 @@ const Prizes = () => {
       features: [
         "Certificate, Merchandise",
         "Coaching & mentoring sessions",
-        "Represent Indonesia at APICTA 2025 in Taipei",
+        // "Represent Indonesia at APICTA 2025 in Taipei",
       ],
       position: "third",
     },
@@ -99,9 +101,20 @@ const Prizes = () => {
               {/* Winner Card */}
               <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-6 border border-white/10 hover:border-purple-400/50 transition-all duration-500 transform hover:scale-105 mb-4 w-full group">
                 <div className="text-center">
-                  <div className="text-5xl mb-3 group-hover:scale-110 transition-transform duration-300">
-                    {prize.icon}
-                  </div>
+                  {prize.icon.includes("/images") ? (
+                    <div className="group-hover:scale-110 transition-transform duration-300 flex items-center justify-center">
+                      <Image
+                        src={prize.icon}
+                        alt="Logo"
+                        width={80}
+                        height={80}
+                      />
+                    </div>
+                  ) : (
+                    <div className="text-5xl mb-3 group-hover:scale-110 transition-transform duration-300">
+                      {prize.icon}
+                    </div>
+                  )}
 
                   {/* <h3 className="text-xl font-bold text-white mb-2">
                     {prize.place}
@@ -141,7 +154,7 @@ const Prizes = () => {
                 <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-r from-purple-500/30 to-blue-500/30 border-b border-white/20"></div>
 
                 {/* Position Number */}
-                <div className="absolute inset-0 flex items-center justify-center">
+                {/* <div className="absolute inset-0 flex items-center justify-center">
                   <div
                     className={`text-6xl font-bold bg-gradient-to-r ${prize.color} bg-clip-text `}
                   >
@@ -151,7 +164,7 @@ const Prizes = () => {
                       ? "2"
                       : "3"}
                   </div>
-                </div>
+                </div> */}
 
                 {/* Shine Effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent transform -skew-x-12 animate-pulse"></div>
