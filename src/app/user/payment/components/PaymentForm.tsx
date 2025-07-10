@@ -14,8 +14,9 @@ interface PaymentFormProps {
 }
 
 export default function PaymentForm({ onClose, onSubmit }: PaymentFormProps) {
-  const [vaNumber] = useState("1234567890123456");
+  const [vaNumber] = useState("2918887771");
   const [amount] = useState(200000);
+  const [vaName] = useState("PENGELOLA NAMA DOMAIN INTERNET INDONESIA");
   const [file, setFile] = useState<File | null>(null);
 
   const { data, isLoading } = useSWR(`/v1/teams`);

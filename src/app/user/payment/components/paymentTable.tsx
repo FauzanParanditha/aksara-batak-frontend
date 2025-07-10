@@ -37,7 +37,8 @@ export default function PaymentTable({
   const [searchQuery, setSearchQuery] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [vaNumber] = useState("1234567890123456");
+  const [vaNumber] = useState("2918887771");
+  const [vaName] = useState("PENGELOLA NAMA DOMAIN INTERNET INDONESIA");
   const [amount] = useState(200000);
   const handleAxiosError = useHandleAxiosError();
 
@@ -88,19 +89,25 @@ export default function PaymentTable({
               height={48}
             />
             <div>
-              <p className="font-medium text-sm">
-                Transfer to BCA Bank virtual account
-              </p>
+              <p className="font-medium text-sm">Transfer to BCA Bank</p>
               <p className="text-sm text-gray-500">
-                Please make payment to the following VA number and upload proof
-                of payment for verification.
+                Please make payment to the following account number and upload
+                proof of payment for verification.
               </p>
             </div>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <Label>Virtual Account Number (VA)</Label>
+            <Label>Name</Label>
+            <Input
+              value={vaName}
+              readOnly
+              className="bg-gray-100 font-mono cursor-not-allowed"
+            />
+          </div>
+          <div>
+            <Label>Account Number</Label>
             <Input
               value={vaNumber}
               readOnly
