@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
-import { CreditCard, Home, LogOut, User } from "lucide-react";
+import { Cog, CreditCard, Home, LogOut, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -10,6 +10,11 @@ const links = [
   { href: "/user/dashboard", label: "Dashboard", icon: <Home size={18} /> },
   { href: "/user/team", label: "Team", icon: <User size={18} /> },
   { href: "/user/payment", label: "Payment", icon: <CreditCard size={18} /> },
+  {
+    href: "/user/settings",
+    label: "Settings",
+    icon: <Cog size={18} />,
+  },
 ];
 
 export default function Sidebar() {

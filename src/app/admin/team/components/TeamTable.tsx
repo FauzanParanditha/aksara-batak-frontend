@@ -16,6 +16,8 @@ interface Team {
   id: string;
   teamName: string;
   category: string;
+  queueNumber: string;
+  paymentStatus: string;
 }
 
 interface Meta {
@@ -130,7 +132,13 @@ export default function TeamTable({
                   {team.teamName}
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-500">
-                  {team.category || "-"}
+                  {team.category}
+                </td>
+                <td className="px-6 py-4 text-sm text-gray-500">
+                  {team.queueNumber}
+                </td>
+                <td className="px-6 py-4 text-sm text-gray-500">
+                  {team.paymentStatus}
                 </td>
                 <td className="px-6 py-4 text-right space-x-2">
                   <Link href={`/admin/team/${team.id}`}>

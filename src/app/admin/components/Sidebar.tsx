@@ -4,6 +4,7 @@ import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
 import {
   Banknote,
+  Cog,
   CreditCard,
   Home,
   LogOut,
@@ -34,6 +35,11 @@ const links = [
     href: "/admin/payment-logs",
     label: "Verified Payment Log",
     icon: <Banknote size={18} />,
+  },
+  {
+    href: "/admin/settings",
+    label: "Settings",
+    icon: <Cog size={18} />,
   },
 ];
 
