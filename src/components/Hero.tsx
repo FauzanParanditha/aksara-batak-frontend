@@ -178,7 +178,7 @@ const Hero = () => {
             </div>
             <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
               <Book className="w-5 h-5 text-pink-400" />
-              <span>IDR 55M Prize Pool</span>
+              <span>IDR 60M Prize Pool</span>
             </div>
           </div>
 

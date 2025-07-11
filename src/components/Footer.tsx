@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const Footer = () => {
   return (
     <footer className="py-12 px-4 border-t border-white/10">
@@ -5,15 +7,22 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           {/* Logo and Description */}
           <div className="md:col-span-2">
-            <h3 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-4">
-              Hack the Future
-            </h3>
+            {/* <h3 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-4">
+              DeveloperDay
+            </h3> */}
+            <Image
+              src="/images/logo/logo.png"
+              alt="Logo"
+              width={220}
+              height={220}
+              className="object-contain transition-opacity duration-200"
+            />
             <p className="text-gray-400 mb-4 max-w-md">
-              The premier hackathon event bringing together innovators,
+              The premier DeveloperDay event bringing together innovators,
               creators, and problem-solvers to build tomorrow&apos;s solutions
               today.
             </p>
-            <div className="flex gap-4">
+            {/* <div className="flex gap-4">
               <a
                 href="#"
                 className="text-gray-400 hover:text-purple-400 transition-colors duration-300"
@@ -32,7 +41,7 @@ const Footer = () => {
               >
                 📷 Instagram
               </a>
-            </div>
+            </div> */}
           </div>
 
           {/* Quick Links */}
@@ -89,7 +98,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center">
           <div className="text-gray-400 mb-4 md:mb-0">
-            © 2025 Hack the Future. All rights reserved.
+            © 2025 DeveloperDay. All rights reserved.
           </div>
           <div className="flex gap-6 text-gray-400">
             <a

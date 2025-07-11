@@ -5,7 +5,15 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle, Clock, FileText, Shield, Users } from "lucide-react";
+import {
+  CheckCircle,
+  Clock,
+  FileText,
+  Shield,
+  Target,
+  Trophy,
+  Users,
+} from "lucide-react";
 import Link from "next/link";
 
 const datas = [
@@ -34,7 +42,7 @@ const RulesGuidelines = () => {
             Competition Rules & Guidelines
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Everything you need to know to participate in HackFuture. Please
+            Everything you need to know to participate in DeveloperDay. Please
             read through all guidelines carefully.
           </p>
         </div>
@@ -74,9 +82,11 @@ const RulesGuidelines = () => {
                       <p>
                         Registration fee: IDR 200,000 per team. Registration
                         via:{" "}
-                        <Link href={"https://domain.id/idfest2025/hackathon"}>
-                          https://domain.id/idfest2025/hackathon before
-                          deadline.
+                        <Link
+                          href={"https://developerday.id"}
+                          className="text-blue-400 hover:underline"
+                        >
+                          https://developerday.id before deadline.
                         </Link>
                         video
                       </p>
@@ -242,6 +252,148 @@ const RulesGuidelines = () => {
                         • PDF with demo video shortlink (s.id)
                       </p>
                       <p className="text-sm">• Max 15 pages</p>
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem
+                value="output"
+                className="border border-white/10 rounded-lg bg-white/5 backdrop-blur-sm"
+              >
+                <AccordionTrigger className="px-6 py-4 hover:no-underline group">
+                  <div className="flex items-center space-x-4 text-left">
+                    <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                      <Trophy className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-white group-hover:text-green-300 transition-colors">
+                        Expected Output
+                      </h3>
+                      <p className="text-gray-400 text-sm">
+                        What judges expect from your project
+                      </p>
+                    </div>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-6 pt-2">
+                  <div className="space-y-6 text-gray-300">
+                    <div>
+                      {/* <h4 className="font-semibold text-green-300 mb-3">
+                        Technical Requirements
+                      </h4> */}
+                      <div className="space-y-3">
+                        <div className="flex items-start space-x-3">
+                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                          <p>
+                            Output in the form of digital innovation on develop
+                            (not only in concept form) to follow APICTA.
+                          </p>
+                        </div>
+                        <div className="flex items-start space-x-3">
+                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                          <p>Project has a landing page using domain.id</p>
+                        </div>
+                        <div className="flex items-start space-x-3">
+                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                          <p>
+                            The proposed innovation must be integrated and
+                            increase the value of PANDI products (s.id/e.id)
+                          </p>
+                        </div>
+                        <div className="flex items-start space-x-3">
+                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                          <p>
+                            Have a business plan (Budgeting, long-term plan,
+                            user projections)
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                        <h4 className="font-semibold text-emerald-300 mb-2">
+                          Code Quality
+                        </h4>
+                        <p className="text-sm">
+                          Clean, well-documented, and maintainable code with
+                          proper version control practices.
+                        </p>
+                      </div>
+                      <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                        <h4 className="font-semibold text-teal-300 mb-2">
+                          Documentation
+                        </h4>
+                        <p className="text-sm">
+                          Clear README, API documentation, and setup
+                          instructions for easy project reproduction.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* Judging Criteria */}
+              <AccordionItem
+                value="judging"
+                className="border border-white/10 rounded-lg bg-white/5 backdrop-blur-sm"
+              >
+                <AccordionTrigger className="px-6 py-4 hover:no-underline group">
+                  <div className="flex items-center space-x-4 text-left">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                      <Target className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-white group-hover:text-orange-300 transition-colors">
+                        Judging Criteria
+                      </h3>
+                      <p className="text-gray-400 text-sm">
+                        How projects will be evaluated
+                      </p>
+                    </div>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-6 pt-2">
+                  <div className="space-y-6 text-gray-300">
+                    <div>
+                      {/* <h4 className="font-semibold text-green-300 mb-3">
+                        Technical Requirements
+                      </h4> */}
+                      <div className="space-y-3">
+                        <div className="flex items-start space-x-3">
+                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                          <p>Uniqueness</p>
+                        </div>
+                        <div className="flex items-start space-x-3">
+                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                          <p>Proof of concept</p>
+                        </div>
+                        <div className="flex items-start space-x-3">
+                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                          <p>Functionalities/features</p>
+                        </div>
+                        <div className="flex items-start space-x-3">
+                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                          <p>Product quality</p>
+                        </div>
+                        <div className="flex items-start space-x-3">
+                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                          <p>Presentation</p>
+                        </div>
+                        <div className="flex items-start space-x-3">
+                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                          <p>Impact</p>
+                        </div>
+                        <div className="flex items-start space-x-3">
+                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                          <p>Innovation</p>
+                        </div>
+                        <div className="flex items-start space-x-3">
+                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                          <p>Commercial potential</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </AccordionContent>

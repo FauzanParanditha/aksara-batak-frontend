@@ -51,21 +51,21 @@ const Navigation = () => {
               <div className="flex flex-row gap-2 items-center space-y-2">
                 <Image
                   src="/images/logo/pandi2.png"
-                  alt="Hackathon Logo"
+                  alt="DeveloperDay Logo"
                   width={130}
                   height={170}
                   className="rounded-full transition-transform duration-300 hover:scale-110"
                 />
                 <Image
                   src="/images/logo/aspiluki2.png"
-                  alt="Hackathon Logo"
+                  alt="DeveloperDay Logo"
                   width={60}
                   height={60}
                   className="rounded-full transition-transform duration-300 hover:scale-110"
                 />
                 <Image
                   src="/images/logo/ftii2.png"
-                  alt="Hackathon Logo"
+                  alt="DeveloperDay Logo"
                   width={90}
                   height={90}
                   className="rounded-full transition-transform duration-300 hover:scale-110"

@@ -2,21 +2,21 @@ const Timeline = () => {
   const events = [
     {
       time: "July 7-11, 2025",
-      title: "Launch of .id Hackathon",
+      title: "Launch of .id DeveloperDay",
       description:
-        "Official announcement and publication of the .id Hackathon 2025, inviting innovators across Indonesia to participate.",
+        "Official announcement and publication of the .id DeveloperDay 2025, inviting innovators across Indonesia to participate.",
       color: "purple",
     },
     {
       time: "July 7–11, 2025",
       title: "Registration Period",
       description:
-        "Participants register and submit their initial proposals to join the hackathon.",
+        "Participants register and submit their initial proposals to join the DeveloperDay.",
       color: "blue",
     },
     {
       time: "July 7 - August 15, 2025",
-      title: "Hacking Begins",
+      title: "DeveloperDay Begins",
       description:
         "Judges and mentors evaluate submitted proposals to shortlist the most promising ideas.",
       color: "pink",
@@ -30,14 +30,14 @@ const Timeline = () => {
     },
     {
       time: "August 25, 2025",
-      title: "Announcement of Top 10 .id Hackathon Teams",
+      title: "Announcement of Top 10 .id DeveloperDay Teams",
       description:
-        "Top 10 selected teams are announced and will advance to the final hackathon stage.",
+        "Top 10 selected teams are announced and will advance to the final DeveloperDay stage.",
       color: "green",
     },
     {
       time: "September 2–3, 2025",
-      title: ".id Hackathon Day",
+      title: ".id DeveloperDay",
       description: "Finalists gather presentation their projects on-site.",
       color: "purple",
     },
@@ -45,7 +45,7 @@ const Timeline = () => {
       time: "September 4, 2025",
       title: "Project Presentations & Winner Announcement",
       description:
-        "Each team presents their final product to the jury panel. Winners of the .id Hackathon 2025 are officially announced.",
+        "Each team presents their final product to the jury panel. Winners of the .id DeveloperDay 2025 are officially announced.",
       color: "blue",
     },
   ];

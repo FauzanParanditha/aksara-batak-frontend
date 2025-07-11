@@ -43,16 +43,16 @@ const About = () => {
             {/* Driving Innovation through .id Hackathon */}
             <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-pink-500/20">
               <h3 className="text-2xl font-bold text-pink-400 mb-3">
-                Driving Innovation through .id Hackathon
+                Driving Innovation through .id DeveloperDay
               </h3>
               <p>
                 As part of the .idFest 2025 series, the{" "}
-                <strong>.id Hackathon</strong> encourages digital innovation and
-                fosters collaboration among Indonesia’s tech talents. It serves
-                as a platform for developers, designers, and young innovators to
-                showcase their best ideas and build impactful, relevant
-                solutions in response to the country’s accelerating digital
-                transformation.
+                <strong>.id DeveloperDay</strong> encourages digital innovation
+                and fosters collaboration among Indonesia’s tech talents. It
+                serves as a platform for developers, designers, and young
+                innovators to showcase their best ideas and build impactful,
+                relevant solutions in response to the country’s accelerating
+                digital transformation.
               </p>
             </div>
           </div>
@@ -71,7 +71,7 @@ const About = () => {
                 </div>
                 <div className="bg-white/10 rounded-2xl p-4">
                   <div className="text-3xl font-bold text-pink-400">
-                    IDR 55M
+                    IDR 60M
                   </div>
                   <div className="text-gray-300">Prize Pool</div>
                 </div>
