@@ -171,7 +171,7 @@ const RulesGuidelines = () => {
                           Submission Deadline
                         </h4>
                         <p className="text-sm">
-                          <strong>Final Deadline:</strong> August 16, 2026
+                          <strong>Final Deadline:</strong> August 16, 2025
                         </p>
                         <p className="text-xs text-gray-400">
                           No extensions will be granted
