@@ -4,14 +4,14 @@ const Prizes = () => {
   const prizes = [
     {
       // place: "2nd Place",
-      amount: "IDR 15,000,000",
+      amount: "IDR 20,000,000",
       description: "Runner-up prize",
       color: "from-gray-300 to-gray-500",
       icon: "🥈",
       features: [
         "Certificate, Merchandise",
         "Coaching & mentoring sessions",
-        // "Represent Indonesia at APICTA 2025 in Taipei",
+        "Represent Indonesia at APICTA 2025 in Taipei",
       ],
       position: "second",
     },
@@ -25,7 +25,7 @@ const Prizes = () => {
         "Certificate, Merchandise",
         "Incubation opportunity",
         "Coaching & mentoring sessions",
-        // "Represent Indonesia at APICTA 2025 in Taipei",
+        "Represent Indonesia at APICTA 2025 in Taipei",
       ],
       position: "first",
     },
@@ -38,7 +38,7 @@ const Prizes = () => {
       features: [
         "Certificate, Merchandise",
         "Coaching & mentoring sessions",
-        // "Represent Indonesia at APICTA 2025 in Taipei",
+        "Represent Indonesia at APICTA 2025 in Taipei",
       ],
       position: "third",
     },
@@ -85,7 +85,7 @@ const Prizes = () => {
             Prizes & Rewards
           </h2>
           <p className="text-xl text-gray-300">
-            IDR 55M total prize pool waiting for you
+            IDR 60M total prize pool waiting for you
           </p>
         </div>
 

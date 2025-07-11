@@ -8,7 +8,7 @@ const FAQ = () => {
 
   const faqs = [
     {
-      question: "Who can participate in the hackathon?",
+      question: "Who can participate in the DeveloperDay?",
       answer:
         "Anyone passionate about technology! Whether you're a student, professional developer, designer, or entrepreneur, you're welcome to join. We encourage diverse teams and skill levels.",
     },
@@ -25,7 +25,7 @@ const FAQ = () => {
     {
       question: "Is there a registration fee?",
       answer:
-        "To be able to take part in the Hackathon participants / teams are required to pay a registration fee of IDR 200,000",
+        "To be able to take part in the DeveloperDay participants / teams are required to pay a registration fee of IDR 200,000",
     },
     {
       question: "What technologies can we use?",
@@ -40,7 +40,7 @@ const FAQ = () => {
     {
       question: "Can I work on an existing project?",
       answer:
-        "Projects that have been submitted to other hackathons but have not previously won any prizes are allowed to be reused for this event.",
+        "Projects that have been submitted to other DeveloperDay but have not previously won any prizes are allowed to be reused for this event.",
     },
   ];
 
@@ -99,7 +99,7 @@ const FAQ = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="mailto:hello@hackthefuture.com"
+                href="mailto:soskom@pandi.id"
                 className="text-purple-400 hover:text-purple-300 font-semibold transition-colors duration-300"
               >
                 📧 soskom@pandi.id

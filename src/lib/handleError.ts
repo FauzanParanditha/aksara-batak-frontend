@@ -17,28 +17,28 @@ export const useHandleAxiosError = () => {
           toast({
             title: "Bad Request",
             description: message,
-            variant: "destructive",
+            variant: "warning",
           });
           break;
         case 401:
           toast({
             title: "Unauthorized",
             description: message,
-            variant: "destructive",
+            variant: "warning",
           });
           break;
         case 403:
           toast({
             title: "Forbidden",
             description: message,
-            variant: "destructive",
+            variant: "warning",
           });
           break;
         case 404:
           toast({
             title: "Not Found",
             description: message,
-            variant: "destructive",
+            variant: "warning",
           });
           break;
         case 500:

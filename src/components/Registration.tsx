@@ -48,7 +48,7 @@ const Registration = () => {
         toast({
           title: "Registration Failed",
           description: "Please check your details and try again.",
-          variant: "destructive",
+          variant: "warning",
         });
         return;
       }
@@ -56,7 +56,7 @@ const Registration = () => {
       toast({
         title: "Registration Successful! 🎉",
         description:
-          "Welcome to Hack the Future! Check your email for confirmation.",
+          "Welcome to DeveloperDay Check your email for confirmation.",
       });
       form.reset();
     } catch (error) {
@@ -72,14 +72,14 @@ const Registration = () => {
             Register Now
           </h2>
           <p className="text-xl text-gray-300">
-            Secure your spot in the most exciting hackathon of 2025
+            Secure your spot in the most exciting DeveloperDay of 2025
           </p>
         </div>
 
         <Card className="bg-white/5 backdrop-blur-sm border-white/10">
           <CardHeader>
             <CardTitle className="text-2xl text-center text-white">
-              Join Hack the Future 2025
+              Join DeveloperDay 2025
             </CardTitle>
           </CardHeader>
 
@@ -204,7 +204,7 @@ const Registration = () => {
                   type="submit"
                   className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white py-4 text-lg font-semibold rounded-full shadow-lg transform hover:scale-105 transition-all duration-300"
                 >
-                  Register for Hack the Future 2025 🚀
+                  Register for DeveloperDay 2025 🚀
                 </Button>
               </div>
 
