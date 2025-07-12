@@ -1,5 +1,6 @@
 "use client";
 
+import { useConfirmDialog } from "@/components/ConfirmDialogProvider";
 import FormInput from "@/components/frontend/FormInput";
 import Pagination from "@/components/frontend/Pagination";
 import { toast } from "@/hooks/use-toast";
@@ -44,6 +45,7 @@ export default function TeamTable({
   const [searchQuery, setSearchQuery] = useState("");
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const handleAxiosError = useHandleAxiosError();
+  const confirm = useConfirmDialog();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,10 +57,14 @@ export default function TeamTable({
   };
 
   const handleDelete = async (id: string) => {
-    const confirm = window.confirm(
-      "Are you sure you want to delete this team?"
-    );
-    if (!confirm) return;
+    const isConfirmed = await confirm({
+      title: "Delete Team?",
+      description:
+        "Are you sure you want to delete this team? This action cannot be undone.",
+      confirmText: "Delete",
+      cancelText: "Cancel",
+    });
+    if (!isConfirmed) return;
     try {
       await clientAxios.delete(`/v1/teams/${id}`);
       await mutate(`/v1/teams?&search=${searchQuery}`);

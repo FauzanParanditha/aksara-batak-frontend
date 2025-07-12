@@ -1,5 +1,6 @@
 "use client";
 
+import { ConfirmDialogProvider } from "@/components/ConfirmDialogProvider";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -22,7 +23,9 @@ export default function UserLayout({
   return (
     <div className="flex">
       <Sidebar />
-      <main className="min-h-screen flex-1 bg-gray-50 p-6">{children}</main>
+      <main className="min-h-screen flex-1 bg-gray-50 p-6">
+        <ConfirmDialogProvider>{children}</ConfirmDialogProvider>
+      </main>
     </div>
   );
 }

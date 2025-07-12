@@ -4,11 +4,13 @@ import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
 import {
   Banknote,
+  Bell,
   Cog,
   CreditCard,
   Home,
   LogOut,
   Mail,
+  Megaphone,
   SquareUser,
   User,
   Users,
@@ -27,6 +29,11 @@ const links = [
   },
   { href: "/admin/payment", label: "Payment", icon: <CreditCard size={18} /> },
   {
+    href: "/admin/announcement",
+    label: "Announcement",
+    icon: <Megaphone size={18} />,
+  },
+  {
     href: "/admin/email-logs",
     label: "Email Log",
     icon: <Mail size={18} />,
@@ -35,6 +42,11 @@ const links = [
     href: "/admin/payment-logs",
     label: "Verified Payment Log",
     icon: <Banknote size={18} />,
+  },
+  {
+    href: "/admin/announcement-logs",
+    label: "Announcement Log",
+    icon: <Bell size={18} />,
   },
   {
     href: "/admin/settings",

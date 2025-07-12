@@ -1,5 +1,6 @@
 "use client";
 
+import { useConfirmDialog } from "@/components/ConfirmDialogProvider";
 import FormInput from "@/components/frontend/FormInput";
 import FullScreenLoader from "@/components/frontend/FullScreenLoader";
 import { toast } from "@/hooks/use-toast";
@@ -30,6 +31,7 @@ export default function AddMemberToTeam({ teamId }: Props) {
   });
   const handleAxiosError = useHandleAxiosError();
   const [loading, setLoading] = useState(false);
+  const confirm = useConfirmDialog();
 
   const { data: members } = useSWR(`/v1/team-members/${teamId}`);
 
@@ -74,7 +76,14 @@ export default function AddMemberToTeam({ teamId }: Props) {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to remove this member?")) return;
+    const isConfirmed = await confirm({
+      title: "Delete Member?",
+      description:
+        "Are you sure you want to delete this member? This action cannot be undone.",
+      confirmText: "Delete",
+      cancelText: "Cancel",
+    });
+    if (!isConfirmed) return;
     setLoading(true);
     try {
       const res = await clientAxios.delete(`/v1/team-members/${id}`);

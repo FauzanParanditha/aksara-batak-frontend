@@ -1,20 +1,23 @@
 "use client";
 
+import { useConfirmDialog } from "@/components/ConfirmDialogProvider";
 import FormInput from "@/components/frontend/FormInput";
 import { toast } from "@/hooks/use-toast";
 import clientAxios from "@/lib/axios/client";
 import { useHandleAxiosError } from "@/lib/handleError";
 import { Pencil, Plus, Search, Trash2, X } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { mutate } from "swr";
+import useSWR, { mutate } from "swr";
+import AddMemberToTeam from "./AddMemberToTeam";
 import TeamForm from "./TeamForm";
 
 interface Team {
   id: string;
   teamName: string;
   category: string;
+  institution: string;
   queueNumber: string;
   paymentStatus: string;
 }
@@ -25,6 +28,14 @@ interface Meta {
   totalCount: number;
   totalPages: number;
 }
+interface Member {
+  teamId?: string;
+  id?: string;
+  fullName: string;
+  email: string;
+  institution: string;
+  roleInTeam: string;
+}
 
 interface TeamTableProps {
   team: Team;
@@ -33,9 +44,15 @@ interface TeamTableProps {
 
 export default function TeamTable({ team, onSearch }: TeamTableProps) {
   const [showForm, setShowForm] = useState(false);
+  const [showFormMember, setShowFormMember] = useState(false);
+  const [editData, setEditData] = useState<Team | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const handleAxiosError = useHandleAxiosError();
+  const confirm = useConfirmDialog();
+  const router = useRouter();
+
+  const { data: members } = useSWR(`/v1/team-members/${team?.id}`);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,18 +60,53 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
   };
 
   const handleAddClick = () => {
+    setEditData(null);
     setShowForm(true);
   };
 
+  const handleAddMemberClick = () => {
+    setShowFormMember(true);
+  };
+
   const handleDelete = async (id: string) => {
-    const confirm = window.confirm(
-      "Are you sure you want to delete this team?"
-    );
-    if (!confirm) return;
+    const isConfirmed = await confirm({
+      title: "Delete team?",
+      description:
+        "Are you sure you want to delete this team? This action cannot be undone.",
+      confirmText: "Delete",
+      cancelText: "Cancel",
+    });
+    if (!isConfirmed) return;
     try {
       await clientAxios.delete(`/v1/teams/${id}`);
       await mutate(`/v1/teams?&search=${searchQuery}`);
       toast({ title: "Team delete successfully" });
+    } catch (error) {
+      handleAxiosError(error);
+    }
+  };
+
+  const handleDeleteMember = async (id: string) => {
+    const isConfirmed = await confirm({
+      title: "Delete member?",
+      description:
+        "Are you sure you want to delete this member? This action cannot be undone.",
+      confirmText: "Delete",
+      cancelText: "Cancel",
+    });
+    if (!isConfirmed) return;
+    try {
+      const res = await clientAxios.delete(`/v1/team-members/${id}`);
+      if (res.status !== 200) {
+        toast({
+          title: "Failed to delete member",
+        });
+      } else {
+        toast({
+          title: "Member deleted successfully",
+        });
+        mutate(`/v1/team-members/${team?.id}`); // Revalidate the members data
+      }
     } catch (error) {
       handleAxiosError(error);
     }
@@ -132,11 +184,15 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
                   {team.paymentStatus}
                 </td>
                 <td className="px-6 py-4 text-right space-x-2">
-                  <Link href={`/user/team/${team.id}`}>
-                    <button className="text-blue-600 hover:text-blue-900">
-                      <Pencil size={16} />
-                    </button>
-                  </Link>
+                  <button
+                    className="text-blue-600 hover:text-blue-900"
+                    onClick={() => {
+                      setEditData(team);
+                      setShowForm(true);
+                    }}
+                  >
+                    <Pencil size={16} />
+                  </button>
                   <button
                     className="text-red-600 hover:text-red-900"
                     onClick={() => handleDelete(team.id)}
@@ -150,15 +206,130 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
         </table>
       </div>
 
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-md mb-2 font-medium">Member in this Team</h3>
+          <button
+            onClick={handleAddMemberClick}
+            className="flex items-center gap-2 rounded bg-blue-600 px-3 py-2 text-white hover:bg-blue-700"
+          >
+            <Plus size={16} /> Add Member
+          </button>
+        </div>
+        <div className="mt-6 overflow-x-auto rounded-lg bg-white shadow">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                  Name
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                  Email
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                  Instution
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                  Role
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {!members || members?.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan={5}
+                    className="whitespace-nowrap px-6 py-4 text-center"
+                  >
+                    No Member
+                  </td>
+                </tr>
+              ) : (
+                members?.map((m: Member, idx: number) => (
+                  <tr key={idx}>
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      {m.fullName}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      {m.email}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      {m.institution}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      {m.roleInTeam}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-center text-gray-900">
+                      {m.roleInTeam === "Leader" ? (
+                        <></>
+                      ) : (
+                        <button
+                          className="text-red-500 hover:text-red-700"
+                          onClick={() => handleDeleteMember(m.id || "")}
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       {showForm && (
         <TeamForm
+          initialData={editData || undefined}
           onClose={() => setShowForm(false)}
           onSubmit={async (formData) => {
             try {
-              await clientAxios.post(`/v1/teams`, formData);
-              toast({ title: "Successfully added team" });
+              if (editData?.id) {
+                await clientAxios.put(`/v1/teams/${editData.id}`, formData);
+                toast({ title: "Team updated successfully" });
+              } else {
+                await clientAxios.post(`/v1/teams`, formData);
+                toast({ title: "Successfully added team" });
+                setShowForm(false);
+
+                const shouldPay = await confirm({
+                  title: "Continue to Payment?",
+                  description:
+                    "The team has been added. Would you like to proceed directly to the payment process?",
+                  confirmText: "Pay now",
+                  cancelText: "Later",
+                });
+
+                if (shouldPay) {
+                  router.push(`/user/payment`);
+                }
+              }
               await mutate(`/v1/teams?&search=${searchQuery}`);
               setShowForm(false);
+            } catch (err) {
+              handleAxiosError(err);
+            }
+          }}
+        />
+      )}
+
+      {showFormMember && (
+        <AddMemberToTeam
+          teamId={team.id}
+          onClose={() => setShowFormMember(false)}
+          onSubmit={async (formData) => {
+            try {
+              await clientAxios.post(`/v1/team-members`, {
+                ...formData,
+                teamId: team.id,
+              });
+              toast({ title: "Member added successfully" });
+              await mutate(`/v1/team-members/${team.id}`);
+              setShowFormMember(false);
             } catch (err) {
               handleAxiosError(err);
             }

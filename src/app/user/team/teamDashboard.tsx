@@ -10,6 +10,7 @@ export default function TeamDashboard() {
   const [search, setSearch] = useState("");
 
   const { data, isLoading } = useSWR(`/v1/teams?&search=${search}`);
+
   if (isLoading) {
     return <FullScreenLoader />;
   }

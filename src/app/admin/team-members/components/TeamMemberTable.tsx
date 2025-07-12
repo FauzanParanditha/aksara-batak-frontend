@@ -1,5 +1,6 @@
 "use client";
 
+import { useConfirmDialog } from "@/components/ConfirmDialogProvider";
 import FormInput from "@/components/frontend/FormInput";
 import Pagination from "@/components/frontend/Pagination";
 import clientAxios from "@/lib/axios/client";
@@ -44,6 +45,7 @@ export default function TeamMemberTable({
   const [showForm, setShowForm] = useState(false);
   const [editData, setEditData] = useState<TeamMember | null>(null);
   const handleAxiosError = useHandleAxiosError();
+  const confirm = useConfirmDialog();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,10 +53,14 @@ export default function TeamMemberTable({
   };
 
   const handleDelete = async (id: string) => {
-    const confirm = window.confirm(
-      "Are you sure you want to delete this team member?"
-    );
-    if (!confirm) return;
+    const isConfirmed = await confirm({
+      title: "Delete team member?",
+      description:
+        "Are you sure you want to delete this team member? This action cannot be undone.",
+      confirmText: "Delete",
+      cancelText: "Cancel",
+    });
+    if (!isConfirmed) return;
     try {
       await clientAxios.delete(`/v1/team-members/${id}`);
       await mutate(`/v1/team-members?page=${meta.page}&search=${searchQuery}`);

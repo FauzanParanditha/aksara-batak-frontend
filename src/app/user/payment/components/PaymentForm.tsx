@@ -1,6 +1,7 @@
 "use client";
 
 import FormFileInput from "@/components/frontend/FormFileInput";
+import FormInput from "@/components/frontend/FormInput";
 import FullScreenLoader from "@/components/frontend/FullScreenLoader";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
@@ -14,9 +15,6 @@ interface PaymentFormProps {
 }
 
 export default function PaymentForm({ onClose, onSubmit }: PaymentFormProps) {
-  const [vaNumber] = useState("2918887771");
-  const [amount] = useState(200000);
-  const [vaName] = useState("PENGELOLA NAMA DOMAIN INTERNET INDONESIA");
   const [file, setFile] = useState<File | null>(null);
 
   const { data, isLoading } = useSWR(`/v1/teams`);
@@ -43,42 +41,10 @@ export default function PaymentForm({ onClose, onSubmit }: PaymentFormProps) {
         >
           <X size={20} />
         </button>
-        {/* <CardHeader className="flex flex-col items-start gap-2">
-            <CardTitle className="text-xl">Pembayaran Manual</CardTitle>
-            <div className="flex items-center gap-3">
-              <Image
-                src="/images/bank/bca.png"
-                alt="Bank BCA"
-                width={48}
-                height={48}
-              />
-              <div>
-                <p className="font-medium text-sm">
-                  Transfer ke rekening virtual Bank BCA
-                </p>
-                <p className="text-sm text-gray-500">
-                  Silakan lakukan pembayaran ke nomor VA berikut dan upload
-                  bukti pembayaran untuk verifikasi.
-                </p>
-              </div>
-            </div>
-          </CardHeader> */}
-        {/* <div>
-              <Label>Nomor Virtual Account (VA)</Label>
-              <Input
-                value={vaNumber}
-                readOnly
-                className="bg-gray-100 font-mono cursor-not-allowed"
-              />
-            </div>
-            <div>
-              <Label>Jumlah Pembayaran</Label>
-              <Input
-                value={`Rp ${amount.toLocaleString()}`}
-                readOnly
-                className="bg-gray-100 cursor-not-allowed"
-              />
-            </div> */}
+
+        <div>
+          <FormInput label="Team Name" value={data?.teamName} readOnly />
+        </div>
         <div>
           <FormFileInput
             label="Photo"
@@ -88,6 +54,16 @@ export default function PaymentForm({ onClose, onSubmit }: PaymentFormProps) {
           <p className="text-xs text-gray-500 mt-1">
             Format file: PDF, JPG, atau PNG. Maksimal 2MB.
           </p>
+          <p className="text-sm text-gray-600 mt-2">
+            Harap pastikan bukti transfer mencantumkan:
+          </p>
+          <ul className="text-xs text-gray-500 list-disc list-inside">
+            <li>Nama pengirim</li>
+            <li>Nomor rekening pengirim</li>
+            <li>Tanggal transfer</li>
+            <li>Jumlah transfer</li>
+            <li>Kode berita/keterangan jika diminta</li>
+          </ul>
         </div>
         <Button
           onClick={handleSubmit}

@@ -18,6 +18,7 @@ type FormData = z.infer<typeof registrationSchema>;
 
 const Registration = () => {
   const { toast } = useToast();
+  const [isloading, setIsLoading] = useState(false);
   const handleAxiosError = useHandleAxiosError();
   const [show, setShow] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -41,6 +42,7 @@ const Registration = () => {
 
   const onSubmit = async (data: FormData) => {
     // console.log("Form Data:", data);
+    setIsLoading(true);
     try {
       const res = await clientAxios.post("/v1/auth/register", data);
 
@@ -61,6 +63,8 @@ const Registration = () => {
       form.reset();
     } catch (error) {
       handleAxiosError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -201,6 +205,7 @@ const Registration = () => {
               {/* Submit Button */}
               <div className="pt-6">
                 <Button
+                  disabled={isloading}
                   type="submit"
                   className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white py-4 text-lg font-semibold rounded-full shadow-lg transform hover:scale-105 transition-all duration-300"
                 >

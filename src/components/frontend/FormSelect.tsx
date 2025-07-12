@@ -5,6 +5,7 @@ import clsx from "clsx";
 interface Option {
   label: string;
   value: string;
+  disabled?: boolean;
 }
 
 interface FormSelectProps {
@@ -47,7 +48,12 @@ export default function FormSelect({
       >
         <option value="">-- Select --</option>
         {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>
+          <option
+            key={opt.value}
+            value={opt.value}
+            disabled={opt.disabled}
+            className={clsx({ "text-gray-400": opt.disabled })}
+          >
             {opt.label}
           </option>
         ))}

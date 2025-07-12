@@ -8,7 +8,6 @@ import { useHandleAxiosError } from "@/lib/handleError";
 import { teamSchema } from "@/schemas/teamSchema";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import AddMemberToTeam from "../components/AddMemberToTeam";
 
 interface TeamForm {
   id: string;
@@ -116,7 +115,7 @@ export default function EditTeam() {
             </button>
           </div>
         </form>
-        <AddMemberToTeam teamId={id} />
+        {/* <AddMemberToTeam teamId={id} /> */}
       </div>
     </div>
   );

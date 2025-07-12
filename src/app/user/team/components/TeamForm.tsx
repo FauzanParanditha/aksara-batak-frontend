@@ -1,8 +1,9 @@
 "use client";
 
 import FormInput from "@/components/frontend/FormInput";
+import FormSelect from "@/components/frontend/FormSelect";
 import { toast } from "@/hooks/use-toast";
-import { teamSchema } from "@/schemas/teamSchema";
+import { teamSchema, teamUpdateSchema } from "@/schemas/teamSchema";
 import { X } from "lucide-react";
 import { useState } from "react";
 
@@ -11,7 +12,7 @@ interface TeamFormProps {
     id?: string;
     teamName: string;
     category: string;
-    institution: string;
+    institution?: string;
   };
   onSubmit: (data: {
     teamName: string;
@@ -34,20 +35,36 @@ export default function TeamForm({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const result = teamSchema.safeParse({
-      teamName,
-      category,
-      institution,
-    });
-    if (!result.success) {
-      result.error.errors.forEach((err) => {
-        toast({
-          title: "Add Team Failed",
-          description: `${err.path[0]}: ${err.message}`,
-          variant: "destructive",
-        });
+
+    if (initialData) {
+      const result = teamUpdateSchema.safeParse({
+        teamName,
+        category,
       });
-      return;
+      if (!result.success) {
+        result.error.errors.forEach((err) => {
+          toast({
+            description: `${err.path[0]}: ${err.message}`,
+            variant: "destructive",
+          });
+        });
+        return;
+      }
+    } else {
+      const result = teamSchema.safeParse({
+        teamName,
+        category,
+        institution,
+      });
+      if (!result.success) {
+        result.error.errors.forEach((err) => {
+          toast({
+            description: `${err.path[0]}: ${err.message}`,
+            variant: "destructive",
+          });
+        });
+        return;
+      }
     }
 
     const jsonBody = {
@@ -83,27 +100,34 @@ export default function TeamForm({
             />
           </div>
           <div>
-            <FormInput
+            <FormSelect
               label="Category"
               name="category"
-              type="text"
-              placeholder="e.g. Technology, Health, Education"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
+              options={[
+                { label: "Technology", value: "Technology" },
+                { label: "AI", value: "AI" },
+                { label: "Health", value: "Health" },
+              ]}
               required
             />
           </div>
-          <div>
-            <FormInput
-              label="Institution"
-              name="institution"
-              type="text"
-              placeholder="e.g. Institution"
-              value={institution}
-              onChange={(e) => setInstitution(e.target.value)}
-              required
-            />
-          </div>
+          {initialData ? (
+            <></>
+          ) : (
+            <div>
+              <FormInput
+                label="Institution"
+                name="institution"
+                type="text"
+                placeholder="e.g. Institution"
+                value={institution}
+                onChange={(e) => setInstitution(e.target.value)}
+                required
+              />
+            </div>
+          )}
           <div className="flex justify-end">
             <button
               type="submit"
