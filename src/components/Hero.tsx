@@ -142,10 +142,10 @@ const Hero = () => {
             </span>
           </h1> */}
           <Image
-            src="/images/banner/banner.jpg"
+            src="/images/banner/banner.png"
             alt="Banner"
-            width={600}
-            height={600}
+            width={320}
+            height={320}
           />
           <div className="relative group">
             <Image
