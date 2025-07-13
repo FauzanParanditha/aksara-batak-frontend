@@ -99,10 +99,10 @@ const FAQ = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="mailto:info@eveloperday.id"
+                href="mailto:soskom@pandi.id"
                 className="text-purple-400 hover:text-purple-300 font-semibold transition-colors duration-300"
               >
-                📧 info@eveloperday.id
+                📧 soskom@pandi.id
               </a>
               {/* <a
                 href="#"
