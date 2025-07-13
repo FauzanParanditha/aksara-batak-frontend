@@ -217,7 +217,7 @@ export default function PaymentTable({
               await clientAxios.post("/v1/payments/manual", formData);
 
               toast({
-                title: `Bukti pembayaran atas VA ${vaNumber} sejumlah Rp${amount.toLocaleString()} berhasil diunggah.`,
+                title: `Proof of payment for VA ${vaNumber} in the amount of Rp${amount.toLocaleString()} has been successfully uploaded.`,
               });
 
               await mutate(`/v1/payments?&search=${searchQuery}`);

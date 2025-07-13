@@ -14,13 +14,16 @@ interface PaymentFormProps {
   onClose: () => void;
 }
 
-export default function PaymentForm({ onClose, onSubmit }: PaymentFormProps) {
+export default function SubmissionForm({
+  onClose,
+  onSubmit,
+}: PaymentFormProps) {
   const [file, setFile] = useState<File | null>(null);
 
   const { data, isLoading } = useSWR(`/v1/teams`);
 
   const handleSubmit = async () => {
-    if (!file) return toast({ title: "Please upload transfer proof." });
+    if (!file) return toast({ title: "Please upload submission." });
 
     const formData = new FormData();
     formData.append("teamId", data.id);
@@ -47,29 +50,24 @@ export default function PaymentForm({ onClose, onSubmit }: PaymentFormProps) {
         </div>
         <div>
           <FormFileInput
-            label="Photo"
-            accept="image/*"
+            label="File"
+            accept=".pdf"
             onChange={(e) => setFile(e.target.files?.[0] || null)}
           />
           <p className="text-xs text-gray-500 mt-1">
-            Format file: PDF, JPG, atau PNG. Max 2MB.
+            Format file: PDF, Max 10MB.
           </p>
           <p className="text-sm text-gray-600 mt-2">
-            Please ensure the transfer proof includes:
+            Upload a PDF (max 15 pages, in English). Include demo video
+            shortlink (s.id) inside the PDF. Ensure the video is accessible
           </p>
-          <ul className="text-xs text-gray-500 list-disc list-inside">
-            <li>Sender's name</li>
-            <li>Sender's account number</li>
-            <li>Transfer date</li>
-            <li>Transfer amount</li>
-            <li>Reference code or description (if applicable)</li>
-          </ul>
         </div>
         <Button
           onClick={handleSubmit}
           className="w-full bg-blue-600 hover:bg-blue-700"
+          disabled={data?.paymentStatus !== "paid" || !file}
         >
-          <Upload className="w-4 h-4 mr-2" /> Upload transfer proof
+          <Upload className="w-4 h-4 mr-2" /> Upload Submission
         </Button>
       </div>
     </div>

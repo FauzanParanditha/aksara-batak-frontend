@@ -1,5 +1,6 @@
 "use client";
 
+import SubmissionForm from "@/app/admin/team/components/SubmissionForm";
 import { useConfirmDialog } from "@/components/ConfirmDialogProvider";
 import FormInput from "@/components/frontend/FormInput";
 import { toast } from "@/hooks/use-toast";
@@ -20,6 +21,7 @@ interface Team {
   institution: string;
   queueNumber: string;
   paymentStatus: string;
+  submissionLink?: string;
 }
 
 interface Meta {
@@ -45,10 +47,12 @@ interface TeamTableProps {
 export default function TeamTable({ team, onSearch }: TeamTableProps) {
   const [showForm, setShowForm] = useState(false);
   const [showFormMember, setShowFormMember] = useState(false);
+  const [showFormSubmission, setShowFormSubmission] = useState(false);
   const [editData, setEditData] = useState<Team | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const handleAxiosError = useHandleAxiosError();
+  const isPdf = previewUrl?.toLowerCase().endsWith(".pdf");
   const confirm = useConfirmDialog();
   const router = useRouter();
 
@@ -66,6 +70,9 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
 
   const handleAddMemberClick = () => {
     setShowFormMember(true);
+  };
+  const handleAddSubmissionClick = () => {
+    setShowFormSubmission(true);
   };
 
   const handleDelete = async (id: string) => {
@@ -130,12 +137,23 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
             <Search size={16} />
           </button>
         </form>
-        <button
-          onClick={handleAddClick}
-          className="flex items-center gap-2 rounded bg-blue-600 px-3 py-2 text-white hover:bg-blue-700"
-        >
-          <Plus size={16} /> Add Team
-        </button>
+        <div className="flex flex-row gap-2">
+          {team && (
+            <button
+              onClick={handleAddSubmissionClick}
+              className="flex items-center gap-2 rounded bg-blue-600 px-3 py-2 text-white hover:bg-blue-700"
+            >
+              <Plus size={16} />{" "}
+              {team?.submissionLink ? "Update Submission" : "Add Submission"}
+            </button>
+          )}
+          <button
+            onClick={handleAddClick}
+            className="flex items-center gap-2 rounded bg-blue-600 px-3 py-2 text-white hover:bg-blue-700"
+          >
+            <Plus size={16} /> Add Team
+          </button>
+        </div>
       </div>
 
       <div className="overflow-x-auto rounded-lg bg-white shadow">
@@ -154,6 +172,9 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
                 Payment Status
               </th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                Submission
+              </th>
               <th className="px-6 py-3 text-right text-xs font-medium uppercase text-gray-500">
                 Actions
               </th>
@@ -163,7 +184,7 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
             {!team ? (
               <tr>
                 <td
-                  colSpan={4}
+                  colSpan={5}
                   className="whitespace-nowrap px-6 py-4 text-center"
                 >
                   Data not found
@@ -181,7 +202,31 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
                   {team.queueNumber || 0}
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-500">
-                  {team.paymentStatus}
+                  <span
+                    className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
+                      team.paymentStatus == "paid"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-yellow-100 text-yellow-800"
+                    }`}
+                  >
+                    {team.paymentStatus}
+                  </span>
+                </td>
+                <td className="px-6 py-4 text-sm text-gray-500">
+                  {team.submissionLink ? (
+                    <button
+                      onClick={() =>
+                        setPreviewUrl(
+                          `${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.submissionLink}`
+                        )
+                      }
+                      className="text-blue-600 hover:text-blue-900"
+                    >
+                      View Submission
+                    </button>
+                  ) : (
+                    <span className="text-red-500">No Submission</span>
+                  )}
                 </td>
                 <td className="px-6 py-4 text-right space-x-2">
                   <button
@@ -337,6 +382,27 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
         />
       )}
 
+      {showFormSubmission && (
+        <SubmissionForm
+          onClose={() => setShowFormSubmission(false)}
+          onSubmit={async (formData) => {
+            // console.log("Submit speaker", formData);
+            try {
+              await clientAxios.post("/v1/teams/submission", formData);
+
+              toast({
+                title: `Upload submission successfully.`,
+              });
+
+              await mutate(`/v1/teams?&search=${searchQuery}`);
+              setShowFormSubmission(false);
+            } catch (err) {
+              handleAxiosError(err);
+            }
+          }}
+        />
+      )}
+
       {previewUrl && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black bg-opacity-80">
           <div className="relative max-h-full max-w-full">
@@ -346,13 +412,22 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
             >
               <X size={20} />
             </button>
-            <Image
-              src={previewUrl}
-              alt="Preview"
-              width={600}
-              height={600}
-              className="max-h-[90vh] max-w-[90vw] rounded object-contain shadow-lg"
-            />
+
+            {isPdf ? (
+              <iframe
+                src={previewUrl}
+                title="PDF Preview"
+                className="h-[90vh] w-[90vw] rounded shadow-lg"
+              />
+            ) : (
+              <Image
+                src={previewUrl}
+                alt="Preview"
+                width={600}
+                height={600}
+                className="max-h-[90vh] max-w-[90vw] rounded object-contain shadow-lg"
+              />
+            )}
           </div>
         </div>
       )}

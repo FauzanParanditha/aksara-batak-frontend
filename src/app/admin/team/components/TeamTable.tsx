@@ -132,7 +132,7 @@ export default function TeamTable({
                 </td>
               </tr>
             )}
-            {teams.map((team) => (
+            {teams?.map((team) => (
               <tr key={team.id}>
                 <td className="px-6 py-4 text-sm font-medium text-gray-900">
                   {team.teamName}
@@ -144,7 +144,15 @@ export default function TeamTable({
                   {team.queueNumber}
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-500">
-                  {team.paymentStatus}
+                  <span
+                    className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
+                      team.paymentStatus == "paid"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-yellow-100 text-yellow-800"
+                    }`}
+                  >
+                    {team.paymentStatus}
+                  </span>
                 </td>
                 <td className="px-6 py-4 text-right space-x-2">
                   <Link href={`/admin/team/${team.id}`}>

@@ -41,7 +41,7 @@ export default function TeamMemberForm({
   );
 
   const { data: teams, isLoading } = useSWR(`/v1/teams`);
-  console.log(teams.data);
+  // console.log(teams?.data);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

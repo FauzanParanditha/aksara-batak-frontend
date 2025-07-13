@@ -159,10 +159,10 @@ const RulesGuidelines = () => {
                           Registration Phase
                         </h4>
                         <p className="text-sm">
-                          <strong>Opens:</strong> July 7, 2025
+                          <strong>Opens:</strong> July 14, 2025
                         </p>
                         <p className="text-sm">
-                          <strong>Closes:</strong> July 11, 2025
+                          <strong>Closes:</strong> August 14, 2025
                         </p>
                       </div>
                       <div className="bg-white/5 rounded-lg p-4 border border-white/10">
@@ -170,10 +170,10 @@ const RulesGuidelines = () => {
                           Competition Period
                         </h4>
                         <p className="text-sm">
-                          <strong>Start:</strong> July 7, 2025
+                          <strong>Start:</strong> Agustus 14, 2025
                         </p>
                         <p className="text-sm">
-                          <strong>End:</strong> August 15, 2025
+                          <strong>End:</strong> August 24, 2025
                         </p>
                       </div>
                       <div className="bg-white/5 rounded-lg p-4 border border-white/10">
@@ -181,7 +181,7 @@ const RulesGuidelines = () => {
                           Submission Deadline
                         </h4>
                         <p className="text-sm">
-                          <strong>Final Deadline:</strong> August 16, 2025
+                          <strong>Final Deadline:</strong> August 24, 2025
                         </p>
                         <p className="text-xs text-gray-400">
                           No extensions will be granted
@@ -192,10 +192,10 @@ const RulesGuidelines = () => {
                           Results
                         </h4>
                         <p className="text-sm">
-                          <strong>Judging:</strong> August 18-22, 2025
+                          <strong>Judging:</strong> August 25-26, 2025
                         </p>
                         <p className="text-sm">
-                          <strong>Winners:</strong> August 25-29, 2025
+                          <strong>Winners:</strong> September 1-2, 2025
                         </p>
                       </div>
                     </div>
