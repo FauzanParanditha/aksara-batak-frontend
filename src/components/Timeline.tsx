@@ -10,8 +10,7 @@ const Timeline = () => {
     {
       time: "July 14 - August 14, 2025",
       title: "Registration Period",
-      description:
-        "Participants register and submit their initial proposals to join the DeveloperDay.",
+      description: "Participants register their teams",
       color: "blue",
     },
     {
