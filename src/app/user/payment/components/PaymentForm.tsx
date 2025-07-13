@@ -58,8 +58,8 @@ export default function PaymentForm({ onClose, onSubmit }: PaymentFormProps) {
             Please ensure the transfer proof includes:
           </p>
           <ul className="text-xs text-gray-500 list-disc list-inside">
-            <li>Sender's name</li>
-            <li>Sender's account number</li>
+            <li>Sender&apos;s name</li>
+            <li>Sender&apos;s account number</li>
             <li>Transfer date</li>
             <li>Transfer amount</li>
             <li>Reference code or description (if applicable)</li>
