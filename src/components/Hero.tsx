@@ -141,6 +141,12 @@ const Hero = () => {
               DEVELOPER DAY
             </span>
           </h1> */}
+          <Image
+            src="/images/banner/banner.jpg"
+            alt="Banner"
+            width={600}
+            height={600}
+          />
           <div className="relative group">
             <Image
               src="/images/logo/logo2.png"
@@ -162,15 +168,17 @@ const Hero = () => {
           </p>
 
           <p className="text-lg text-gray-400 mb-8 max-w-2xl mx-auto">
-            10 days of coding, collaboration, and creativity. Build
-            tomorrow&apos;s solutions today.
+            Our mission is to create impactful solutions to solve national
+            challenges in the field of applications, websites, and internet
+            infrastructure driven by the spirit of innovation and digital
+            sovereignty.
           </p>
 
           {/* Event details */}
           <div className="flex flex-wrap justify-center gap-6 mb-8 text-gray-300">
             <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
               <Calendar className="w-5 h-5 text-purple-400" />
-              <span>September 2-4, 2025</span>
+              <span>September 1-2, 2025</span>
             </div>
             <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
               <Users className="w-5 h-5 text-blue-400" />

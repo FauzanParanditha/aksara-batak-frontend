@@ -87,7 +87,7 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-gray-400">
-              <li>📧 soskom@pandi.id</li>
+              <li>📧 info@eveloperday.id</li>
               {/* <li>📱 +1 (555) 123-4567</li> */}
               <li>📍 Tangerang, Indonesia</li>
               {/* <li>💬 Join our Discord</li> */}
