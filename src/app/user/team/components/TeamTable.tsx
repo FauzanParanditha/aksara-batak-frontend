@@ -139,7 +139,7 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
           </button>
         </form>
         <div className="flex flex-row gap-2">
-          {team.paymentStatus == "paid" && (
+          {team?.paymentStatus == "paid" && (
             <button
               onClick={handleAddSubmissionClick}
               className="flex items-center gap-2 rounded bg-blue-600 px-3 py-2 text-white hover:bg-blue-700"
