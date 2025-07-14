@@ -22,6 +22,7 @@ interface Team {
   queueNumber: string;
   paymentStatus: string;
   submissionLink?: string;
+  photoUrl?: string;
 }
 
 interface Meta {
@@ -138,7 +139,7 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
           </button>
         </form>
         <div className="flex flex-row gap-2">
-          {team && (
+          {team.paymentStatus == "paid" && (
             <button
               onClick={handleAddSubmissionClick}
               className="flex items-center gap-2 rounded bg-blue-600 px-3 py-2 text-white hover:bg-blue-700"
@@ -160,6 +161,9 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                Photo
+              </th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
                 Team Name
               </th>
@@ -192,6 +196,30 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
               </tr>
             ) : (
               <tr key={team.id}>
+                <td className="whitespace-nowrap px-6 py-4">
+                  {team.photoUrl ? (
+                    <button
+                      onClick={() =>
+                        setPreviewUrl(
+                          `${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.photoUrl}`
+                        )
+                      }
+                      className="h-10 w-10 overflow-hidden rounded-full border"
+                    >
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.photoUrl}`}
+                        alt={team.teamName}
+                        width={40}
+                        height={40}
+                        className="rounded-full object-cover"
+                      />
+                    </button>
+                  ) : (
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 text-xs text-gray-400">
+                      N/A
+                    </div>
+                  )}
+                </td>
                 <td className="px-6 py-4 text-sm font-medium text-gray-900">
                   {team.teamName}
                 </td>
@@ -254,12 +282,14 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h3 className="text-md mb-2 font-medium">Member in this Team</h3>
-          <button
-            onClick={handleAddMemberClick}
-            className="flex items-center gap-2 rounded bg-blue-600 px-3 py-2 text-white hover:bg-blue-700"
-          >
-            <Plus size={16} /> Add Member
-          </button>
+          {team && (
+            <button
+              onClick={handleAddMemberClick}
+              className="flex items-center gap-2 rounded bg-blue-600 px-3 py-2 text-white hover:bg-blue-700"
+            >
+              <Plus size={16} /> Add Member
+            </button>
+          )}
         </div>
         <div className="mt-6 overflow-x-auto rounded-lg bg-white shadow">
           <table className="min-w-full divide-y divide-gray-200">
@@ -346,7 +376,7 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
                   description:
                     "The team has been added. Would you like to proceed directly to the payment process?",
                   confirmText: "Pay now",
-                  cancelText: "Later",
+                  // cancelText: "Later",
                 });
 
                 if (shouldPay) {

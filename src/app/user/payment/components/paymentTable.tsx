@@ -39,7 +39,7 @@ export default function PaymentTable({
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [vaNumber] = useState("2918887771");
   const [vaName] = useState("PENGELOLA NAMA DOMAIN INTERNET INDONESIA");
-  const [amount] = useState(200000);
+  const [amount] = useState(100000);
   const handleAxiosError = useHandleAxiosError();
 
   const handleSearch = (e: React.FormEvent) => {

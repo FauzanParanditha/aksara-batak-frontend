@@ -1,5 +1,6 @@
 "use client";
 
+import FormFileInput from "@/components/frontend/FormFileInput";
 import FormInput from "@/components/frontend/FormInput";
 import FormSelect from "@/components/frontend/FormSelect";
 import { toast } from "@/hooks/use-toast";
@@ -14,11 +15,7 @@ interface TeamFormProps {
     category: string;
     institution?: string;
   };
-  onSubmit: (data: {
-    teamName: string;
-    category: string;
-    institution: string;
-  }) => void;
+  onSubmit: (data: FormData) => void;
   onClose: () => void;
 }
 
@@ -32,9 +29,11 @@ export default function TeamForm({
   const [institution, setInstitution] = useState(
     initialData?.institution || ""
   );
+  const [file, setFile] = useState<File | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!file) return toast({ title: "Please upload transfer proof." });
 
     if (initialData) {
       const result = teamUpdateSchema.safeParse({
@@ -67,12 +66,14 @@ export default function TeamForm({
       }
     }
 
-    const jsonBody = {
-      teamName,
-      category,
-      institution,
-    };
-    onSubmit(jsonBody);
+    const formData = new FormData();
+    formData.append("teamName", teamName);
+    formData.append("category", category);
+    if (institution) {
+      formData.append("institution", institution);
+    }
+    formData.append("photo", file);
+    onSubmit(formData);
   };
 
   return (
@@ -117,17 +118,57 @@ export default function TeamForm({
             <></>
           ) : (
             <div>
-              <FormInput
+              <FormSelect
                 label="Institution"
                 name="institution"
-                type="text"
-                placeholder="e.g. Institution"
                 value={institution}
                 onChange={(e) => setInstitution(e.target.value)}
+                options={[
+                  {
+                    label: "University/College",
+                    value: "university_college",
+                  },
+                  {
+                    label: "Technology Companies/Startups",
+                    value: "technology_companies_startups",
+                  },
+                  {
+                    label: "Government / Ministry / SOE",
+                    value: "government_ministry_soe",
+                  },
+                  {
+                    label: "Technology Community / Developer Community",
+                    value: "technology_community_developer_community",
+                  },
+                  {
+                    label: "Vocational High School / IT High School",
+                    value: "vocational_high_school_it_high_school",
+                  },
+                  {
+                    label: "Incubator / Accelerator Institution",
+                    value: "incubator_accelerator_institution",
+                  },
+                  {
+                    label: "Non-profit Organization / NGO / Digital Foundation",
+                    value: "non_profit_organization_ngo_digital_foundation",
+                  },
+                  {
+                    label: "Other",
+                    value: "other",
+                  },
+                ]}
                 required
               />
             </div>
           )}
+          <div>
+            <FormFileInput
+              label="Photo"
+              accept="image/*"
+              onChange={(e) => setFile(e.target.files?.[0] || null)}
+              required
+            />
+          </div>
           <div className="flex justify-end">
             <button
               type="submit"

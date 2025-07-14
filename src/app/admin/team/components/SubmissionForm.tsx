@@ -55,7 +55,7 @@ export default function SubmissionForm({
             onChange={(e) => setFile(e.target.files?.[0] || null)}
           />
           <p className="text-xs text-gray-500 mt-1">
-            Format file: PDF, Max 10MB.
+            Format file: PDF, Max 20MB.
           </p>
           <p className="text-sm text-gray-600 mt-2">
             Upload a PDF (max 15 pages, in English). Include demo video

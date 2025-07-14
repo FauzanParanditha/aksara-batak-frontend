@@ -133,7 +133,7 @@ const Hero = () => {
       </div> */}
 
       {/* Content */}
-      <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
+      <div className="relative z-10 text-center px-4 max-w-6xl mx-auto mt-2 md:mt-0">
         <div className="animate-fade-in flex items-center flex-col justify-center h-full space-y-6">
           {/* <h1 className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent mb-6 leading-tight">
             ID

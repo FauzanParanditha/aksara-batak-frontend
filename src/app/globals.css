@@ -94,12 +94,16 @@ All colors MUST be HSL.
   }
 }
 
-/* @layer base {
+@layer base {
   * {
     @apply border-border;
   }
 
+  html,
   body {
     @apply bg-background text-foreground;
+    @apply overflow-x-hidden; /* ⬅️ Tambahkan ini */
+    padding: 0;
+    margin: 0;
   }
-} */
+}

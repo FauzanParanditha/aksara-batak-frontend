@@ -45,7 +45,7 @@ const Navigation = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-16 ">
             {/* Logo */}
             <div className="flex items-center space-x-2 cursor-pointer">
               <div className="flex flex-row gap-2 items-center space-y-2">
@@ -54,21 +54,21 @@ const Navigation = () => {
                   alt="DeveloperDay Logo"
                   width={130}
                   height={170}
-                  className="rounded-full transition-transform duration-300 hover:scale-110"
+                  className="rounded-full transition-transform duration-300 hover:scale-110 w-10 h-5 md:w-36 md:h-12"
                 />
                 <Image
                   src="/images/logo/aspiluki2.png"
                   alt="DeveloperDay Logo"
                   width={60}
                   height={60}
-                  className="rounded-full transition-transform duration-300 hover:scale-110"
+                  className="rounded-full transition-transform duration-300 hover:scale-110 w-10 h-10 md:w-14 md:h-14"
                 />
                 <Image
                   src="/images/logo/ftii2.png"
                   alt="DeveloperDay Logo"
                   width={90}
                   height={90}
-                  className="rounded-full transition-transform duration-300 hover:scale-110"
+                  className="rounded-full transition-transform duration-300 hover:scale-110 w-10 h-10 md:w-14 md:h-14"
                 />
               </div>
             </div>
@@ -145,6 +145,11 @@ const Navigation = () => {
                 Register Now
               </Button>
             </div>
+            <Link href={"/auth/login"}>
+              <Button className="w-full bg-transparent border border-gray-300 text-gray-300 hover:bg-white/10 hover:text-white px-6 py-2 rounded-full font-semibold transform hover:scale-105 transition-all duration-300 shadow-lg">
+                Login
+              </Button>
+            </Link>
           </div>
         </div>
       </nav>
