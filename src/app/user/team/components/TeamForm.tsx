@@ -143,10 +143,10 @@ export default function TeamForm({
                   label: "Industrial – Agriculture",
                   value: "industrial_agriculture",
                 },
-                {
-                  label: "Industrial – Engineering & Construction",
-                  value: "industrial_engineering_construction",
-                },
+                // {
+                //   label: "Industrial – Engineering & Construction",
+                //   value: "industrial_engineering_construction",
+                // },
                 {
                   label: "Student – Tertiary Student Project",
                   value: "student_tertiary_student_project",
