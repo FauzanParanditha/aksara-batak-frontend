@@ -163,11 +163,11 @@ const Hero = () => {
             />
           </div>
 
-          <p className="text-xl md:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl text-white mb-4 max-w-3xl mx-auto">
             Join the developer day road to APICTA Chinese Taipei
           </p>
 
-          <p className="text-lg text-gray-400 mb-8 max-w-2xl mx-auto">
+          <p className="text-lg text-white mb-8 max-w-2xl mx-auto">
             Our mission is to create impactful solutions to solve national
             challenges in the field of applications, websites, and internet
             infrastructure driven by the spirit of innovation and digital

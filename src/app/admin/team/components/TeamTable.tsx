@@ -19,6 +19,8 @@ interface Team {
   category: string;
   queueNumber: string;
   paymentStatus: string;
+  submissionLink?: string;
+  photoUrl?: string;
 }
 
 interface Meta {
@@ -105,6 +107,9 @@ export default function TeamTable({
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                Photo
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
                 Team Name
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
@@ -115,6 +120,9 @@ export default function TeamTable({
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
                 Payment Status
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                Submission
               </th>
               <th className="px-6 py-3 text-right text-xs font-medium uppercase text-gray-500">
                 Actions
@@ -134,6 +142,30 @@ export default function TeamTable({
             )}
             {teams?.map((team) => (
               <tr key={team.id}>
+                <td className="whitespace-nowrap px-6 py-4">
+                  {team.photoUrl ? (
+                    <button
+                      onClick={() =>
+                        setPreviewUrl(
+                          `${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.photoUrl}`
+                        )
+                      }
+                      className="h-10 w-10 overflow-hidden rounded-full border"
+                    >
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.photoUrl}`}
+                        alt={team.teamName}
+                        width={40}
+                        height={40}
+                        className="rounded-full object-cover"
+                      />
+                    </button>
+                  ) : (
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 text-xs text-gray-400">
+                      N/A
+                    </div>
+                  )}
+                </td>
                 <td className="px-6 py-4 text-sm font-medium text-gray-900">
                   {team.teamName}
                 </td>
@@ -153,6 +185,22 @@ export default function TeamTable({
                   >
                     {team.paymentStatus}
                   </span>
+                </td>
+                <td className="px-6 py-4 text-sm text-gray-500">
+                  {team.submissionLink ? (
+                    <button
+                      onClick={() =>
+                        setPreviewUrl(
+                          `${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.submissionLink}`
+                        )
+                      }
+                      className="text-blue-600 hover:text-blue-900"
+                    >
+                      View Submission
+                    </button>
+                  ) : (
+                    <span className="text-red-500">No Submission</span>
+                  )}
                 </td>
                 <td className="px-6 py-4 text-right space-x-2">
                   <Link href={`/admin/team/${team.id}`}>
