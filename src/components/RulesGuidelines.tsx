@@ -215,7 +215,7 @@ const RulesGuidelines = () => {
                     </div>
                     <div>
                       <h3 className="text-xl font-semibold text-white group-hover:text-blue-300 transition-colors">
-                        Submission Instructions
+                        Pitchdeck Structure
                       </h3>
                       <p className="text-gray-400 text-sm">
                         Project deliverables and submission format
@@ -226,9 +226,6 @@ const RulesGuidelines = () => {
                 <AccordionContent className="px-6 pb-6 pt-2">
                   <div className="space-y-6 text-gray-300">
                     <div>
-                      <h4 className="font-semibold text-blue-300 mb-3">
-                        Structure
-                      </h4>
                       <div className="space-y-3">
                         {datas.map((item, index) => (
                           <div
