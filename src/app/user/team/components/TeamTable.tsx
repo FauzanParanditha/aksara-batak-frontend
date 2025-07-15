@@ -73,8 +73,21 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
   const handleAddMemberClick = () => {
     setShowFormMember(true);
   };
-  const handleAddSubmissionClick = () => {
-    setShowFormSubmission(true);
+  const handleAddSubmissionClick = async () => {
+    if (team?.paymentStatus != "paid") {
+      const shouldPay = await confirm({
+        title: "Continue to Payment?",
+        description:
+          "Would you like to proceed directly to the payment process?",
+        confirmText: "Pay now",
+        // cancelText: "Later",
+      });
+      if (shouldPay) {
+        router.push(`/user/payment`);
+      }
+    } else {
+      setShowFormSubmission(true);
+    }
   };
 
   const handleDelete = async (id: string) => {
@@ -140,10 +153,10 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
           </button>
         </form>
         <div className="flex flex-row gap-2">
-          {team?.paymentStatus == "paid" && (
+          {team && (
             <button
               onClick={handleAddSubmissionClick}
-              className="flex items-center gap-2 rounded bg-blue-600 px-3 py-2 text-white hover:bg-blue-700"
+              className="flex items-center gap-2 rounded bg-blue-300 px-3 py-2 text-white hover:bg-blue-700"
             >
               <Plus size={16} />{" "}
               {team?.submissionLink ? "Update Submission" : "Add Submission"}
@@ -189,7 +202,7 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
             {!team ? (
               <tr>
                 <td
-                  colSpan={5}
+                  colSpan={7}
                   className="whitespace-nowrap px-6 py-4 text-center"
                 >
                   Data not found
