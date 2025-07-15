@@ -107,9 +107,50 @@ export default function TeamForm({
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               options={[
-                { label: "Technology", value: "Technology" },
-                { label: "AI", value: "AI" },
-                { label: "Health", value: "Health" },
+                {
+                  label: "Business Services – ICT Services Solutions",
+                  value: "business_service_ict_services_solutions",
+                },
+                {
+                  label: "Business Services – Marketing Solutions",
+                  value: "business_services_marketing_solutions",
+                },
+                {
+                  label: "Business Services – Security Solutions",
+                  value: "business_service_security_solutions",
+                },
+                {
+                  label:
+                    "Business Services – Finance & Accounting Solutions (Fintech)",
+                  value:
+                    "business_service_finance_accounting_solutions_fintech",
+                },
+                {
+                  label: "Inclusion & Community Services – Education",
+                  value: "inclusion_community_services_education",
+                },
+                {
+                  label:
+                    "Inclusion & Community Services – Sustainability & Environment",
+                  value:
+                    "inclusion_community_services_sustainability_environment",
+                },
+                {
+                  label: "Inclusion & Community Services – Community Services",
+                  value: "inclusion_community_services_community_services",
+                },
+                {
+                  label: "Industrial – Agriculture",
+                  value: "industrial_agriculture",
+                },
+                {
+                  label: "Industrial – Engineering & Construction",
+                  value: "industrial_engineering_construction",
+                },
+                {
+                  label: "Student – Tertiary Student Project",
+                  value: "student_tertiary_student_project",
+                },
               ]}
               required
             />
