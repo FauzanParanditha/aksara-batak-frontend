@@ -8,7 +8,6 @@ import clientAxios from "@/lib/axios/client";
 import { useHandleAxiosError } from "@/lib/handleError";
 import { Pencil, Search, Trash2, X } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import { mutate } from "swr";
 import TeamForm from "./TeamForm";
@@ -17,6 +16,7 @@ interface Team {
   id: string;
   teamName: string;
   category: string;
+  institution: string;
   queueNumber: string;
   paymentStatus: string;
   submissionLink?: string;
@@ -45,6 +45,7 @@ export default function TeamTable({
 }: TeamTableProps) {
   const [showForm, setShowForm] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [editData, setEditData] = useState<Team | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const handleAxiosError = useHandleAxiosError();
   const confirm = useConfirmDialog();
@@ -203,11 +204,15 @@ export default function TeamTable({
                   )}
                 </td>
                 <td className="px-6 py-4 text-right space-x-2">
-                  <Link href={`/admin/team/${team.id}`}>
-                    <button className="text-blue-600 hover:text-blue-900">
-                      <Pencil size={16} />
-                    </button>
-                  </Link>
+                  <button
+                    className="text-blue-600 hover:text-blue-900"
+                    onClick={() => {
+                      setEditData(team);
+                      setShowForm(true);
+                    }}
+                  >
+                    <Pencil size={16} />
+                  </button>
                   <button
                     className="text-red-600 hover:text-red-900"
                     onClick={() => handleDelete(team.id)}
@@ -236,11 +241,17 @@ export default function TeamTable({
 
       {showForm && (
         <TeamForm
+          initialData={editData || undefined}
           onClose={() => setShowForm(false)}
           onSubmit={async (formData) => {
             try {
-              await clientAxios.post(`/v1/teams`, formData);
-              toast({ title: "Successfully added team" });
+              if (editData?.id) {
+                await clientAxios.put(`/v1/teams/${editData.id}`, formData);
+                toast({ title: "Team updated successfully" });
+              } else {
+                await clientAxios.post(`/v1/teams`, formData);
+                toast({ title: "Successfully added team" });
+              }
               await mutate(`/v1/teams?&search=${searchQuery}`);
               setShowForm(false);
             } catch (err) {

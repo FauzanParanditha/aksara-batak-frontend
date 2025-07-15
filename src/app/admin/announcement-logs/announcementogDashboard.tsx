@@ -23,9 +23,9 @@ export default function AnnouncementLogDashboard() {
       <div className="space-y-4">
         <h1 className="text-2xl font-bold text-gray-800">Email Logs</h1>
         <AnnouncementLogTable
-          announcementLogs={data.data}
-          key={data.data.id}
-          meta={data.meta}
+          announcementLogs={data?.data}
+          key={data?.data?.id}
+          meta={data?.meta}
           onPageChange={setPage}
           onSearch={setSearch}
         />

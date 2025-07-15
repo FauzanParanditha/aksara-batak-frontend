@@ -2,10 +2,10 @@
 
 import FormInput from "@/components/frontend/FormInput";
 import FormSelect from "@/components/frontend/FormSelect";
+import { toast } from "@/hooks/use-toast";
 import { createTeamMemberSchema } from "@/schemas/teamMemberSchema";
 import { X } from "lucide-react";
 import { useState } from "react";
-import { toast } from "react-toastify";
 import useSWR from "swr";
 
 interface TeamMemberFormProps {
@@ -16,6 +16,8 @@ interface TeamMemberFormProps {
     email: string;
     institution: string;
     roleInTeam: string;
+    phone?: string;
+    address?: string;
   };
   onSubmit: (data: {
     teamId: string;
@@ -23,6 +25,8 @@ interface TeamMemberFormProps {
     email: string;
     institution: string;
     roleInTeam: string;
+    phone?: string;
+    address?: string;
   }) => void;
   onClose: () => void;
 }
@@ -39,6 +43,8 @@ export default function TeamMemberForm({
   const [institution, setInstitution] = useState(
     initialData?.institution || ""
   );
+  const [phone, setPhone] = useState(initialData?.phone || "");
+  const [address, setAddress] = useState(initialData?.address || "");
 
   const { data: teams, isLoading } = useSWR(`/v1/teams`);
   // console.log(teams?.data);
@@ -50,11 +56,13 @@ export default function TeamMemberForm({
       email,
       roleInTeam,
       institution,
+      phone,
+      address,
     });
 
     if (!result.success) {
       result.error.errors.forEach((err) => {
-        toast.error(`${err.path[0]}: ${err.message}`);
+        toast({ title: `${err.path[0]}: ${err.message}` });
       });
       return;
     }
@@ -65,7 +73,10 @@ export default function TeamMemberForm({
       email,
       roleInTeam,
       institution,
+      phone,
+      address,
     };
+    console.log(jsonBody);
     onSubmit(jsonBody);
   };
 
@@ -79,7 +90,7 @@ export default function TeamMemberForm({
           <X size={20} />
         </button>
         <h2 className="mb-4 text-lg font-semibold">
-          {initialData ? "Edit TeamMember" : "Add TeamMember"}
+          {initialData ? "Edit Team Member" : "Add Team Member"}
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -128,12 +139,80 @@ export default function TeamMemberForm({
             />
           </div>
           <div>
-            <FormInput
+            <FormSelect
               label="Institution"
               name="institution"
-              type="text"
               value={institution}
               onChange={(e) => setInstitution(e.target.value)}
+              options={[
+                {
+                  label: "University/College",
+                  value: "university_college",
+                },
+                {
+                  label: "Technology Companies/Startups",
+                  value: "technology_companies_startups",
+                },
+                {
+                  label: "Government / Ministry / SOE",
+                  value: "government_ministry_soe",
+                },
+                {
+                  label: "Technology Community / Developer Community",
+                  value: "technology_community_developer_community",
+                },
+                {
+                  label: "Vocational High School / IT High School",
+                  value: "vocational_high_school_it_high_school",
+                },
+                {
+                  label: "Incubator / Accelerator Institution",
+                  value: "incubator_accelerator_institution",
+                },
+                {
+                  label: "Non-profit Organization / NGO / Digital Foundation",
+                  value: "non_profit_organization_ngo_digital_foundation",
+                },
+                {
+                  label: "Other",
+                  value: "other",
+                },
+              ]}
+              required
+            />
+          </div>
+          <div>
+            <FormInput
+              label="Role in Team"
+              name="roleInTeam"
+              type="text"
+              value={roleInTeam}
+              placeholder="Enter role in team"
+              onChange={(e) => setRoleInTeam(e.target.value)}
+              className="w-full rounded border p-2"
+            />
+          </div>
+          <div>
+            <FormInput
+              label="Phone"
+              name="phone"
+              type="text"
+              value={phone}
+              placeholder="Enter phone number"
+              onChange={(e) => setPhone(e.target.value)}
+              className="w-full rounded border p-2"
+              required
+            />
+          </div>
+          <div>
+            <FormInput
+              label="Address"
+              name="address"
+              type="text"
+              value={address}
+              placeholder="Enter address"
+              onChange={(e) => setAddress(e.target.value)}
+              className="w-full rounded border p-2"
               required
             />
           </div>

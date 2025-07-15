@@ -24,9 +24,9 @@ export default function TeamMemberDashboard() {
       <div className="space-y-4">
         <h1 className="text-2xl font-bold text-gray-800">Team Members</h1>
         <TeamMemberTable
-          teamMembers={data.data}
-          key={data.data.id}
-          meta={data.meta}
+          teamMembers={data?.data}
+          key={data?.data?.id}
+          meta={data?.meta}
           onPageChange={setPage}
           onStatusFilter={setStatus}
           onSearch={setSearch}

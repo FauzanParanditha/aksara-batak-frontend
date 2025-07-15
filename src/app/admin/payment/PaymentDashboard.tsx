@@ -25,7 +25,7 @@ export default function PaymentDashboard() {
         <PaymentTable
           payments={data?.data || []}
           key={data?.data?.id || []}
-          meta={data.meta}
+          meta={data?.meta}
           onPageChange={setPage}
           onStatusFilter={setStatus}
           onSearch={setSearch}

@@ -20,32 +20,32 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           <StatCard
             title="Total Teams"
-            value={data.totalTeams}
+            value={data?.totalTeams}
             icon={<User />}
           />
           <StatCard
             title="Total Member"
-            value={data.totalMember}
+            value={data?.totalMember}
             icon={<Users />}
           />
           <StatCard
             title="Total Leader"
-            value={data.totalLeader}
+            value={data?.totalLeader}
             icon={<Users />}
           />
           <StatCard
             title="Waiting Payment"
-            value={data.waitingPayment}
+            value={data?.waitingPayment}
             icon={<Banknote />}
           />
           <StatCard
             title="Paid Payment"
-            value={data.paidPayment}
+            value={data?.paidPayment}
             icon={<HandCoins />}
           />
           <StatCard
             title="Submit Submission"
-            value={data.submission}
+            value={data?.submission}
             icon={<Send />}
           />
         </div>

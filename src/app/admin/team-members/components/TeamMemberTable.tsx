@@ -3,11 +3,11 @@
 import { useConfirmDialog } from "@/components/ConfirmDialogProvider";
 import FormInput from "@/components/frontend/FormInput";
 import Pagination from "@/components/frontend/Pagination";
+import { toast } from "@/hooks/use-toast";
 import clientAxios from "@/lib/axios/client";
 import { useHandleAxiosError } from "@/lib/handleError";
 import { Pencil, Search, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { toast } from "react-toastify";
 import { mutate } from "swr";
 import TeamMemberForm from "./TeamMemberForm";
 
@@ -64,7 +64,7 @@ export default function TeamMemberTable({
     try {
       await clientAxios.delete(`/v1/team-members/${id}`);
       await mutate(`/v1/team-members?page=${meta.page}&search=${searchQuery}`);
-      toast.success("Team member delete successfully");
+      toast({ title: "Team member delete successfully" });
     } catch (error) {
       handleAxiosError(error);
     }
@@ -168,13 +168,18 @@ export default function TeamMemberTable({
             // console.log("Submit sponsor", formData);
             try {
               if (editData?.id) {
-                await clientAxios.put(`/v1/users/${editData.id}`, formData);
-                toast.success("Successfully edited user");
+                await clientAxios.put(
+                  `/v1/team-members/${editData.id}`,
+                  formData
+                );
+                toast({ title: "Successfully edited team member" });
               } else {
-                await clientAxios.post(`/v1/users`, formData);
-                toast.success("Successfully added user");
+                await clientAxios.post(`/v1/team-members`, formData);
+                toast({ title: "Successfully added team member" });
               }
-              await mutate(`/v1/users?page=${meta.page}&search=${searchQuery}`);
+              await mutate(
+                `/v1/team-members?page=${meta.page}&search=${searchQuery}`
+              );
               setShowForm(false);
             } catch (err) {
               handleAxiosError(err);

@@ -33,7 +33,7 @@ export default function TeamForm({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!file) return toast({ title: "Please upload transfer proof." });
+    if (!file) return toast({ title: "Please upload photo." });
 
     if (initialData) {
       const result = teamUpdateSchema.safeParse({

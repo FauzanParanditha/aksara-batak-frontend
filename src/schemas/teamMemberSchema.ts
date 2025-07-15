@@ -4,7 +4,7 @@ export const createTeamMemberSchema = z.object({
   fullName: z
     .string()
     .min(3, "Nama lengkap minimal 3 karakter")
-    .max(100, "Nama lengkap maksimal 100 karakter")
+    .max(100, "Nama lengkap terlalu panjang")
     .trim(),
 
   email: z
@@ -12,8 +12,29 @@ export const createTeamMemberSchema = z.object({
     .email("Format email tidak valid")
     .max(100, "Email terlalu panjang"),
 
-  institution: z.string(),
-  roleInTeam: z.string(),
+  institution: z
+    .string()
+    .min(2, "Nama institusi minimal 2 karakter")
+    .max(100, "Nama institusi terlalu panjang")
+    .trim(),
+
+  roleInTeam: z
+    .string()
+    .min(2, "Peran dalam tim minimal 2 karakter")
+    .max(50, "Peran dalam tim terlalu panjang")
+    .trim(),
+
+  phone: z
+    .string()
+    .regex(/^\+?\d{9,15}$/, "Nomor telepon tidak valid")
+    .optional(),
+
+  address: z
+    .string()
+    .min(5, "Alamat minimal 5 karakter")
+    .max(200, "Alamat terlalu panjang")
+    .trim()
+    .optional(),
 });
 
 export type TeamMemberSchemaType = z.infer<typeof createTeamMemberSchema>;

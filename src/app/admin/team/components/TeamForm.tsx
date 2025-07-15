@@ -1,8 +1,10 @@
 "use client";
 
+import FormFileInput from "@/components/frontend/FormFileInput";
 import FormInput from "@/components/frontend/FormInput";
+import FormSelect from "@/components/frontend/FormSelect";
 import { toast } from "@/hooks/use-toast";
-import { teamSchema } from "@/schemas/teamSchema";
+import { teamSchema, teamUpdateSchema } from "@/schemas/teamSchema";
 import { X } from "lucide-react";
 import { useState } from "react";
 
@@ -13,11 +15,7 @@ interface TeamFormProps {
     category: string;
     institution: string;
   };
-  onSubmit: (data: {
-    teamName: string;
-    category: string;
-    institution: string;
-  }) => void;
+  onSubmit: (data: FormData) => void;
   onClose: () => void;
 }
 
@@ -31,31 +29,51 @@ export default function TeamForm({
   const [institution, setInstitution] = useState(
     initialData?.institution || ""
   );
+  const [file, setFile] = useState<File | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const result = teamSchema.safeParse({
-      teamName,
-      category,
-      institution,
-    });
-    if (!result.success) {
-      result.error.errors.forEach((err) => {
-        toast({
-          title: "Add Team Failed",
-          description: `${err.path[0]}: ${err.message}`,
-          variant: "destructive",
-        });
+    if (!file) return toast({ title: "Please upload transfer proof." });
+
+    if (initialData) {
+      const result = teamUpdateSchema.safeParse({
+        teamName,
+        category,
       });
-      return;
+      if (!result.success) {
+        result.error.errors.forEach((err) => {
+          toast({
+            description: `${err.path[0]}: ${err.message}`,
+            variant: "destructive",
+          });
+        });
+        return;
+      }
+    } else {
+      const result = teamSchema.safeParse({
+        teamName,
+        category,
+        institution,
+      });
+      if (!result.success) {
+        result.error.errors.forEach((err) => {
+          toast({
+            description: `${err.path[0]}: ${err.message}`,
+            variant: "destructive",
+          });
+        });
+        return;
+      }
     }
 
-    const jsonBody = {
-      teamName,
-      category,
-      institution,
-    };
-    onSubmit(jsonBody);
+    const formData = new FormData();
+    formData.append("teamName", teamName);
+    formData.append("category", category);
+    if (institution) {
+      formData.append("institution", institution);
+    }
+    formData.append("photo", file);
+    onSubmit(formData);
   };
 
   return (
@@ -83,24 +101,112 @@ export default function TeamForm({
             />
           </div>
           <div>
-            <FormInput
+            <FormSelect
               label="Category"
               name="category"
-              type="text"
-              placeholder="e.g. Technology, Health, Education"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
+              options={[
+                {
+                  label: "Business Services – ICT Services Solutions",
+                  value: "business_service_ict_services_solutions",
+                },
+                // {
+                //   label: "Business Services – Marketing Solutions",
+                //   value: "business_services_marketing_solutions",
+                // },
+                {
+                  label: "Business Services – Security Solutions",
+                  value: "business_service_security_solutions",
+                },
+                {
+                  label:
+                    "Business Services – Finance & Accounting Solutions (Fintech)",
+                  value:
+                    "business_service_finance_accounting_solutions_fintech",
+                },
+                {
+                  label: "Inclusion & Community Services – Education",
+                  value: "inclusion_community_services_education",
+                },
+                {
+                  label:
+                    "Inclusion & Community Services – Sustainability & Environment",
+                  value:
+                    "inclusion_community_services_sustainability_environment",
+                },
+                {
+                  label: "Inclusion & Community Services – Community Services",
+                  value: "inclusion_community_services_community_services",
+                },
+                {
+                  label: "Industrial – Agriculture",
+                  value: "industrial_agriculture",
+                },
+                // {
+                //   label: "Industrial – Engineering & Construction",
+                //   value: "industrial_engineering_construction",
+                // },
+                {
+                  label: "Student – Tertiary Student Project",
+                  value: "student_tertiary_student_project",
+                },
+              ]}
               required
             />
           </div>
+          {initialData ? (
+            <></>
+          ) : (
+            <div>
+              <FormSelect
+                label="Institution"
+                name="institution"
+                value={institution}
+                onChange={(e) => setInstitution(e.target.value)}
+                options={[
+                  {
+                    label: "University/College",
+                    value: "university_college",
+                  },
+                  {
+                    label: "Technology Companies/Startups",
+                    value: "technology_companies_startups",
+                  },
+                  {
+                    label: "Government / Ministry / SOE",
+                    value: "government_ministry_soe",
+                  },
+                  {
+                    label: "Technology Community / Developer Community",
+                    value: "technology_community_developer_community",
+                  },
+                  {
+                    label: "Vocational High School / IT High School",
+                    value: "vocational_high_school_it_high_school",
+                  },
+                  {
+                    label: "Incubator / Accelerator Institution",
+                    value: "incubator_accelerator_institution",
+                  },
+                  {
+                    label: "Non-profit Organization / NGO / Digital Foundation",
+                    value: "non_profit_organization_ngo_digital_foundation",
+                  },
+                  {
+                    label: "Other",
+                    value: "other",
+                  },
+                ]}
+                required
+              />
+            </div>
+          )}
           <div>
-            <FormInput
-              label="Institution"
-              name="institution"
-              type="text"
-              placeholder="e.g. Institution"
-              value={institution}
-              onChange={(e) => setInstitution(e.target.value)}
+            <FormFileInput
+              label="Photo"
+              accept="image/*"
+              onChange={(e) => setFile(e.target.files?.[0] || null)}
               required
             />
           </div>

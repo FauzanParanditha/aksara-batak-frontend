@@ -24,9 +24,9 @@ export default function EmailLogDashboard() {
       <div className="space-y-4">
         <h1 className="text-2xl font-bold text-gray-800">Email Logs</h1>
         <EmailLogTable
-          emailLogs={data.data}
-          key={data.data.id}
-          meta={data.meta}
+          emailLogs={data?.data}
+          key={data?.data?.id}
+          meta={data?.meta}
           onPageChange={setPage}
           onStatusFilter={setStatus}
           onSearch={setSearch}

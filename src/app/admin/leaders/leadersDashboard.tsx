@@ -24,9 +24,9 @@ export default function LeaderDashboard() {
       <div className="space-y-4">
         <h1 className="text-2xl font-bold text-gray-800">Leaders</h1>
         <LeaderTable
-          leaders={data.data}
-          key={data.data.id}
-          meta={data.meta}
+          leaders={data?.data}
+          key={data?.data?.id}
+          meta={data?.meta}
           onPageChange={setPage}
           onStatusFilter={setStatus}
           onSearch={setSearch}
