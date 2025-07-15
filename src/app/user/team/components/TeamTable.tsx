@@ -50,6 +50,7 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
   const [showFormMember, setShowFormMember] = useState(false);
   const [showFormSubmission, setShowFormSubmission] = useState(false);
   const [editData, setEditData] = useState<Team | null>(null);
+  const [editDataMember, setEditDataMember] = useState<Member | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const handleAxiosError = useHandleAxiosError();
@@ -337,16 +338,35 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
                     <td className="px-6 py-4 text-sm text-gray-900">
                       {m.roleInTeam}
                     </td>
-                    <td className="px-6 py-4 text-sm text-center text-gray-900">
+                    <td className="px-6 py-4 text-sm text-center text-gray-900 space-x-2">
                       {m.roleInTeam === "Leader" ? (
-                        <></>
-                      ) : (
                         <button
-                          className="text-red-500 hover:text-red-700"
-                          onClick={() => handleDeleteMember(m.id || "")}
+                          className="text-blue-600 hover:text-blue-900"
+                          onClick={() => {
+                            setEditDataMember(m);
+                            setShowFormMember(true);
+                          }}
                         >
-                          Delete
+                          <Pencil size={16} />
                         </button>
+                      ) : (
+                        <>
+                          <button
+                            className="text-blue-600 hover:text-blue-900"
+                            onClick={() => {
+                              setEditDataMember(m);
+                              setShowFormMember(true);
+                            }}
+                          >
+                            <Pencil size={16} />
+                          </button>
+                          <button
+                            className="text-red-600 hover:text-red-900"
+                            onClick={() => handleDelete(team.id)}
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </>
                       )}
                     </td>
                   </tr>
@@ -394,15 +414,24 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
 
       {showFormMember && (
         <AddMemberToTeam
+          initialData={editDataMember || undefined}
           teamId={team.id}
           onClose={() => setShowFormMember(false)}
           onSubmit={async (formData) => {
             try {
-              await clientAxios.post(`/v1/team-members`, {
-                ...formData,
-                teamId: team.id,
-              });
-              toast({ title: "Member added successfully" });
+              if (editDataMember?.id) {
+                await clientAxios.put(
+                  `/v1/team-members/${editDataMember?.id}`,
+                  formData
+                );
+                toast({ title: "Member updated successfully" });
+              } else {
+                await clientAxios.post(`/v1/team-members`, {
+                  ...formData,
+                  teamId: team.id,
+                });
+                toast({ title: "Member added successfully" });
+              }
               await mutate(`/v1/team-members/${team.id}`);
               setShowFormMember(false);
             } catch (err) {

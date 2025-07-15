@@ -23,4 +23,16 @@ export const memberSchema = z.object({
     .min(2, "Peran dalam tim minimal 2 karakter")
     .max(50, "Peran dalam tim terlalu panjang")
     .trim(),
+
+  phone: z
+    .string()
+    .regex(/^\+?\d{9,15}$/, "Nomor telepon tidak valid")
+    .optional(),
+
+  address: z
+    .string()
+    .min(5, "Alamat minimal 5 karakter")
+    .max(200, "Alamat terlalu panjang")
+    .trim()
+    .optional(),
 });
