@@ -3,13 +3,9 @@
 import AnimatedCard from "@/components/frontend/AnimatedCard";
 import FormInput from "@/components/frontend/FormInput";
 import FullScreenLoader from "@/components/frontend/FullScreenLoader";
-import PasswordInput from "@/components/frontend/PasswordInput";
-import { useAuth } from "@/context/AuthContext";
-import { useGuestRedirect } from "@/hooks/useGuestRedirects";
-import { useHandleAxiosError } from "@/lib/handleError";
-import { loginSchema } from "@/schemas/loginSchema";
-import { loginForm } from "@/service/auth";
-import { motion } from "framer-motion";
+import { toast } from "@/hooks/use-toast";
+import clientAxios from "@/lib/axios/client";
+import { forgotPasswordSchema } from "@/schemas/loginSchema";
 import {
   Code,
   Cpu,
@@ -22,47 +18,47 @@ import {
   Zap,
 } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { toast } from "react-toastify";
 
-export const metadata = {
-  title: "Login | Page",
-};
-
-export default function LoginFormPage() {
-  useGuestRedirect();
-
-  const { login } = useAuth();
+export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const handleAxiosError = useHandleAxiosError();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const result = loginSchema.safeParse({ email, password });
+    const result = forgotPasswordSchema.safeParse({ email });
 
     if (!result.success) {
       result.error.errors.forEach((err) => {
-        toast.error(`${err.path[0]}: ${err.message}`);
+        toast({
+          title: `${err.path[0]}: ${err.message}`,
+          variant: "destructive",
+        });
       });
       setLoading(false);
       return;
     }
+
     try {
-      const res = await loginForm(email, password);
-      login(res.token);
-      toast.success("Login berhasil!");
-    } catch (err) {
-      handleAxiosError(err);
+      const res = await clientAxios.post("/v1/auth/forgot-password", { email });
+      toast({ title: `${res.data.message}` });
+      setEmail("");
+      //   router.push("/auth/login");
+    } catch (err: any) {
+      toast({
+        title: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="flex flex-col gap-5 min-h-screen items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 px-4">
+    <div className="min-h-screen flex flex-col gap-5 items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 px-4">
       <div className="">
         <Image
           src="/images/logo/logo.png"
@@ -72,7 +68,7 @@ export default function LoginFormPage() {
           className="object-contain transition-opacity duration-200"
         />
       </div>
-      <title>Login | Page</title>
+      <title>Forgor Password | Page</title>
       <div className="hidden md:block absolute inset-0 pointer-events-none">
         {/* Code Icon */}
         <div
@@ -176,16 +172,10 @@ export default function LoginFormPage() {
           <div className="w-2 h-8 bg-gradient-to-b from-pink-400/40 to-transparent rounded-full"></div>
         </div>
       </div>
-
       <AnimatedCard className="w-full max-w-md space-y-6">
-        <motion.h2
-          className="text-center text-3xl font-bold text-blue-700"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-        >
-          Login Page
-        </motion.h2>
+        <h2 className="text-center text-2xl font-semibold text-blue-700">
+          Forgot Password
+        </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <FormInput
@@ -194,28 +184,15 @@ export default function LoginFormPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <PasswordInput
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
 
           <button
             type="submit"
             disabled={loading}
-            className="flex w-full items-center justify-center rounded-md bg-blue-600 py-2 text-white transition hover:bg-blue-700"
+            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
           >
-            {loading ? <FullScreenLoader /> : "Login"}
+            {loading ? <FullScreenLoader /> : "Send Reset Link"}
           </button>
         </form>
-
-        <div className="text-center text-sm">
-          <a
-            href="/auth/forgot-password"
-            className="text-blue-600 hover:underline"
-          >
-            Forgot Password?
-          </a>
-        </div>
       </AnimatedCard>
     </div>
   );

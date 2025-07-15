@@ -1,15 +1,10 @@
 "use client";
 
 import AnimatedCard from "@/components/frontend/AnimatedCard";
-import FormInput from "@/components/frontend/FormInput";
-import FullScreenLoader from "@/components/frontend/FullScreenLoader";
 import PasswordInput from "@/components/frontend/PasswordInput";
-import { useAuth } from "@/context/AuthContext";
-import { useGuestRedirect } from "@/hooks/useGuestRedirects";
-import { useHandleAxiosError } from "@/lib/handleError";
-import { loginSchema } from "@/schemas/loginSchema";
-import { loginForm } from "@/service/auth";
-import { motion } from "framer-motion";
+import { toast } from "@/hooks/use-toast";
+import clientAxios from "@/lib/axios/client";
+import { resetPasswordSchema } from "@/schemas/loginSchema";
 import {
   Code,
   Cpu,
@@ -22,47 +17,61 @@ import {
   Zap,
 } from "lucide-react";
 import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { toast } from "react-toastify";
 
-export const metadata = {
-  title: "Login | Page",
-};
+export default function ResetPasswordPage() {
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token") || "";
 
-export default function LoginFormPage() {
-  useGuestRedirect();
-
-  const { login } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassowrd] = useState("");
   const [loading, setLoading] = useState(false);
-  const handleAxiosError = useHandleAxiosError();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!token) {
+      toast({ title: "Missing token.", variant: "destructive" });
+      return;
+    }
+
     setLoading(true);
-    const result = loginSchema.safeParse({ email, password });
+
+    const result = resetPasswordSchema.safeParse({
+      token,
+      newPassword,
+      confirmPassword,
+    });
 
     if (!result.success) {
       result.error.errors.forEach((err) => {
-        toast.error(`${err.path[0]}: ${err.message}`);
+        toast({
+          title: `${err.path[0]}: ${err.message}`,
+          variant: "destructive",
+        });
       });
       setLoading(false);
       return;
     }
+
     try {
-      const res = await loginForm(email, password);
-      login(res.token);
-      toast.success("Login berhasil!");
+      await clientAxios.post(`/v1/auth/reset-password`, {
+        token,
+        newPassword,
+        confirmPassword,
+      });
+      toast({ title: "Password has been reset. Please login." });
     } catch (err) {
-      handleAxiosError(err);
+      toast({ title: "Failed to reset password.", variant: "destructive" });
     } finally {
       setLoading(false);
+      router.push("/auth/login");
     }
   };
 
   return (
-    <div className="flex flex-col gap-5 min-h-screen items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 px-4">
+    <div className="min-h-screen flex flex-col gap-5 items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 px-4">
       <div className="">
         <Image
           src="/images/logo/logo.png"
@@ -72,7 +81,7 @@ export default function LoginFormPage() {
           className="object-contain transition-opacity duration-200"
         />
       </div>
-      <title>Login | Page</title>
+      <title>Reset Password | Page</title>
       <div className="hidden md:block absolute inset-0 pointer-events-none">
         {/* Code Icon */}
         <div
@@ -176,46 +185,31 @@ export default function LoginFormPage() {
           <div className="w-2 h-8 bg-gradient-to-b from-pink-400/40 to-transparent rounded-full"></div>
         </div>
       </div>
-
       <AnimatedCard className="w-full max-w-md space-y-6">
-        <motion.h2
-          className="text-center text-3xl font-bold text-blue-700"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-        >
-          Login Page
-        </motion.h2>
+        <h2 className="text-center text-2xl font-semibold text-blue-700">
+          Reset Password
+        </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <FormInput
-            label="Email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+          <PasswordInput
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            label="New Password"
           />
           <PasswordInput
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassowrd(e.target.value)}
+            label="Confirm Password"
           />
 
           <button
             type="submit"
             disabled={loading}
-            className="flex w-full items-center justify-center rounded-md bg-blue-600 py-2 text-white transition hover:bg-blue-700"
+            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
           >
-            {loading ? <FullScreenLoader /> : "Login"}
+            {loading ? "Resetting..." : "Reset Password"}
           </button>
         </form>
-
-        <div className="text-center text-sm">
-          <a
-            href="/auth/forgot-password"
-            className="text-blue-600 hover:underline"
-          >
-            Forgot Password?
-          </a>
-        </div>
       </AnimatedCard>
     </div>
   );
