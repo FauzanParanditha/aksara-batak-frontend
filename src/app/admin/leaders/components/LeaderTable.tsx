@@ -3,11 +3,11 @@
 import { useConfirmDialog } from "@/components/ConfirmDialogProvider";
 import FormInput from "@/components/frontend/FormInput";
 import Pagination from "@/components/frontend/Pagination";
+import { toast } from "@/hooks/use-toast";
 import clientAxios from "@/lib/axios/client";
 import { useHandleAxiosError } from "@/lib/handleError";
 import { Pencil, Search, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { toast } from "react-toastify";
 import { mutate } from "swr";
 import LeaderForm from "./LeaderForm";
 
@@ -65,7 +65,7 @@ export default function LeaderTable({
     try {
       await clientAxios.delete(`/v1/users/${id}`);
       await mutate(`/v1/users?page=${meta.page}&search=${searchQuery}`);
-      toast.success("Leader delete successfully");
+      toast({ title: "Leader delete successfully" });
     } catch (error) {
       handleAxiosError(error);
     }
@@ -183,10 +183,10 @@ export default function LeaderTable({
             try {
               if (editData?.id) {
                 await clientAxios.put(`/v1/users/${editData.id}`, formData);
-                toast.success("Successfully edited user");
+                toast({ title: "Successfully edited user" });
               } else {
                 await clientAxios.post(`/v1/users`, formData);
-                toast.success("Successfully added user");
+                toast({ title: "Successfully added user" });
               }
               await mutate(`/v1/users?page=${meta.page}&search=${searchQuery}`);
               setShowForm(false);
