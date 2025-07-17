@@ -8,12 +8,9 @@ import LeaderTable from "./components/LeaderTable";
 
 export default function LeaderDashboard() {
   const [page, setPage] = useState(1);
-  const [status, setStatus] = useState("all");
   const [search, setSearch] = useState("");
 
-  const { data, isLoading } = useSWR(
-    `/v1/users?page=${page}&status=${status}&search=${search}`
-  );
+  const { data, isLoading } = useSWR(`/v1/users?page=${page}&search=${search}`);
 
   if (isLoading || !data) {
     return <FullScreenLoader />;
@@ -28,7 +25,6 @@ export default function LeaderDashboard() {
           key={data?.data?.id}
           meta={data?.meta}
           onPageChange={setPage}
-          onStatusFilter={setStatus}
           onSearch={setSearch}
         />
       </div>

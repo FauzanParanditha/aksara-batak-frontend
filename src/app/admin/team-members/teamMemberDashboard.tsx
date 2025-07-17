@@ -8,11 +8,10 @@ import TeamMemberTable from "./components/TeamMemberTable";
 
 export default function TeamMemberDashboard() {
   const [page, setPage] = useState(1);
-  const [status, setStatus] = useState("all");
   const [search, setSearch] = useState("");
 
   const { data, isLoading } = useSWR(
-    `/v1/team-members?page=${page}&status=${status}&search=${search}`
+    `/v1/team-members?page=${page}&search=${search}`
   );
 
   if (isLoading || !data) {
@@ -28,7 +27,6 @@ export default function TeamMemberDashboard() {
           key={data?.data?.id}
           meta={data?.meta}
           onPageChange={setPage}
-          onStatusFilter={setStatus}
           onSearch={setSearch}
         />
       </div>
