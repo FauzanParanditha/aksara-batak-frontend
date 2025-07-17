@@ -63,8 +63,8 @@ export default function LeaderTable({
     });
     if (!isConfirmed) return;
     try {
-      await clientAxios.delete(`/v1/leaders/${id}`);
-      await mutate(`/v1/leaders?page=${meta.page}&search=${searchQuery}`);
+      await clientAxios.delete(`/v1/users/${id}`);
+      await mutate(`/v1/users?page=${meta.page}&search=${searchQuery}`);
       toast.success("Leader delete successfully");
     } catch (error) {
       handleAxiosError(error);
