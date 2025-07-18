@@ -61,9 +61,11 @@ export default function SubmissionForm({
             Upload a PDF (max 15 pages, in English). Include demo video
             shortlink (s.id) inside the PDF. Ensure the video is accessible
           </p>
-          <a href="/pptx/PaperStructure.pptx" className="hover:text-blue-400">
-            <p>Download Structure</p>
-          </a>
+          <div className="my-5">
+            <a href="/pptx/PaperStructure.pptx" className="hover:text-blue-400">
+              <p>Download Structure</p>
+            </a>
+          </div>
         </div>
         <Button
           onClick={handleSubmit}

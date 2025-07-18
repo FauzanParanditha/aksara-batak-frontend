@@ -1,6 +1,5 @@
 "use client";
 
-import SubmissionForm from "@/app/admin/team/components/SubmissionForm";
 import { useConfirmDialog } from "@/components/ConfirmDialogProvider";
 import FormInput from "@/components/frontend/FormInput";
 import { toast } from "@/hooks/use-toast";
@@ -12,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import useSWR, { mutate } from "swr";
 import AddMemberToTeam from "./AddMemberToTeam";
+import SubmissionForm from "./SubmissionForm";
 import TeamForm from "./TeamForm";
 
 interface Team {
@@ -80,7 +80,7 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
         description:
           "Would you like to proceed directly to the payment process?",
         confirmText: "Pay now",
-        // cancelText: "Later",
+        cancelText: "Later",
       });
       if (shouldPay) {
         router.push(`/user/payment`);
@@ -156,7 +156,11 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
           {team && (
             <button
               onClick={handleAddSubmissionClick}
-              className="flex items-center gap-2 rounded bg-blue-300 px-3 py-2 text-white hover:bg-blue-700"
+              className={`flex items-center gap-2 rounded ${
+                team.paymentStatus == "paid"
+                  ? "bg-blue-600 hover:bg-blue-700 "
+                  : "bg-blue-300 hover:bg-blue-700"
+              } px-3 py-2 text-white `}
             >
               <Plus size={16} />{" "}
               {team?.submissionLink ? "Update Submission" : "Add Submission"}

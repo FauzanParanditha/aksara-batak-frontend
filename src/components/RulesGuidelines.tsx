@@ -249,6 +249,12 @@ const RulesGuidelines = () => {
                         • PDF with demo video shortlink (s.id)
                       </p>
                       <p className="text-sm">• Max 15 pages</p>
+                      <a
+                        href="/pptx/PaperStructure.pptx"
+                        className="hover:text-blue-400 text-red-500"
+                      >
+                        <p>• Download Structure</p>
+                      </a>
                     </div>
                   </div>
                 </AccordionContent>
