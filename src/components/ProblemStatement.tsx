@@ -1,36 +1,68 @@
 const ProblemStatement = () => {
   const challenges = [
     {
-      category: "AI & Machine Learning",
-      title: "Sustainable Future",
+      category: "Business Services",
+      title: "ICT Services Solutions",
       description:
-        "Develop AI solutions to combat climate change and promote sustainability",
-      icon: "🤖",
+        "Develop innovative ICT solutions to enhance business operations and digital transformation",
+      icon: "💻",
       color: "purple",
     },
     {
-      category: "Healthcare Tech",
-      title: "Digital Health",
+      category: "Business Services",
+      title: "Security Solutions",
       description:
-        "Create innovative healthcare applications to improve patient outcomes",
-      icon: "🏥",
+        "Create cutting-edge security technologies to protect businesses and data",
+      icon: "🔒",
       color: "blue",
     },
     {
-      category: "Fintech",
-      title: "Financial Inclusion",
+      category: "Business Services",
+      title: "Finance & Accounting Solutions (Fintech)",
       description:
-        "Build solutions to make financial services accessible to everyone",
+        "Build fintech solutions to revolutionize financial services and accounting practices",
       icon: "💰",
-      color: "green",
+      color: "blue",
     },
     {
-      category: "Education",
-      title: "Learning Revolution",
+      category: "Inclusion & Community Services",
+      title: "Education",
       description:
-        "Transform education with technology for better learning experiences",
+        "Transform education with innovative solutions for better learning experiences",
       icon: "📚",
-      color: "pink",
+      color: "purple",
+    },
+    {
+      category: "Inclusion & Community Services",
+      title: "Sustainability & Environment",
+      description:
+        "Develop sustainable solutions to address environmental challenges and climate change",
+      icon: "🌱",
+      color: "purple",
+    },
+    {
+      category: "Inclusion & Community Services",
+      title: "Community Services",
+      description:
+        "Create solutions that strengthen communities and improve social welfare",
+      icon: "🤝",
+      color: "blue",
+    },
+    {
+      category: "Industrial",
+      title: "Agriculture",
+      description:
+        "Innovate agricultural technologies for sustainable farming and food production",
+      icon: "🌾",
+      color: "blue",
+    },
+    {
+      category: "Student",
+      title: "Tertiary Student Project",
+      description:
+        "Showcase your creativity with innovative projects across any domain or technology",
+      icon: "🎓",
+      color: "purple",
     },
   ];
 
