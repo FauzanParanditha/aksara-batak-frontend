@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Book, Calendar, Users } from "lucide-react";
+import { Book, Calendar } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -180,10 +180,10 @@ const Hero = () => {
               <Calendar className="w-5 h-5 text-purple-400" />
               <span>September 1-2, 2025</span>
             </div>
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
+            {/* <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
               <Users className="w-5 h-5 text-blue-400" />
               <span>500+ Participants</span>
-            </div>
+            </div> */}
             <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
               <Book className="w-5 h-5 text-pink-400" />
               <span>IDR 60M Prize Pool</span>

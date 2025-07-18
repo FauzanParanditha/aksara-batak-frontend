@@ -80,20 +80,28 @@ const RulesGuidelines = () => {
                     <div className="flex items-start space-x-3">
                       <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
                       <p>
-                        Registration fee: IDR 200,000 per team. Registration
+                        Registration fee: IDR 100,000 per team. Registration
                         via:{" "}
                         <Link
-                          href={"https://developerday.id"}
+                          href={"#register"}
                           className="text-blue-400 hover:underline"
                         >
-                          https://developerday.id before deadline.
+                          Link
                         </Link>
-                        video
                       </p>
                     </div>
                     <div className="flex items-start space-x-3">
                       <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-                      <p>Include demo via s.id shortlink.</p>
+                      <p>
+                        Include demo via{" "}
+                        <Link
+                          href={"https://s.id"}
+                          className="text-blue-400 hover:underline"
+                        >
+                          s.id
+                        </Link>{" "}
+                        shortlink.
+                      </p>
                     </div>
                     <div className="flex items-start space-x-3">
                       <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />

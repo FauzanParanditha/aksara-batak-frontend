@@ -11,7 +11,7 @@ const About = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-1 gap-12 items-center">
           <div className="space-y-6 text-gray-300">
             {/* National Digital Empowerment */}
             <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/20">
@@ -58,7 +58,7 @@ const About = () => {
           </div>
 
           {/* Statistics */}
-          <div className="relative">
+          {/* <div className="relative">
             <div className="bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-3xl p-8 backdrop-blur-sm border border-white/10">
               <div className="grid grid-cols-2 gap-4 text-center">
                 <div className="bg-white/10 rounded-2xl p-4">
@@ -81,7 +81,7 @@ const About = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

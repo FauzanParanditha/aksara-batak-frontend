@@ -54,21 +54,21 @@ const Navigation = () => {
                   alt="DeveloperDay Logo"
                   width={130}
                   height={170}
-                  className="rounded-full transition-transform duration-300 hover:scale-110 w-10 h-5 md:w-36 md:h-12"
+                  className="transition-transform duration-300 hover:scale-110 w-10 h-5 md:w-36 md:h-12"
                 />
                 <Image
                   src="/images/logo/aspiluki2.png"
                   alt="DeveloperDay Logo"
                   width={60}
                   height={60}
-                  className="rounded-full transition-transform duration-300 hover:scale-110 w-10 h-10 md:w-14 md:h-14"
+                  className="transition-transform duration-300 hover:scale-110 w-10 h-8 md:w-14 md:h-14"
                 />
                 <Image
                   src="/images/logo/ftii2.png"
                   alt="DeveloperDay Logo"
                   width={90}
                   height={90}
-                  className="rounded-full transition-transform duration-300 hover:scale-110 w-10 h-10 md:w-14 md:h-14"
+                  className="transition-transform duration-300 hover:scale-110 w-10 h-10 md:w-14 md:h-14"
                 />
               </div>
             </div>
