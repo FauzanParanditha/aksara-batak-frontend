@@ -134,7 +134,7 @@ export default function TeamTable({
             {teams?.length == 0 && (
               <tr>
                 <td
-                  colSpan={5}
+                  colSpan={7}
                   className="whitespace-nowrap px-6 py-4 text-center"
                 >
                   Data not Found
