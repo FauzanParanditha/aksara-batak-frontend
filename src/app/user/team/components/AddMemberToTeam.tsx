@@ -125,6 +125,7 @@ export default function AddMemberToTeam({
               placeholder="Enter member name"
               onChange={handleChange}
               className="w-full rounded border p-2"
+              required
             />
           </div>
 
@@ -137,6 +138,7 @@ export default function AddMemberToTeam({
               placeholder="Enter member email"
               onChange={handleChange}
               className="w-full rounded border p-2"
+              required
             />
           </div>
           <div>
@@ -191,6 +193,7 @@ export default function AddMemberToTeam({
               placeholder="Enter role in team"
               onChange={handleChange}
               className="w-full rounded border p-2"
+              required
             />
           </div>
           <div>
@@ -202,6 +205,7 @@ export default function AddMemberToTeam({
               placeholder="Enter phone number"
               onChange={handleChange}
               className="w-full rounded border p-2"
+              required
             />
           </div>
           <div>
@@ -213,6 +217,7 @@ export default function AddMemberToTeam({
               placeholder="Enter address"
               onChange={handleChange}
               className="w-full rounded border p-2"
+              required
             />
           </div>
 
