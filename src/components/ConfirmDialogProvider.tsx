@@ -37,13 +37,9 @@ export const ConfirmDialogProvider = ({
     });
   };
 
-  const handleConfirm = () => {
-    resolver.current?.(true);
-    setIsOpen(false);
-  };
-
-  const handleCancel = () => {
-    resolver.current?.(false);
+  const close = (result: boolean) => {
+    resolver.current?.(result);
+    resolver.current = undefined;
     setIsOpen(false);
   };
 
@@ -51,31 +47,34 @@ export const ConfirmDialogProvider = ({
     <ConfirmDialogContext.Provider value={{ confirm }}>
       {children}
 
-      <AlertDialog.Root open={isOpen}>
+      <AlertDialog.Root
+        open={isOpen}
+        onOpenChange={(val) => !val && close(false)}
+      >
         <AlertDialog.Portal>
-          <AlertDialog.Overlay className="fixed inset-0 bg-black/30 backdrop-blur-sm" />
-          <AlertDialog.Content className="fixed top-[50%] left-[50%] max-w-md w-full bg-white p-6 rounded-xl -translate-x-1/2 -translate-y-1/2 shadow-xl">
-            <AlertDialog.Title className="text-lg font-bold">
-              {options.title || "Konfirmasi"}
+          <AlertDialog.Overlay className="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm animate-fade-in" />
+          <AlertDialog.Content className="fixed z-50 top-[50%] left-[50%] w-full max-w-md max-h-[90vh] overflow-y-auto bg-white p-6 px-4 md:px-6 rounded-xl -translate-x-1/2 -translate-y-1/2 shadow-xl focus:outline-none animate-slide-in">
+            <AlertDialog.Title className="text-lg md:text-xl font-bold">
+              {options.title || "Confirmation"}
             </AlertDialog.Title>
-            <AlertDialog.Description className="mt-2 text-gray-600">
-              {options.description || "Apakah Anda yakin?"}
+            <AlertDialog.Description className="mt-2 text-sm md:text-base text-gray-600">
+              {options.description || "Are you sure you want to proceed?"}
             </AlertDialog.Description>
             <div className="mt-4 flex justify-end gap-2">
               <AlertDialog.Cancel asChild>
                 <button
-                  onClick={handleCancel}
-                  className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
+                  onClick={() => close(false)}
+                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                 >
-                  {options.cancelText || "Batal"}
+                  {options.cancelText || "Cancel"}
                 </button>
               </AlertDialog.Cancel>
               <AlertDialog.Action asChild>
                 <button
-                  onClick={handleConfirm}
-                  className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+                  onClick={() => close(true)}
+                  className="px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
                 >
-                  {options.confirmText || "Ya"}
+                  {options.confirmText || "Yes"}
                 </button>
               </AlertDialog.Action>
             </div>

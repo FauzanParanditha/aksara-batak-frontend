@@ -75,13 +75,13 @@ export default function PaymentTable({
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <div className="space-x-2">
+      <div className="grid  md:flex items-center md:justify-between gap-5">
+        <div className="md:space-x-2 grid grid-cols-2 gap-2 md:flex">
           {statusOptions.map((status) => (
             <button
               key={status}
               onClick={() => handleStatusChange(status)}
-              className={`rounded border px-3 py-1 text-sm font-medium ${
+              className={`rounded border px-0 md:px-3 py-1 text-sm font-medium ${
                 status === selectedStatus
                   ? "border-blue-600 bg-blue-600 text-white"
                   : "border-gray-300 bg-white text-gray-700 hover:bg-gray-100"
@@ -109,7 +109,7 @@ export default function PaymentTable({
       </div>
 
       <div className="overflow-x-auto rounded-lg bg-white shadow">
-        <table className="min-w-full divide-y divide-gray-200">
+        <table className="min-w-full divide-y divide-gray-200 text-sm md:table hidden">
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
@@ -205,6 +205,68 @@ export default function PaymentTable({
             )}
           </tbody>
         </table>
+      </div>
+
+      <div className="md:hidden space-y-4">
+        {payments.length === 0 ? (
+          <p className="text-center text-gray-500">Data not found</p>
+        ) : (
+          payments.map((pay) => (
+            <div
+              key={pay.id}
+              className="rounded-lg border bg-white p-4 shadow-sm space-y-2"
+            >
+              <div className="flex items-center gap-3">
+                {pay.manualProofUrl ? (
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${pay.manualProofUrl}`}
+                    alt="Proof"
+                    width={40}
+                    height={40}
+                    className="rounded-full object-cover h-10 w-10"
+                    onClick={() =>
+                      setPreviewUrl(
+                        `${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${pay.manualProofUrl}`
+                      )
+                    }
+                  />
+                ) : (
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 text-xs text-gray-400">
+                    N/A
+                  </div>
+                )}
+                <div className="flex-1">
+                  <p className="font-semibold">{pay.team.teamName}</p>
+                  <p className="text-sm text-gray-500">{pay.method}</p>
+                  <p className="text-sm text-gray-500">Rp {pay.amount}</p>
+                  <p className="text-xs text-gray-400">{pay.paidAt}</p>
+                  <span
+                    className={`inline-block mt-1 text-xs px-2 py-0.5 rounded-full ${
+                      pay.status === "paid"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-yellow-100 text-yellow-700"
+                    }`}
+                  >
+                    {pay.status}
+                  </span>
+                </div>
+              </div>
+              {pay.paidAt && pay.status !== "paid" && (
+                <div className="text-right">
+                  <button
+                    onClick={() => {
+                      setShowForm(true);
+                      setId(pay.id);
+                    }}
+                    className="text-blue-600 hover:underline text-sm"
+                  >
+                    <Pencil size={14} className="inline" /> Verify
+                  </button>
+                </div>
+              )}
+            </div>
+          ))
+        )}
       </div>
 
       {meta.totalPages > 1 && (

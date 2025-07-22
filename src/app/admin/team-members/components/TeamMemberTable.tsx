@@ -91,7 +91,7 @@ export default function TeamMemberTable({
       </div>
 
       <div className="overflow-x-auto rounded-lg bg-white shadow">
-        <table className="min-w-full divide-y divide-gray-200">
+        <table className="min-w-full divide-y divide-gray-200 text-sm md:table hidden">
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
@@ -158,6 +158,49 @@ export default function TeamMemberTable({
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Mobile card list */}
+      <div className="md:hidden space-y-4">
+        {teamMembers.length === 0 ? (
+          <div className="text-center text-gray-500">Data Not Found</div>
+        ) : (
+          teamMembers.map((member) => (
+            <div
+              key={member.id}
+              className="rounded-lg border p-4 shadow-sm bg-white space-y-1"
+            >
+              <div className="flex justify-between items-start">
+                <div>
+                  <p className="text-sm font-semibold text-gray-800">
+                    {member.fullName}
+                  </p>
+                  <p className="text-xs text-gray-500">{member.email}</p>
+                  <p className="text-xs text-gray-500">
+                    {member.institution} — {member.roleInTeam}
+                  </p>
+                </div>
+              </div>
+              <div className="flex justify-end gap-3 pt-2">
+                <button
+                  onClick={() => {
+                    setEditData(member);
+                    setShowForm(true);
+                  }}
+                  className="text-blue-600 hover:underline"
+                >
+                  <Pencil size={16} />
+                </button>
+                <button
+                  onClick={() => handleDelete(member.id)}
+                  className="text-red-600 hover:underline"
+                >
+                  <Trash2 size={16} />
+                </button>
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       {showForm && (

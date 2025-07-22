@@ -74,8 +74,8 @@ export default function EmailLogTable({
   };
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <div className="space-x-2">
+      <div className="grid md:flex items-center md:justify-between gap-5">
+        <div className="md:space-x-2 grid grid-cols-2 gap-2 md:flex">
           {statusOptions.map((status) => (
             <button
               key={status}
@@ -108,7 +108,7 @@ export default function EmailLogTable({
       </div>
 
       <div className="overflow-x-auto rounded-lg bg-white shadow">
-        <table className="min-w-full divide-y divide-gray-200">
+        <table className="min-w-full divide-y divide-gray-200 text-sm md:table hidden">
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
@@ -189,6 +189,57 @@ export default function EmailLogTable({
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Mobile card list */}
+      <div className="md:hidden space-y-4">
+        {emailLogs.length === 0 ? (
+          <p className="text-center text-gray-500">Data Not Found</p>
+        ) : (
+          emailLogs.map((emailLog) => (
+            <div
+              key={emailLog.id}
+              className="rounded-lg border p-4 shadow-sm bg-white space-y-1"
+            >
+              <div className="flex justify-between items-start">
+                <div>
+                  <p className="font-semibold text-gray-800">{emailLog.to}</p>
+                  <p className="text-sm text-gray-500">{emailLog.subject}</p>
+                  <p className="text-xs text-gray-500 italic">
+                    {emailLog.type}
+                  </p>
+                  <p className="text-xs text-gray-400">
+                    {new Date(emailLog.sentAt).toLocaleString()}
+                  </p>
+                  <span
+                    className={`inline-block mt-1 text-xs px-2 py-0.5 rounded-full ${
+                      emailLog.status === "success"
+                        ? "bg-blue-100 text-blue-800"
+                        : emailLog.status === "pending"
+                        ? "bg-yellow-100 text-yellow-800"
+                        : "bg-red-100 text-red-800"
+                    }`}
+                  >
+                    {emailLog.status}
+                  </span>
+                  {emailLog.errorMessage && (
+                    <p className="text-xs text-red-500 mt-1">
+                      Error: {emailLog.errorMessage}
+                    </p>
+                  )}
+                </div>
+                {emailLog.status !== "success" && (
+                  <button
+                    onClick={() => handleRetry(emailLog.id, emailLog.to)}
+                    className="text-blue-600 hover:underline"
+                  >
+                    <RotateCcw size={16} />
+                  </button>
+                )}
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       {meta.totalPages > 1 && (

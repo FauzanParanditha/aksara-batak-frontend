@@ -92,7 +92,7 @@ export default function LeaderTable({
       </div>
 
       <div className="overflow-x-auto rounded-lg bg-white shadow">
-        <table className="min-w-full divide-y divide-gray-200">
+        <table className="min-w-full divide-y divide-gray-200 text-sm md:table hidden">
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
@@ -172,6 +172,56 @@ export default function LeaderTable({
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Mobile card view */}
+      <div className="md:hidden space-y-4">
+        {leaders.length === 0 && (
+          <div className="text-center text-gray-500">Data Not Found</div>
+        )}
+        {leaders.map((leader) => (
+          <div
+            key={leader.id}
+            className="rounded-lg border p-4 shadow-sm space-y-2 bg-white"
+          >
+            <div className="flex justify-between">
+              <div>
+                <p className="font-semibold text-gray-800">{leader.fullName}</p>
+                <p className="text-sm text-gray-600">{leader.email}</p>
+              </div>
+              <div>
+                <span
+                  className={`text-xs font-medium px-2 py-1 rounded ${
+                    leader.isVerified
+                      ? "bg-green-100 text-green-700"
+                      : "bg-red-100 text-red-700"
+                  }`}
+                >
+                  {leader.isVerified ? "Verified" : "Unverified"}
+                </span>
+              </div>
+            </div>
+            <div className="text-sm text-gray-500">Role: {leader.role}</div>
+            <div className="text-sm text-gray-500">Phone: {leader.phone}</div>
+            <div className="flex justify-end gap-3 pt-2">
+              <button
+                onClick={() => {
+                  setEditData(leader);
+                  setShowForm(true);
+                }}
+                className="text-blue-600 hover:underline"
+              >
+                <Pencil size={16} />
+              </button>
+              <button
+                onClick={() => handleDelete(leader.id)}
+                className="text-red-600 hover:underline"
+              >
+                <Trash2 size={16} />
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
 
       {showForm && (

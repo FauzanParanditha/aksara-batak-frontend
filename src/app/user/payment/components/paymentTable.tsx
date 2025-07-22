@@ -53,7 +53,7 @@ export default function PaymentTable({
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="grid md:flex items-center md:justify-between gap-5">
         <form onSubmit={handleSearch} className="flex items-center gap-2">
           <FormInput
             type="text"
@@ -125,8 +125,8 @@ export default function PaymentTable({
         </CardContent>
       </Card>
 
-      <div className="overflow-x-auto rounded-lg bg-white shadow">
-        <table className="min-w-full divide-y divide-gray-200">
+      <div className="hidden md:block overflow-x-auto rounded-lg bg-white shadow">
+        <table className="min-w-full divide-y divide-gray-200 text-sm md:hidden hidden">
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
@@ -206,6 +206,50 @@ export default function PaymentTable({
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* Card view untuk mobile */}
+      <div className="block md:hidden space-y-4">
+        {payments.length === 0 ? (
+          <div className="rounded border p-4 text-center text-sm text-gray-500">
+            Data not found
+          </div>
+        ) : (
+          payments.map((pay) => (
+            <div key={pay.id} className="rounded-lg bg-white p-4 shadow">
+              <div className="flex items-center gap-4 mb-2">
+                {pay.manualProofUrl ? (
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${pay.manualProofUrl}`}
+                    alt={pay.team.teamName}
+                    width={48}
+                    height={48}
+                    className="rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="h-12 w-12 flex items-center justify-center rounded-full bg-gray-200 text-sm text-gray-400">
+                    N/A
+                  </div>
+                )}
+                <div>
+                  <p className="font-semibold">{pay.team.teamName}</p>
+                  <p className="text-xs text-gray-500">{pay.method}</p>
+                </div>
+              </div>
+              <div className="space-y-1 text-sm text-gray-700">
+                <p>
+                  <span className="font-medium">Amount:</span> {pay.amount}
+                </p>
+                <p>
+                  <span className="font-medium">Paid At:</span> {pay.paidAt}
+                </p>
+                <p>
+                  <span className="font-medium">Status:</span> {pay.status}
+                </p>
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       {showForm && (

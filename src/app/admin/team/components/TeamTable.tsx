@@ -104,7 +104,7 @@ export default function TeamTable({
       </div>
 
       <div className="overflow-x-auto rounded-lg bg-white shadow">
-        <table className="min-w-full divide-y divide-gray-200">
+        <table className="min-w-full divide-y divide-gray-200 text-sm md:table hidden">
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
@@ -226,7 +226,79 @@ export default function TeamTable({
         </table>
       </div>
 
-      {meta.totalPages > 1 && (
+      <div className="md:hidden space-y-4">
+        {teams.map((team) => (
+          <div
+            key={team.id}
+            className="rounded-lg border p-4 shadow-sm bg-white"
+          >
+            <div className="flex items-center gap-3">
+              {team.photoUrl ? (
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.photoUrl}`}
+                  alt={team.teamName}
+                  width={40}
+                  height={40}
+                  className="rounded-full object-cover h-10 w-10"
+                />
+              ) : (
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 text-xs text-gray-400">
+                  N/A
+                </div>
+              )}
+              <div className="flex-1">
+                <p className="font-medium text-gray-900">{team.teamName}</p>
+                <p className="text-xs text-gray-500">{team.category}</p>
+              </div>
+            </div>
+            <div className="mt-2 text-sm text-gray-500">
+              Team #: {team.queueNumber}
+            </div>
+            <div className="text-sm">
+              <span
+                className={`inline-block mt-1 rounded-full px-2 py-0.5 text-xs font-medium ${
+                  team.paymentStatus === "paid"
+                    ? "bg-green-100 text-green-800"
+                    : "bg-yellow-100 text-yellow-800"
+                }`}
+              >
+                {team.paymentStatus}
+              </span>
+            </div>
+            {team.submissionLink && (
+              <button
+                onClick={() =>
+                  setPreviewUrl(
+                    `${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.submissionLink}`
+                  )
+                }
+                className="mt-2 text-sm text-blue-600 hover:underline"
+              >
+                View Submission
+              </button>
+            )}
+            <div className="flex justify-end gap-3 pt-2">
+              <button
+                className="text-blue-600"
+                onClick={() => {
+                  setEditData(team);
+                  setShowForm(true);
+                }}
+              >
+                <Pencil size={16} />
+              </button>
+              <button
+                className="text-red-600"
+                onClick={() => handleDelete(team.id)}
+              >
+                <Trash2 size={16} />
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {meta?.totalPages > 1 && (
         <Pagination
           paginate={{
             currentPage: meta.page,

@@ -22,7 +22,7 @@ export default function PaymentLogDashboard() {
   return (
     <ProtectedRoute allowedRoles={["admin"]}>
       <div className="space-y-4">
-        <h1 className="text-2xl font-bold text-gray-800">Email Logs</h1>
+        <h1 className="text-2xl font-bold text-gray-800">Payment Logs</h1>
         <PaymentVerifiedLogTable
           paymentVerifieds={data?.data}
           key={data?.data?.id}

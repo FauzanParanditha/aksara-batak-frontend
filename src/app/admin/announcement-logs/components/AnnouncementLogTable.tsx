@@ -63,7 +63,7 @@ export default function AnnouncementLogTable({
       </div>
 
       <div className="overflow-x-auto rounded-lg bg-white shadow">
-        <table className="min-w-full divide-y divide-gray-200">
+        <table className="min-w-full divide-y divide-gray-200 text-sm md:table hidden">
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
@@ -110,6 +110,27 @@ export default function AnnouncementLogTable({
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Mobile card view */}
+      <div className="md:hidden space-y-4">
+        {announcementLogs.length === 0 ? (
+          <p className="text-center text-gray-500">Data Not Found</p>
+        ) : (
+          announcementLogs.map((log) => (
+            <div
+              key={log.id}
+              className="rounded-lg border p-4 shadow-sm bg-white space-y-1"
+            >
+              <h3 className="font-semibold text-gray-800">{log.title}</h3>
+              <p className="text-sm text-gray-600">{log.content}</p>
+              <div className="text-sm text-gray-500">Target: {log.target}</div>
+              <div className="text-xs text-gray-400">
+                {new Date(log.createdAt).toLocaleString()}
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       {meta.totalPages > 1 && (

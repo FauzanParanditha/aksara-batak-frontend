@@ -102,7 +102,7 @@ export default function AddMemberToTeam({
   };
 
   return (
-    <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/30">
+    <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/30 p-4 overflow-y-auto">
       <div className="relative w-full max-w-md rounded-lg bg-white p-6 shadow">
         <h2 className="mb-2 text-lg font-semibold">
           {initialData ? "Update Member" : "Add Member"}

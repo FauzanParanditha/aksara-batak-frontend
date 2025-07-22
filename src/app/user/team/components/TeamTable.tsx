@@ -136,7 +136,7 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="grid md:flex items-center md:justify-between gap-5">
         <form onSubmit={handleSearch} className="flex items-center gap-2">
           <FormInput
             type="text"
@@ -176,7 +176,7 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
       </div>
 
       <div className="overflow-x-auto rounded-lg bg-white shadow">
-        <table className="min-w-full divide-y divide-gray-200">
+        <table className="min-w-full divide-y divide-gray-200 text-sm md:table hidden">
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
@@ -297,6 +297,90 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
         </table>
       </div>
 
+      <div className="md:hidden space-y-4">
+        {!team ? (
+          <div className="rounded border p-4 text-center text-sm text-gray-500">
+            Data not found
+          </div>
+        ) : (
+          <div className="rounded border p-4 shadow">
+            <div className="flex items-center gap-4">
+              {team.photoUrl ? (
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.photoUrl}`}
+                  alt={team.teamName}
+                  width={50}
+                  height={50}
+                  className="rounded-full object-cover"
+                />
+              ) : (
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200 text-xs text-gray-400">
+                  N/A
+                </div>
+              )}
+              <div>
+                <div className="text-sm font-semibold">{team.teamName}</div>
+                <div className="text-xs text-gray-500">{team.category}</div>
+              </div>
+            </div>
+            <div className="mt-3 space-y-1 text-sm text-gray-700">
+              <div>
+                <span className="font-medium">Queue:</span>{" "}
+                {team.queueNumber || 0}
+              </div>
+              <div>
+                <span className="font-medium">Payment:</span>{" "}
+                <span
+                  className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${
+                    team.paymentStatus == "paid"
+                      ? "bg-green-100 text-green-800"
+                      : "bg-yellow-100 text-yellow-800"
+                  }`}
+                >
+                  {team.paymentStatus}
+                </span>
+              </div>
+              <div>
+                <span className="font-medium">Submission:</span>{" "}
+                {team.submissionLink ? (
+                  <button
+                    onClick={() =>
+                      setPreviewUrl(
+                        `${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.submissionLink}`
+                      )
+                    }
+                    className="text-blue-600 underline"
+                  >
+                    View
+                  </button>
+                ) : (
+                  <span className="text-red-500">No Submission</span>
+                )}
+              </div>
+            </div>
+            <div className="mt-4 flex gap-3">
+              <button
+                className="flex-1 rounded bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-700"
+                onClick={() => {
+                  setEditData(team);
+                  setShowForm(true);
+                }}
+              >
+                <Pencil size={14} className="inline-block mr-1" />
+                Edit
+              </button>
+              <button
+                className="flex-1 rounded bg-red-600 px-3 py-1.5 text-sm text-white hover:bg-red-700"
+                onClick={() => handleDelete(team.id)}
+              >
+                <Trash2 size={14} className="inline-block mr-1" />
+                Delete
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h3 className="text-md mb-2 font-medium">Member in this Team</h3>
@@ -310,7 +394,7 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
           )}
         </div>
         <div className="mt-6 overflow-x-auto rounded-lg bg-white shadow">
-          <table className="min-w-full divide-y divide-gray-200">
+          <table className="min-w-full divide-y divide-gray-200 text-sm md:table hidden">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
@@ -392,6 +476,69 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
             </tbody>
           </table>
         </div>
+      </div>
+
+      <div className="md:hidden space-y-4">
+        {!members ? (
+          <div className="rounded border p-4 text-center text-sm text-gray-500">
+            Data not found
+          </div>
+        ) : (
+          members?.map((m: Member, idx: number) => (
+            <div className="rounded border p-4 shadow" key={idx}>
+              <div className="flex items-center gap-4">
+                <div>
+                  <div className="text-sm font-semibold">{m.fullName}</div>
+                  <div className="text-xs text-gray-500">{m.email}</div>
+                </div>
+              </div>
+              <div className="mt-3 space-y-1 text-sm text-gray-700">
+                <div>
+                  <span className="font-medium">Institution:</span>{" "}
+                  {m.institution}
+                </div>
+                <div>
+                  <span className="font-medium">Role in Team:</span>{" "}
+                  {m.roleInTeam}
+                </div>
+              </div>
+              <div className="mt-4 flex gap-3">
+                {m.roleInTeam === "Leader" ? (
+                  <button
+                    className="flex-1 rounded bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-700"
+                    onClick={() => {
+                      setEditDataMember(m);
+                      setShowForm(true);
+                    }}
+                  >
+                    <Pencil size={14} className="inline-block mr-1" />
+                    Edit
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      className="flex-1 rounded bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-700"
+                      onClick={() => {
+                        setEditDataMember(m);
+                        setShowFormMember(true);
+                      }}
+                    >
+                      <Pencil size={16} className="inline-block mr-1" />
+                      Edit
+                    </button>
+                    <button
+                      className="flex-1 rounded bg-red-600 px-3 py-1.5 text-sm text-white hover:bg-red-700"
+                      onClick={() => handleDelete(team.id)}
+                    >
+                      <Trash2 size={16} className="inline-block mr-1" />
+                      Delete
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       {showForm && (
