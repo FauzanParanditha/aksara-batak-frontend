@@ -6,7 +6,7 @@ import Pagination from "@/components/frontend/Pagination";
 import { toast } from "@/hooks/use-toast";
 import clientAxios from "@/lib/axios/client";
 import { useHandleAxiosError } from "@/lib/handleError";
-import { Pencil, Search, Trash2, X } from "lucide-react";
+import { Search, X } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { mutate } from "swr";
@@ -18,7 +18,9 @@ interface Team {
   category: string;
   institution: string;
   queueNumber: string;
-  paymentStatus: string;
+  scores: {
+    score: number;
+  };
   submissionLink?: string;
   photoUrl?: string;
 }
@@ -48,33 +50,12 @@ export default function TeamTable({
   const [editData, setEditData] = useState<Team | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const handleAxiosError = useHandleAxiosError();
+  const isPdf = previewUrl?.toLowerCase().endsWith(".pdf");
   const confirm = useConfirmDialog();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (onSearch) onSearch(searchQuery);
-  };
-
-  const handleAddClick = () => {
-    setShowForm(true);
-  };
-
-  const handleDelete = async (id: string) => {
-    const isConfirmed = await confirm({
-      title: "Delete Team?",
-      description:
-        "Are you sure you want to delete this team? This action cannot be undone.",
-      confirmText: "Delete",
-      cancelText: "Cancel",
-    });
-    if (!isConfirmed) return;
-    try {
-      await clientAxios.delete(`/v1/teams/${id}`);
-      await mutate(`/v1/teams?&search=${searchQuery}`);
-      toast({ title: "Team delete successfully" });
-    } catch (error) {
-      handleAxiosError(error);
-    }
   };
 
   return (
@@ -120,10 +101,10 @@ export default function TeamTable({
                 Team Number
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
-                Payment Status
+                Submission
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
-                Submission
+                Score
               </th>
               <th className="px-6 py-3 text-right text-xs font-medium uppercase text-gray-500">
                 Actions
@@ -177,17 +158,6 @@ export default function TeamTable({
                   {team.queueNumber}
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-500">
-                  <span
-                    className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
-                      team.paymentStatus == "paid"
-                        ? "bg-green-100 text-green-800"
-                        : "bg-yellow-100 text-yellow-800"
-                    }`}
-                  >
-                    {team.paymentStatus}
-                  </span>
-                </td>
-                <td className="px-6 py-4 text-sm text-gray-500">
                   {team.submissionLink ? (
                     <button
                       onClick={() =>
@@ -203,8 +173,11 @@ export default function TeamTable({
                     <span className="text-red-500">No Submission</span>
                   )}
                 </td>
+                <td className="px-6 py-4 text-sm text-gray-500">
+                  {team.scores.score || 0}
+                </td>
                 <td className="px-6 py-4 text-right space-x-2">
-                  <button
+                  {/* <button
                     className="text-blue-600 hover:text-blue-900"
                     onClick={() => {
                       setEditData(team);
@@ -212,13 +185,7 @@ export default function TeamTable({
                     }}
                   >
                     <Pencil size={16} />
-                  </button>
-                  <button
-                    className="text-red-600 hover:text-red-900"
-                    onClick={() => handleDelete(team.id)}
-                  >
-                    <Trash2 size={16} />
-                  </button>
+                  </button> */}
                 </td>
               </tr>
             ))}
@@ -254,17 +221,7 @@ export default function TeamTable({
             <div className="mt-2 text-sm text-gray-500">
               Team #: {team.queueNumber}
             </div>
-            <div className="text-sm">
-              <span
-                className={`inline-block mt-1 rounded-full px-2 py-0.5 text-xs font-medium ${
-                  team.paymentStatus === "paid"
-                    ? "bg-green-100 text-green-800"
-                    : "bg-yellow-100 text-yellow-800"
-                }`}
-              >
-                {team.paymentStatus}
-              </span>
-            </div>
+            <div className="text-sm">Score: {team.scores.score || 0}</div>
             {team.submissionLink && (
               <button
                 onClick={() =>
@@ -278,7 +235,7 @@ export default function TeamTable({
               </button>
             )}
             <div className="flex justify-end gap-3 pt-2">
-              <button
+              {/* <button
                 className="text-blue-600"
                 onClick={() => {
                   setEditData(team);
@@ -286,13 +243,7 @@ export default function TeamTable({
                 }}
               >
                 <Pencil size={16} />
-              </button>
-              <button
-                className="text-red-600"
-                onClick={() => handleDelete(team.id)}
-              >
-                <Trash2 size={16} />
-              </button>
+              </button> */}
             </div>
           </div>
         ))}
@@ -342,13 +293,21 @@ export default function TeamTable({
             >
               <X size={20} />
             </button>
-            <Image
-              src={previewUrl}
-              alt="Preview"
-              width={600}
-              height={600}
-              className="max-h-[90vh] max-w-[90vw] rounded object-contain shadow-lg"
-            />
+            {isPdf ? (
+              <iframe
+                src={previewUrl}
+                title="PDF Preview"
+                className="h-[90vh] w-[90vw] rounded shadow-lg"
+              />
+            ) : (
+              <Image
+                src={previewUrl}
+                alt="Preview"
+                width={600}
+                height={600}
+                className="max-h-[90vh] max-w-[90vw] rounded object-contain shadow-lg"
+              />
+            )}
           </div>
         </div>
       )}

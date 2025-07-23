@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
 import {
+  Award,
   CheckCircle,
   Clock,
   FileText,
@@ -15,6 +16,14 @@ import {
   Users,
 } from "lucide-react";
 import Link from "next/link";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "./ui/table";
 
 const datas = [
   "Title Slide (Innovation Name)",
@@ -345,6 +354,122 @@ const RulesGuidelines = () => {
                 </AccordionContent>
               </AccordionItem>
 
+              {/* Selection Stages */}
+              <AccordionItem
+                value="selection"
+                className="border border-white/10 rounded-lg bg-white/5 backdrop-blur-sm"
+              >
+                <AccordionTrigger className="px-6 py-4 hover:no-underline group">
+                  <div className="flex items-center space-x-4 text-left">
+                    <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                      <Award className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-white group-hover:text-indigo-300 transition-colors">
+                        Selection Stages & Processes
+                      </h3>
+                      <p className="text-gray-400 text-sm">
+                        Competition stages and evaluation criteria
+                      </p>
+                    </div>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-6 pt-2">
+                  <div className="space-y-6 text-gray-300">
+                    <div className="grid gap-4">
+                      {/* Stage 1: Online Selection */}
+                      <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                        <h4 className="font-semibold text-purple-300 mb-3">
+                          Stage 1: Online Selection
+                        </h4>
+                        <div className="space-y-2 text-sm">
+                          <div className="flex items-start space-x-3">
+                            <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                            <p>
+                              <strong>Participants:</strong> 200 teams or
+                              individuals
+                            </p>
+                          </div>
+                          <div className="flex items-start space-x-3">
+                            <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                            <p>
+                              <strong>Judges:</strong> 5 reviewers (independent
+                              or grouped, e.g., 40 participants per judge)
+                            </p>
+                          </div>
+                          <div className="flex items-start space-x-3">
+                            <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                            <p>
+                              <strong>Assessment:</strong> Based on proposal,
+                              initial prototype, and pitch deck
+                            </p>
+                          </div>
+                          <div className="flex items-start space-x-3">
+                            <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                            <p>
+                              <strong>Scoring:</strong> Cumulative score
+                              determines the top 10 finalists
+                            </p>
+                          </div>
+                          <div className="flex items-start space-x-3">
+                            <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                            <p>
+                              <strong>Criteria:</strong> Innovation, Design,
+                              Market Potential, Technology, and Impact
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Stage 2: Offline Final */}
+                      <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                        <h4 className="font-semibold text-pink-300 mb-3">
+                          Stage 2: Final Selection (Offline)
+                        </h4>
+                        <div className="space-y-2 text-sm">
+                          <div className="flex items-start space-x-3">
+                            <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                            <p>
+                              <strong>Finalists:</strong> Top 10 teams from the
+                              online stage
+                            </p>
+                          </div>
+                          <div className="flex items-start space-x-3">
+                            <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                            <p>
+                              <strong>Judging Panel:</strong> 3 judges (may
+                              differ from previous stage; includes industry
+                              experts, investors, and practitioners)
+                            </p>
+                          </div>
+                          <div className="flex items-start space-x-3">
+                            <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                            <p>
+                              <strong>Format:</strong> Live demo, pitch
+                              presentation, and Q&A session
+                            </p>
+                          </div>
+                          <div className="flex items-start space-x-3">
+                            <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                            <p>
+                              <strong>Evaluation Focus:</strong> Business
+                              viability, user feedback, and sustainability plans
+                            </p>
+                          </div>
+                          <div className="flex items-start space-x-3">
+                            <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                            <p>
+                              <strong>Outcome:</strong> 3 main winners selected
+                              (1st, 2nd, and 3rd place)
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
               {/* Judging Criteria */}
               <AccordionItem
                 value="judging"
@@ -360,52 +485,117 @@ const RulesGuidelines = () => {
                         Judging Criteria
                       </h3>
                       <p className="text-gray-400 text-sm">
-                        How projects will be evaluated
+                        Evaluation categories, descriptions, and weights
                       </p>
                     </div>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="px-6 pb-6 pt-2">
                   <div className="space-y-6 text-gray-300">
-                    <div>
-                      {/* <h4 className="font-semibold text-green-300 mb-3">
-                        Technical Requirements
-                      </h4> */}
-                      <div className="space-y-3">
-                        <div className="flex items-start space-x-3">
-                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-                          <p>Uniqueness</p>
-                        </div>
-                        <div className="flex items-start space-x-3">
-                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-                          <p>Proof of concept</p>
-                        </div>
-                        <div className="flex items-start space-x-3">
-                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-                          <p>Functionalities/features</p>
-                        </div>
-                        <div className="flex items-start space-x-3">
-                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-                          <p>Product quality</p>
-                        </div>
-                        <div className="flex items-start space-x-3">
-                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-                          <p>Presentation</p>
-                        </div>
-                        <div className="flex items-start space-x-3">
-                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-                          <p>Impact</p>
-                        </div>
-                        <div className="flex items-start space-x-3">
-                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-                          <p>Innovation</p>
-                        </div>
-                        <div className="flex items-start space-x-3">
-                          <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-                          <p>Commercial potential</p>
-                        </div>
-                      </div>
+                    <div className="bg-white/5 rounded-lg border border-white/10 overflow-hidden">
+                      <Table>
+                        <TableHeader>
+                          <TableRow className="border-white/10 hover:bg-white/5">
+                            <TableHead className="text-orange-300 font-semibold">
+                              Criteria
+                            </TableHead>
+                            <TableHead className="text-orange-300 font-semibold">
+                              Description
+                            </TableHead>
+                            <TableHead className="text-orange-300 font-semibold text-center">
+                              Weight (%)
+                            </TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          <TableRow className="border-white/10 hover:bg-white/5">
+                            <TableCell className="font-medium text-red-300">
+                              Usefulness & Relevance
+                            </TableCell>
+                            <TableCell className="text-sm">
+                              To what extent the product addresses real-world
+                              needs or enhances user efficiency and experience.
+                            </TableCell>
+                            <TableCell className="text-center font-semibold text-red-300">
+                              25%
+                            </TableCell>
+                          </TableRow>
+                          <TableRow className="border-white/10 hover:bg-white/5">
+                            <TableCell className="font-medium text-pink-300">
+                              Design & User Experience
+                            </TableCell>
+                            <TableCell className="text-sm">
+                              Interface quality, ease of use, aesthetics, and
+                              inclusive design.
+                            </TableCell>
+                            <TableCell className="text-center font-semibold text-pink-300">
+                              20%
+                            </TableCell>
+                          </TableRow>
+                          <TableRow className="border-white/10 hover:bg-white/5">
+                            <TableCell className="font-medium text-purple-300">
+                              Performance & Technical Stability
+                            </TableCell>
+                            <TableCell className="text-sm">
+                              Speed, reliability, security, and cross-platform
+                              or device compatibility.
+                            </TableCell>
+                            <TableCell className="text-center font-semibold text-purple-300">
+                              20%
+                            </TableCell>
+                          </TableRow>
+                          <TableRow className="border-white/10 hover:bg-white/5">
+                            <TableCell className="font-medium text-blue-300">
+                              Innovation & Differentiation
+                            </TableCell>
+                            <TableCell className="text-sm">
+                              Novelty of the idea, uniqueness of the technical
+                              approach, and advantage over similar products.
+                            </TableCell>
+                            <TableCell className="text-center font-semibold text-blue-300">
+                              20%
+                            </TableCell>
+                          </TableRow>
+                          <TableRow className="border-white/10 hover:bg-white/5">
+                            <TableCell className="font-medium text-yellow-300">
+                              Impact & Scalability Potential
+                            </TableCell>
+                            <TableCell className="text-sm">
+                              How impactful the product is and its potential to
+                              scale and reach wider audiences.
+                            </TableCell>
+                            <TableCell className="text-center font-semibold text-yellow-300">
+                              15%
+                            </TableCell>
+                          </TableRow>
+                        </TableBody>
+                      </Table>
                     </div>
+
+                    {/* <div className="bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-500/20 rounded-lg p-4">
+                      <h4 className="font-semibold text-orange-300 mb-2">
+                        Scoring Process
+                      </h4>
+                      <div className="space-y-2 text-sm">
+                        <p>
+                          • <strong>Scale:</strong> Each criterion is scored
+                          from 1 to 10 by individual judges
+                        </p>
+                        <p>
+                          • <strong>Calculation:</strong> Final score is
+                          calculated as a weighted average based on the
+                          percentages above
+                        </p>
+                        <p>
+                          • <strong>Judging Panel:</strong> Composed of industry
+                          experts, investors, and experienced practitioners
+                        </p>
+                        <p>
+                          • <strong>Final Result:</strong> Teams with the
+                          highest total score will be selected as winners
+                        </p>
+                      </div>
+                    </div> */}
                   </div>
                 </AccordionContent>
               </AccordionItem>

@@ -20,6 +20,9 @@ interface Team {
   category: string;
   institution: string;
   queueNumber: string;
+  scores: {
+    score: number;
+  };
   paymentStatus: string;
   submissionLink?: string;
   photoUrl?: string;
@@ -192,6 +195,9 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
                 Team number
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                Score
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
                 Payment Status
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
@@ -206,7 +212,7 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
             {!team ? (
               <tr>
                 <td
-                  colSpan={7}
+                  colSpan={8}
                   className="whitespace-nowrap px-6 py-4 text-center"
                 >
                   Data not found
@@ -246,6 +252,9 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-500">
                   {team.queueNumber || 0}
+                </td>
+                <td className="px-6 py-4 text-sm text-gray-500">
+                  {team.scores?.score || 0}
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-500">
                   <span
@@ -328,6 +337,7 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
                 <span className="font-medium">Queue:</span>{" "}
                 {team.queueNumber || 0}
               </div>
+              <div className="text-sm">Score: {team.scores?.score || 0}</div>
               <div>
                 <span className="font-medium">Payment:</span>{" "}
                 <span

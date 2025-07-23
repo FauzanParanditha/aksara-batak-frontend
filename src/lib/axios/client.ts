@@ -35,7 +35,7 @@ clientAxios.interceptors.response.use(
       const isAdmin = pathname.startsWith("/admin");
       const isLeader = pathname.startsWith("/user");
       const status = error?.response?.status;
-
+      console.log(pathname);
       if (status === 401) {
         deleteCookie(
           isAdmin
