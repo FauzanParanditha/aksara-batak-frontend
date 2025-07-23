@@ -1,15 +1,13 @@
 "use client";
 
 import { ProtectedRoute } from "@/app/user/components/ProtectedRole";
-import FullScreenLoader from "@/components/frontend/FullScreenLoader";
-import useSWR from "swr";
 
 export default function AdminDashboard() {
-  const { data, isLoading } = useSWR("/v1/dashboard/stats/admin");
+  // const { data, isLoading } = useSWR("/v1/dashboard/stats/admin");
 
-  if (isLoading || !data) {
-    return <FullScreenLoader />;
-  }
+  // if (isLoading || !data) {
+  //   return <FullScreenLoader />;
+  // }
 
   return (
     <ProtectedRoute allowedRoles={["admin"]}>
