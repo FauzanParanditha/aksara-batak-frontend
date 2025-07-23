@@ -115,18 +115,22 @@ export default function PaymentTable({
             />
           </div>
           <div>
-            <Label>Payment Amount</Label>
-            <Input
-              value={`Rp ${amount.toLocaleString()}`}
-              readOnly
-              className="bg-gray-100 cursor-not-allowed"
-            />
+            {payments.map((pay) => (
+              <div className="" key={pay.id}>
+                <Label>Payment Amount</Label>
+                <Input
+                  value={`Rp ${pay.amount}`}
+                  readOnly
+                  className="bg-gray-100 cursor-not-allowed"
+                />
+              </div>
+            ))}
           </div>
         </CardContent>
       </Card>
 
       <div className="hidden md:block overflow-x-auto rounded-lg bg-white shadow">
-        <table className="min-w-full divide-y divide-gray-200 text-sm md:hidden hidden">
+        <table className="min-w-full divide-y divide-gray-200 text-sm md:table hidden">
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
@@ -261,7 +265,7 @@ export default function PaymentTable({
               await clientAxios.post("/v1/payments/manual", formData);
 
               toast({
-                title: `Proof of payment for VA ${vaNumber} in the amount of Rp${amount.toLocaleString()} has been successfully uploaded.`,
+                title: `Proof of payment for Account Number ${vaNumber} has been successfully uploaded.`,
               });
 
               await mutate(`/v1/payments?&search=${searchQuery}`);
