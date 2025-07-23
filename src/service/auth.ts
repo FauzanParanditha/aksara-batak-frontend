@@ -12,7 +12,9 @@ export const loginForm = async (email: string, password: string) => {
     user.accessTokenName ?? // Jika disediakan langsung oleh backend
     (user.role === "admin"
       ? jwtConfig.admin.accessTokenName
-      : jwtConfig.user?.accessTokenName ?? "token");
+      : user.role === "leader"
+      ? jwtConfig.user?.accessTokenName
+      : "_jDTkn");
 
   setCookie(accessTokenName, token, {
     maxAge: 60 * 60 * 24,

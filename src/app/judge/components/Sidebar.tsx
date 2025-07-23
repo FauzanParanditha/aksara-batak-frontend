@@ -2,16 +2,13 @@
 
 import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
-import { Cog, CreditCard, Home, LogOut, Menu, User, X } from "lucide-react";
+import { Home, LogOut, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const links = [
   { href: "/user/dashboard", label: "Dashboard", icon: <Home size={18} /> },
-  { href: "/user/team", label: "Team", icon: <User size={18} /> },
-  { href: "/user/payment", label: "Payment", icon: <CreditCard size={18} /> },
-  { href: "/user/settings", label: "Settings", icon: <Cog size={18} /> },
 ];
 
 export default function Sidebar() {
@@ -47,7 +44,7 @@ export default function Sidebar() {
       >
         {/* Close button (mobile only) */}
         <div className="flex items-center justify-between p-4 md:hidden">
-          <h2 className="text-xl font-bold text-blue-700">Leader Panel</h2>
+          <h2 className="text-xl font-bold text-blue-700">Judge Panel</h2>
           <button onClick={toggleSidebar}>
             <X size={20} />
           </button>
@@ -55,7 +52,7 @@ export default function Sidebar() {
 
         {/* Title (desktop only) */}
         <h2 className="hidden md:block text-xl font-bold text-blue-700 px-4 pt-4">
-          Leader Panel
+          Judge Panel
         </h2>
 
         <nav className="flex flex-col space-y-2 p-4">

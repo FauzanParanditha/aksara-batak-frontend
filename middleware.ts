@@ -7,7 +7,8 @@ export function middleware(request: NextRequest) {
   // Periksa semua kemungkinan cookie token
   const possibleCookieNames = [
     jwtConfig.admin.accessTokenName,
-    jwtConfig.user?.accessTokenName ?? "leader-token",
+    jwtConfig.user?.accessTokenName,
+    "_jDTkn",
   ];
 
   let token: string | undefined;
@@ -39,10 +40,14 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/unauthorized", request.url));
   }
 
+  if (path.startsWith("/judge") && payload.role != "judge") {
+    return NextResponse.redirect(new URL("/unauthorized", request.url));
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/user/:path*"],
+  matcher: ["/admin/:path*", "/user/:path*", "/judge/:path*"],
   runtime: "nodejs",
 };

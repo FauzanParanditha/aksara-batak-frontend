@@ -15,6 +15,7 @@ import {
 export enum UserRole {
   Admin = "admin",
   Leader = "leader",
+  Judge = "judge",
 }
 
 interface AuthContextType {
@@ -30,9 +31,9 @@ const getAccessTokenNameForRole = (role?: string): string => {
     case UserRole.Admin:
       return jwtConfig.admin.accessTokenName;
     case UserRole.Leader:
-      return jwtConfig.user?.accessTokenName ?? "leader-token";
+      return jwtConfig.user?.accessTokenName;
     default:
-      return "token"; // fallback
+      return "_jDTkn"; // fallback
   }
 };
 
@@ -59,7 +60,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setToken(newToken);
       setUser(user);
       setIsAuthenticated(true);
-
       switch (user.role) {
         case UserRole.Admin:
           router.push("/admin/dashboard");
@@ -67,6 +67,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         case UserRole.Leader:
           router.push("/user/dashboard");
           break;
+        case UserRole.Judge:
+          router.push("/judge/dashboard");
         default:
           router.push("/");
       }
@@ -78,7 +80,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const logout = useCallback(() => {
     // Hapus semua kemungkinan token
     deleteCookie(jwtConfig.admin.accessTokenName);
-    deleteCookie(jwtConfig.user?.accessTokenName ?? "leader-token");
+    deleteCookie(jwtConfig.user?.accessTokenName);
+    deleteCookie("_jDTkn");
 
     setToken(null);
     setUser(null);
@@ -90,7 +93,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     // Coba baca token dari semua kemungkinan lokasi
     const tryTokens = [
       jwtConfig.admin.accessTokenName,
-      jwtConfig.user?.accessTokenName ?? "leader-token",
+      jwtConfig.user?.accessTokenName,
+      "_jDTkn",
     ];
 
     for (const name of tryTokens) {
