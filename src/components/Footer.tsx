@@ -50,7 +50,7 @@ const Footer = () => {
             <ul className="space-y-2 text-gray-400">
               <li>
                 <a
-                  href="#"
+                  href="#about"
                   className="hover:text-purple-400 transition-colors duration-300"
                 >
                   About
@@ -58,7 +58,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="#timeline"
                   className="hover:text-purple-400 transition-colors duration-300"
                 >
                   Timeline
@@ -66,7 +66,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="#prizes"
                   className="hover:text-purple-400 transition-colors duration-300"
                 >
                   Prizes
@@ -87,7 +87,12 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-gray-400">
-              <li>📧 info@developerday.id</li>
+              <a
+                href="mailto:info@developerday.id"
+                className="text-purple-400 hover:text-purple-300 font-semibold transition-colors duration-300"
+              >
+                📧 info@developerday.id
+              </a>
               {/* <li>📱 +1 (555) 123-4567</li> */}
               <li>📍 Tangerang, Indonesia</li>
               {/* <li>💬 Join our Discord</li> */}

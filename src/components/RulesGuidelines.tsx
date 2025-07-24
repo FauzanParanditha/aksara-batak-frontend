@@ -212,7 +212,7 @@ const RulesGuidelines = () => {
                           <strong>Judging:</strong> August 25-26, 2025
                         </p>
                         <p className="text-sm">
-                          <strong>Winners:</strong> September 1-2, 2025
+                          <strong>Winners:</strong> September 16-17, 2025
                         </p>
                       </div>
                     </div>

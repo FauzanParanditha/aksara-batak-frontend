@@ -21,8 +21,13 @@ interface Team {
   institution: string;
   queueNumber: string;
   scores: {
+    id: string;
+    judgeId: string;
+    teamId: string;
+    criteria: string;
     score: number;
-  };
+    comment: string;
+  }[];
   paymentStatus: string;
   submissionLink?: string;
   photoUrl?: string;
@@ -254,7 +259,7 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
                   {team.queueNumber || 0}
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-500">
-                  {team.scores?.score || 0}
+                  {team.scores?.reduce((acc, s) => acc + s.score, 0) || 0}
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-500">
                   <span
@@ -337,7 +342,9 @@ export default function TeamTable({ team, onSearch }: TeamTableProps) {
                 <span className="font-medium">Queue:</span>{" "}
                 {team.queueNumber || 0}
               </div>
-              <div className="text-sm">Score: {team.scores?.score || 0}</div>
+              <div className="text-sm">
+                Score: {team.scores?.reduce((acc, s) => acc + s.score, 0) || 0}
+              </div>
               <div>
                 <span className="font-medium">Payment:</span>{" "}
                 <span

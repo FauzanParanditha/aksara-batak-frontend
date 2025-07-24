@@ -6,11 +6,11 @@ import Pagination from "@/components/frontend/Pagination";
 import { toast } from "@/hooks/use-toast";
 import clientAxios from "@/lib/axios/client";
 import { useHandleAxiosError } from "@/lib/handleError";
-import { Search, X } from "lucide-react";
+import { Download, Pencil, Search, X } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { mutate } from "swr";
-import TeamForm from "./TeamForm";
+import JudgeScoreForm from "./JudgeForm";
 
 interface Team {
   id: string;
@@ -19,8 +19,13 @@ interface Team {
   institution: string;
   queueNumber: string;
   scores: {
+    id: string;
+    judgeId: string;
+    teamId: string;
+    criteria: string;
     score: number;
-  };
+    comment: string;
+  }[];
   submissionLink?: string;
   photoUrl?: string;
 }
@@ -159,25 +164,35 @@ export default function TeamTable({
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-500">
                   {team.submissionLink ? (
-                    <button
-                      onClick={() =>
-                        setPreviewUrl(
-                          `${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.submissionLink}`
-                        )
-                      }
-                      className="text-blue-600 hover:text-blue-900"
-                    >
-                      View Submission
-                    </button>
+                    <div className="flex flex-row gap-4">
+                      <button
+                        onClick={() =>
+                          setPreviewUrl(
+                            `${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.submissionLink}`
+                          )
+                        }
+                        className="text-blue-600 hover:text-blue-900"
+                      >
+                        View Submission
+                      </button>
+                      <button className="hover:text-blue-600">
+                        <a
+                          href={`${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.submissionLink}`}
+                        >
+                          <Download />{" "}
+                        </a>
+                      </button>
+                    </div>
                   ) : (
                     <span className="text-red-500">No Submission</span>
                   )}
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-500">
-                  {team.scores.score || 0}
+                  {team.scores?.reduce((acc, s) => acc + s.score, 0) || 0}
                 </td>
+
                 <td className="px-6 py-4 text-right space-x-2">
-                  {/* <button
+                  <button
                     className="text-blue-600 hover:text-blue-900"
                     onClick={() => {
                       setEditData(team);
@@ -185,7 +200,7 @@ export default function TeamTable({
                     }}
                   >
                     <Pencil size={16} />
-                  </button> */}
+                  </button>
                 </td>
               </tr>
             ))}
@@ -221,21 +236,32 @@ export default function TeamTable({
             <div className="mt-2 text-sm text-gray-500">
               Team #: {team.queueNumber}
             </div>
-            <div className="text-sm">Score: {team.scores.score || 0}</div>
+            <div className="text-sm">
+              Score: {team.scores?.reduce((acc, s) => acc + s.score, 0) || 0}
+            </div>
             {team.submissionLink && (
-              <button
-                onClick={() =>
-                  setPreviewUrl(
-                    `${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.submissionLink}`
-                  )
-                }
-                className="mt-2 text-sm text-blue-600 hover:underline"
-              >
-                View Submission
-              </button>
+              <div className="flex flex-row gap-2">
+                <button
+                  onClick={() =>
+                    setPreviewUrl(
+                      `${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.submissionLink}`
+                    )
+                  }
+                  className="mt-2 text-sm text-blue-600 hover:underline"
+                >
+                  View Submission
+                </button>
+                <button className="hover:text-blue-600">
+                  <a
+                    href={`${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.submissionLink}`}
+                  >
+                    <Download />{" "}
+                  </a>
+                </button>
+              </div>
             )}
             <div className="flex justify-end gap-3 pt-2">
-              {/* <button
+              <button
                 className="text-blue-600"
                 onClick={() => {
                   setEditData(team);
@@ -243,7 +269,7 @@ export default function TeamTable({
                 }}
               >
                 <Pencil size={16} />
-              </button> */}
+              </button>
             </div>
           </div>
         ))}
@@ -262,19 +288,18 @@ export default function TeamTable({
         />
       )}
 
-      {showForm && (
-        <TeamForm
-          initialData={editData || undefined}
+      {showForm && editData && (
+        <JudgeScoreForm
+          teamName={editData.teamName}
           onClose={() => setShowForm(false)}
-          onSubmit={async (formData) => {
+          onSubmit={async ({ scores, comments }) => {
             try {
-              if (editData?.id) {
-                await clientAxios.put(`/v1/teams/${editData.id}`, formData);
-                toast({ title: "Team updated successfully" });
-              } else {
-                await clientAxios.post(`/v1/teams`, formData);
-                toast({ title: "Successfully added team" });
-              }
+              await clientAxios.post("/v1/scores", {
+                teamId: editData.id,
+                scores,
+                comments,
+              });
+              toast({ title: "Skor berhasil disimpan" });
               await mutate(`/v1/teams?&search=${searchQuery}`);
               setShowForm(false);
             } catch (err) {

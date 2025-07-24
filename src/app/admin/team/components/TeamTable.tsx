@@ -18,6 +18,14 @@ interface Team {
   category: string;
   institution: string;
   queueNumber: string;
+  scores: {
+    id: string;
+    judgeId: string;
+    teamId: string;
+    criteria: string;
+    score: number;
+    comment: string;
+  }[];
   paymentStatus: string;
   submissionLink?: string;
   photoUrl?: string;
@@ -125,6 +133,9 @@ export default function TeamTable({
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
                 Submission
               </th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                Score
+              </th>
               <th className="px-6 py-3 text-right text-xs font-medium uppercase text-gray-500">
                 Actions
               </th>
@@ -203,6 +214,9 @@ export default function TeamTable({
                     <span className="text-red-500">No Submission</span>
                   )}
                 </td>
+                <td className="px-6 py-4 text-sm text-gray-500">
+                  {team.scores?.reduce((acc, s) => acc + s.score, 0) || 0}
+                </td>
                 <td className="px-6 py-4 text-right space-x-2">
                   <button
                     className="text-blue-600 hover:text-blue-900"
@@ -253,6 +267,9 @@ export default function TeamTable({
             </div>
             <div className="mt-2 text-sm text-gray-500">
               Team #: {team.queueNumber}
+            </div>
+            <div className="text-sm">
+              Score: {team.scores?.reduce((acc, s) => acc + s.score, 0) || 0}
             </div>
             <div className="text-sm">
               <span

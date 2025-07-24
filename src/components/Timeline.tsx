@@ -36,7 +36,7 @@ const Timeline = () => {
     },
     {
       time: "September 16–17, 2025",
-      title: "DeveloperDay.id Finals",
+      title: "DeveloperDay.id Finals at idFest",
       description:
         "Finalists gather to present their projects on-site at idfest.",
       color: "purple",
