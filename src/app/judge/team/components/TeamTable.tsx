@@ -190,18 +190,19 @@ export default function TeamTable({
                 <td className="px-6 py-4 text-sm text-gray-500">
                   {team.scores?.reduce((acc, s) => acc + s.score, 0) || 0}
                 </td>
-
-                <td className="px-6 py-4 text-right space-x-2">
-                  <button
-                    className="text-blue-600 hover:text-blue-900"
-                    onClick={() => {
-                      setEditData(team);
-                      setShowForm(true);
-                    }}
-                  >
-                    <Pencil size={16} />
-                  </button>
-                </td>
+                {team.submissionLink && (
+                  <td className="px-6 py-4 text-right space-x-2">
+                    <button
+                      className="text-blue-600 hover:text-blue-900"
+                      onClick={() => {
+                        setEditData(team);
+                        setShowForm(true);
+                      }}
+                    >
+                      <Pencil size={16} />
+                    </button>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
@@ -260,17 +261,19 @@ export default function TeamTable({
                 </button>
               </div>
             )}
-            <div className="flex justify-end gap-3 pt-2">
-              <button
-                className="text-blue-600"
-                onClick={() => {
-                  setEditData(team);
-                  setShowForm(true);
-                }}
-              >
-                <Pencil size={16} />
-              </button>
-            </div>
+            {team.submissionLink && (
+              <div className="flex justify-end gap-3 pt-2">
+                <button
+                  className="text-blue-600"
+                  onClick={() => {
+                    setEditData(team);
+                    setShowForm(true);
+                  }}
+                >
+                  <Pencil size={16} />
+                </button>
+              </div>
+            )}
           </div>
         ))}
       </div>
