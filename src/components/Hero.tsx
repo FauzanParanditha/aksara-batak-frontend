@@ -168,10 +168,11 @@ const Hero = () => {
           </p>
 
           <p className="text-lg text-white mb-8 max-w-2xl mx-auto">
-            Our mission is to create impactful solutions to solve national
-            challenges in the field of applications, websites, and internet
-            infrastructure driven by the spirit of innovation and digital
-            sovereignty.
+            Developer day .id is a flagship program of idFest 2025, designed as
+            a national-scale tech innovation competition that brings together
+            developers, startups, and students to solve real challenges in
+            digital identity, internet services, and public digital
+            infrastructure.
           </p>
 
           {/* Event details */}
