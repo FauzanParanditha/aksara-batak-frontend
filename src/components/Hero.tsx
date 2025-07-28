@@ -141,12 +141,14 @@ const Hero = () => {
               DEVELOPER DAY
             </span>
           </h1> */}
-          <Image
-            src="/images/banner/banner.png"
-            alt="Banner"
-            width={320}
-            height={320}
-          />
+          <a href="/auth/login">
+            <Image
+              src="/images/banner/banner.png"
+              alt="Banner"
+              width={320}
+              height={320}
+            />
+          </a>
           <div className="relative group">
             <Image
               src="/images/logo/logo2.png"
