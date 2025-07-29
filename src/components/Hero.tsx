@@ -165,9 +165,9 @@ const Hero = () => {
             />
           </div>
 
-          <p className="text-xl md:text-2xl text-white mb-4 max-w-3xl mx-auto">
+          {/* <p className="text-xl md:text-2xl text-white mb-4 max-w-3xl mx-auto">
             Join the developer day road to APICTA Chinese Taipei
-          </p>
+          </p> */}
 
           <p className="text-lg text-white mb-8 max-w-2xl mx-auto">
             Developer day .id is a flagship program of idFest 2025, designed as
