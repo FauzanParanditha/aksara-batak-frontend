@@ -29,6 +29,7 @@ interface Team {
   paymentStatus: string;
   submissionLink?: string;
   photoUrl?: string;
+  weightedScore: number;
 }
 
 interface Meta {
@@ -215,7 +216,8 @@ export default function TeamTable({
                   )}
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-500">
-                  {team.scores?.reduce((acc, s) => acc + s.score, 0) || 0}
+                  {/* {team.scores?.reduce((acc, s) => acc + s.score, 0) || 0} */}
+                  {team.weightedScore}
                 </td>
                 <td className="px-6 py-4 text-right space-x-2">
                   <button

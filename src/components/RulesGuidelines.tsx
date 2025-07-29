@@ -179,7 +179,7 @@ const RulesGuidelines = () => {
                           <strong>Opens:</strong> July 14, 2025
                         </p>
                         <p className="text-sm">
-                          <strong>Closes:</strong> August 14, 2025
+                          <strong>Closes:</strong> August 31, 2025
                         </p>
                       </div>
                       <div className="bg-white/5 rounded-lg p-4 border border-white/10">
@@ -209,10 +209,10 @@ const RulesGuidelines = () => {
                           Results
                         </h4>
                         <p className="text-sm">
-                          <strong>Judging:</strong> August 25-26, 2025
+                          <strong>Judging:</strong> September 9, 2025
                         </p>
                         <p className="text-sm">
-                          <strong>Winners:</strong> September 16-17, 2025
+                          <strong>Winners:</strong> September 17, 2025
                         </p>
                       </div>
                     </div>

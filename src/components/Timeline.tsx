@@ -8,7 +8,7 @@ const Timeline = () => {
       color: "purple",
     },
     {
-      time: "July 14 - August 14, 2025",
+      time: "July 14 - August 31, 2025",
       title: "Registration Period",
       description: "Participants register their teams",
       color: "blue",
@@ -21,21 +21,21 @@ const Timeline = () => {
       color: "pink",
     },
     {
-      time: "August 25-26, 2025",
+      time: "September 2-4, 2025",
       title: "Proposal Selection Phase",
       description:
         "Judges and mentors evaluate submitted proposals to shortlist the most promising ideas.",
       color: "pink",
     },
     {
-      time: "August 26, 2025",
+      time: "September 9, 2025",
       title: "Announcement of Top 10 Teams",
       description:
         "Top 10 selected teams are announced and will advance to the final DeveloperDay stage.",
       color: "green",
     },
     {
-      time: "September 16–17, 2025",
+      time: "September 17, 2025",
       title: "DeveloperDay.id Finals at idFest",
       description:
         "Finalists gather to present their projects on-site at idfest.",

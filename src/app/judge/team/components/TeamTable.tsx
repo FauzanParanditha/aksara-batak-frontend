@@ -28,6 +28,7 @@ interface Team {
   }[];
   submissionLink?: string;
   photoUrl?: string;
+  weightedScore: number;
 }
 
 interface Meta {
@@ -188,21 +189,22 @@ export default function TeamTable({
                   )}
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-500">
-                  {team.scores?.reduce((acc, s) => acc + s.score, 0) || 0}
+                  {/* {team.scores?.reduce((acc, s) => acc + s.score, 0) || 0} */}
+                  {team.weightedScore}
                 </td>
-                {team.submissionLink && (
-                  <td className="px-6 py-4 text-right space-x-2">
-                    <button
-                      className="text-blue-600 hover:text-blue-900"
-                      onClick={() => {
-                        setEditData(team);
-                        setShowForm(true);
-                      }}
-                    >
-                      <Pencil size={16} />
-                    </button>
-                  </td>
-                )}
+                {/* {team.submissionLink && ( */}
+                <td className="px-6 py-4 text-right space-x-2">
+                  <button
+                    className="text-blue-600 hover:text-blue-900"
+                    onClick={() => {
+                      setEditData(team);
+                      setShowForm(true);
+                    }}
+                  >
+                    <Pencil size={16} />
+                  </button>
+                </td>
+                {/* )} */}
               </tr>
             ))}
           </tbody>

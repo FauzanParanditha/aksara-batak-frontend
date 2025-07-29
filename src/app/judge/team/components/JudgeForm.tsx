@@ -100,6 +100,7 @@ export default function JudgeScoreForm({
               rows={4}
               className="w-full rounded border px-3 py-2 text-sm shadow focus:outline-none focus:ring focus:ring-blue-500"
               placeholder="Comment for this team....."
+              required
             />
           </div>
           <div className="flex justify-end">
