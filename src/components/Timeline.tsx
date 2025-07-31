@@ -13,13 +13,13 @@ const Timeline = () => {
       description: "Participants register their teams",
       color: "blue",
     },
-    {
-      time: "August 14-24, 2025",
-      title: "DeveloperDay Begins",
-      description:
-        "The official start of the .id DeveloperDay 2025 competition. Participants submit their proposals, and the journey to become one of the top 10 teams begins.",
-      color: "pink",
-    },
+    // {
+    //   time: "August 14-24, 2025",
+    //   title: "DeveloperDay Begins",
+    //   description:
+    //     "The official start of the .id DeveloperDay 2025 competition. Participants submit their proposals, and the journey to become one of the top 10 teams begins.",
+    //   color: "pink",
+    // },
     {
       time: "September 2-4, 2025",
       title: "Proposal Selection Phase",
