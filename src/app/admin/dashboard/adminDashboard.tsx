@@ -2,7 +2,7 @@
 
 import { ProtectedRoute } from "@/app/user/components/ProtectedRole";
 import FullScreenLoader from "@/components/frontend/FullScreenLoader";
-import { Banknote, HandCoins, Send, User, Users } from "lucide-react";
+import { User } from "lucide-react";
 import useSWR from "swr";
 import StatCard from "./components/StatCard";
 
@@ -22,31 +22,6 @@ export default function AdminDashboard() {
             title="Total Teams"
             value={data?.totalTeams}
             icon={<User />}
-          />
-          <StatCard
-            title="Total Member"
-            value={data?.totalMember}
-            icon={<Users />}
-          />
-          <StatCard
-            title="Total Leader"
-            value={data?.totalLeader}
-            icon={<Users />}
-          />
-          <StatCard
-            title="Waiting Payment"
-            value={data?.waitingPayment}
-            icon={<Banknote />}
-          />
-          <StatCard
-            title="Paid Payment"
-            value={data?.paidPayment}
-            icon={<HandCoins />}
-          />
-          <StatCard
-            title="Submit Submission"
-            value={data?.submission}
-            icon={<Send />}
           />
         </div>
       </div>

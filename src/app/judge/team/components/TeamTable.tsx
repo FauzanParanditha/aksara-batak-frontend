@@ -95,19 +95,7 @@ export default function TeamTable({
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
-                Photo
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
-                Team Name
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
-                Category
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
-                Team Number
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
-                Submission
+                Website Lomba
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
                 Score
@@ -130,63 +118,8 @@ export default function TeamTable({
             )}
             {teams?.map((team) => (
               <tr key={team.id}>
-                <td className="whitespace-nowrap px-6 py-4">
-                  {team.photoUrl ? (
-                    <button
-                      onClick={() =>
-                        setPreviewUrl(
-                          `${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.photoUrl}`
-                        )
-                      }
-                      className="h-10 w-10 overflow-hidden rounded-full border"
-                    >
-                      <Image
-                        src={`${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.photoUrl}`}
-                        alt={team.teamName}
-                        width={40}
-                        height={40}
-                        className="rounded-full object-cover"
-                      />
-                    </button>
-                  ) : (
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 text-xs text-gray-400">
-                      N/A
-                    </div>
-                  )}
-                </td>
                 <td className="px-6 py-4 text-sm font-medium text-gray-900">
                   {team.teamName}
-                </td>
-                <td className="px-6 py-4 text-sm text-gray-500">
-                  {team.category}
-                </td>
-                <td className="px-6 py-4 text-sm text-gray-500">
-                  {team.queueNumber}
-                </td>
-                <td className="px-6 py-4 text-sm text-gray-500">
-                  {team.submissionLink ? (
-                    <div className="flex flex-row gap-4">
-                      <button
-                        onClick={() =>
-                          setPreviewUrl(
-                            `${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.submissionLink}`
-                          )
-                        }
-                        className="text-blue-600 hover:text-blue-900"
-                      >
-                        View Submission
-                      </button>
-                      <button className="hover:text-blue-600">
-                        <a
-                          href={`${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.submissionLink}`}
-                        >
-                          <Download />{" "}
-                        </a>
-                      </button>
-                    </div>
-                  ) : (
-                    <span className="text-red-500">No Submission</span>
-                  )}
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-500">
                   {/* {team.scores?.reduce((acc, s) => acc + s.score, 0) || 0} */}

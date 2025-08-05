@@ -3,19 +3,12 @@
 import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
 import {
-  Banknote,
-  Bell,
   Cog,
-  CreditCard,
+  Globe,
   Home,
   LogOut,
-  Mail,
-  Megaphone,
   Menu,
-  SquareUser,
-  User,
-  Users,
-  X,
+  X
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -23,34 +16,34 @@ import { useState } from "react";
 
 const links = [
   { href: "/admin/dashboard", label: "Dashboard", icon: <Home size={18} /> },
-  { href: "/admin/leaders", label: "Leaders", icon: <SquareUser size={18} /> },
-  { href: "/admin/team", label: "Teams", icon: <User size={18} /> },
-  {
-    href: "/admin/team-members",
-    label: "Team Members",
-    icon: <Users size={18} />,
-  },
-  { href: "/admin/payment", label: "Payment", icon: <CreditCard size={18} /> },
-  {
-    href: "/admin/announcement",
-    label: "Announcement",
-    icon: <Megaphone size={18} />,
-  },
-  {
-    href: "/admin/email-logs",
-    label: "Email Log",
-    icon: <Mail size={18} />,
-  },
-  {
-    href: "/admin/payment-logs",
-    label: "Verified Payment Log",
-    icon: <Banknote size={18} />,
-  },
-  {
-    href: "/admin/announcement-logs",
-    label: "Announcement Log",
-    icon: <Bell size={18} />,
-  },
+  // { href: "/admin/leaders", label: "Leaders", icon: <SquareUser size={18} /> },
+  { href: "/admin/team", label: "Website", icon: <Globe size={18} /> },
+  // {
+  //   href: "/admin/team-members",
+  //   label: "Team Members",
+  //   icon: <Users size={18} />,
+  // },
+  // { href: "/admin/payment", label: "Payment", icon: <CreditCard size={18} /> },
+  // {
+  //   href: "/admin/announcement",
+  //   label: "Announcement",
+  //   icon: <Megaphone size={18} />,
+  // },
+  // {
+  //   href: "/admin/email-logs",
+  //   label: "Email Log",
+  //   icon: <Mail size={18} />,
+  // },
+  // {
+  //   href: "/admin/payment-logs",
+  //   label: "Verified Payment Log",
+  //   icon: <Banknote size={18} />,
+  // },
+  // {
+  //   href: "/admin/announcement-logs",
+  //   label: "Announcement Log",
+  //   icon: <Bell size={18} />,
+  // },
   {
     href: "/admin/settings",
     label: "Settings",

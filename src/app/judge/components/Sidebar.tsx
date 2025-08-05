@@ -2,14 +2,14 @@
 
 import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
-import { Home, LogOut, Menu, User, X } from "lucide-react";
+import { Globe, Home, LogOut, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const links = [
   { href: "/judge/dashboard", label: "Dashboard", icon: <Home size={18} /> },
-  { href: "/judge/team", label: "Teams", icon: <User size={18} /> },
+  { href: "/judge/team", label: "Website", icon: <Globe size={18} /> },
 ];
 
 export default function Sidebar() {
