@@ -238,7 +238,7 @@ export default function TeamTable({
                 comments,
               });
               toast({ title: "Skor berhasil disimpan" });
-              await mutate(`/v1/teams?&search=${searchQuery}`);
+              await mutate(`/v1/teams?page=${meta.page}&search=${searchQuery}`);
               setShowForm(false);
             } catch (err) {
               handleAxiosError(err);

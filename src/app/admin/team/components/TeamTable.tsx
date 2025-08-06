@@ -79,7 +79,7 @@ export default function TeamTable({
     if (!isConfirmed) return;
     try {
       await clientAxios.delete(`/v1/teams/${id}`);
-      await mutate(`/v1/teams?&search=${searchQuery}`);
+      await mutate(`/v1/teams?page=${meta.page}&search=${searchQuery}`);
       toast({ title: "Team delete successfully" });
     } catch (error) {
       handleAxiosError(error);
@@ -271,7 +271,7 @@ export default function TeamTable({
                 await clientAxios.post(`/v1/teams`, formData);
                 toast({ title: "Successfully added team" });
               }
-              await mutate(`/v1/teams?&search=${searchQuery}`);
+              await mutate(`/v1/teams?page=${meta.page}&search=${searchQuery}`);
               setShowForm(false);
             } catch (err) {
               handleAxiosError(err);

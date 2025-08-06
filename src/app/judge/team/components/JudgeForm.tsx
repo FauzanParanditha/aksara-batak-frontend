@@ -10,19 +10,33 @@ interface ScoreItem {
 }
 
 const scoreCriteria: ScoreItem[] = [
-  { criteria: "usefulness_and_relevance", label: "Usefulness & Relevance" },
-  { criteria: "design_and_user_experience", label: "Design & User Experience" },
   {
-    criteria: "performance_and_technical_stability",
-    label: "Performance & Technical Stability",
+    criteria: "website_accessibility",
+    label: "Aksesibilitas Website",
   },
   {
-    criteria: "innovation_and_differentiation",
-    label: "Innovation & Differentiation",
+    criteria: "platform_stability",
+    label: "Stabilitas & Platform",
   },
   {
-    criteria: "impact_and_scalability_potential",
-    label: "Impact & Scalability Potential",
+    criteria: "visual_design",
+    label: "Desain Visual (UI/UX)",
+  },
+  {
+    criteria: "navigation_responsiveness",
+    label: "Navigasi & Responsivitas",
+  },
+  {
+    criteria: "content_weight",
+    label: "Bobot & Tema Konten",
+  },
+  {
+    criteria: "creativity_innovation",
+    label: "Kreativitas & Inovasi",
+  },
+  {
+    criteria: "consistency_relevance",
+    label: "Konsistensi & Relevansi",
   },
 ];
 
