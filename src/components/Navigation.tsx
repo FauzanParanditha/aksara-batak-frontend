@@ -32,10 +32,10 @@ const Navigation = () => {
           isScrolled ? "bg-transparent" : "bg-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-end h-16 ">
             {/* CTA Button */}
-            <div className="hidden md:flex space-x-4">
+            <div className="hidden md:flex space-x-4 ml-">
               <Link href={"/auth/login"}>
                 <Button className="bg-transparent border border-black text-black hover:bg-blue/10 hover:text-blue px-6 py-2 rounded-full font-semibold transform hover:scale-105 transition-all duration-300 shadow-lg">
                   Login
