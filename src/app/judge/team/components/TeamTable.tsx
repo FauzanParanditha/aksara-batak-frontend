@@ -119,7 +119,11 @@ export default function TeamTable({
             {teams?.map((team) => (
               <tr key={team.id}>
                 <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                  <a href={team.teamName} target="_blank">
+                  <a
+                    href={`https://${team.teamName}`}
+                    target="_blank"
+                    className="text-blue-500"
+                  >
                     {team.teamName}
                   </a>
                 </td>

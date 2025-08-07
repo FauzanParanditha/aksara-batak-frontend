@@ -10,8 +10,11 @@ const Hero = () => {
           alt="Banner"
           fill
           priority
-          className="object-cover"
+          className="object-contain"
+          sizes="100vw"
         />
+
+        {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/40"></div>
       </div>
     </section>
