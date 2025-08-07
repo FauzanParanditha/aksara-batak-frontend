@@ -1,10 +1,9 @@
 import Image from "next/image";
-import Navigation from "./Navigation";
 
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <Navigation />
+      {/* <Navigation /> */}
       <div className="relative w-full h-screen">
         <Image
           src="/images/banner/banner1.jpg"
