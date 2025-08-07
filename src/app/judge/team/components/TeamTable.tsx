@@ -119,7 +119,9 @@ export default function TeamTable({
             {teams?.map((team) => (
               <tr key={team.id}>
                 <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                  {team.teamName}
+                  <a href={team.teamName} target="_blank">
+                    {team.teamName}
+                  </a>
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-500">
                   {/* {team.scores?.reduce((acc, s) => acc + s.score, 0) || 0} */}
