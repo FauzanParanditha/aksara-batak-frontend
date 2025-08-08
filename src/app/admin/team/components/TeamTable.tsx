@@ -6,9 +6,10 @@ import Pagination from "@/components/frontend/Pagination";
 import { toast } from "@/hooks/use-toast";
 import clientAxios from "@/lib/axios/client";
 import { useHandleAxiosError } from "@/lib/handleError";
+import { SCORING_WEIGHT } from "@/utils/var";
 import { Pencil, Search, Trash2, X } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { mutate } from "swr";
 import TeamForm from "./TeamForm";
 
@@ -16,20 +17,21 @@ interface Team {
   id: string;
   teamName: string;
   category: string;
-  institution: string;
-  queueNumber: string;
+  institution?: string;
+  queueNumber?: string;
   scores: {
-    id: string;
+    id?: string;
     judgeId: string;
-    teamId: string;
+    teamId?: string;
     criteria: string;
     score: number;
-    comment: string;
+    comment?: string;
+    judge?: { fullName: string };
   }[];
   paymentStatus: string;
   submissionLink?: string;
   photoUrl?: string;
-  weightedScore: number;
+  weightedScore: number | null;
 }
 
 interface Meta {
@@ -45,6 +47,48 @@ interface TeamTableProps {
   onPageChange: (page: number) => void;
   onSearch?: (query: string) => void;
 }
+
+// Helper: ambil daftar juri unik dari semua tim di halaman (stabil, first-seen order)
+function getJudgeList(teams: Team[]) {
+  const map = new Map<string, string>();
+  for (const t of teams ?? []) {
+    for (const s of t.scores ?? []) {
+      if (!map.has(s.judgeId)) {
+        map.set(
+          s.judgeId,
+          s.judge?.fullName ?? `Judge ${s.judgeId?.slice?.(-6) ?? ""}`
+        );
+      }
+    }
+  }
+  return Array.from(map.entries()).map(([judgeId, name]) => ({
+    judgeId,
+    name,
+  }));
+}
+
+// Helper: rata-rata skor dari judge tertentu untuk sebuah tim
+export const avgForJudge = (
+  team: {
+    scores: { judgeId: string; criteria: string; score: number }[];
+  },
+  judgeId: string
+): number | null => {
+  const judgeScores = team.scores.filter((s) => s.judgeId === judgeId);
+
+  if (judgeScores.length === 0) return null;
+
+  let totalScore = 0;
+  let totalWeight = 0;
+
+  for (const s of judgeScores) {
+    const weight = SCORING_WEIGHT[s.criteria] ?? 0;
+    totalScore += s.score * weight;
+    totalWeight += weight;
+  }
+
+  return totalWeight > 0 ? totalScore / totalWeight : 0;
+};
 
 export default function TeamTable({
   teams,
@@ -62,10 +106,6 @@ export default function TeamTable({
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (onSearch) onSearch(searchQuery);
-  };
-
-  const handleAddClick = () => {
-    setShowForm(true);
   };
 
   const handleDelete = async (id: string) => {
@@ -86,8 +126,12 @@ export default function TeamTable({
     }
   };
 
+  // Daftar juri unik untuk kolom dinamis
+  const judgeList = useMemo(() => getJudgeList(teams ?? []), [teams]);
+
   return (
     <div className="space-y-4">
+      {/* Top bar */}
       <div className="flex items-center justify-between">
         <form onSubmit={handleSearch} className="flex items-center gap-2">
           <FormInput
@@ -104,14 +148,16 @@ export default function TeamTable({
             <Search size={16} />
           </button>
         </form>
-        {/* <button
-          onClick={handleAddClick}
+        {/* Tombol Add disembunyikan sesuai kode awal
+        <button
+          onClick={() => setShowForm(true)}
           className="flex items-center gap-2 rounded bg-blue-600 px-3 py-2 text-white hover:bg-blue-700"
         >
           <Plus size={16} /> Add Team
         </button> */}
       </div>
 
+      {/* Desktop table */}
       <div className="overflow-x-auto rounded-lg bg-white shadow">
         <table className="min-w-full divide-y divide-gray-200 text-sm md:table hidden">
           <thead className="bg-gray-50">
@@ -119,34 +165,65 @@ export default function TeamTable({
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
                 Team Name
               </th>
+              {judgeList.map((j) => (
+                <th
+                  key={j.judgeId}
+                  className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500"
+                >
+                  {j.name}
+                </th>
+              ))}
               <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
-                Score
+                Total
               </th>
               <th className="px-6 py-3 text-right text-xs font-medium uppercase text-gray-500">
                 Actions
               </th>
             </tr>
           </thead>
+
           <tbody className="divide-y divide-gray-200 bg-white">
-            {(!teams || teams?.length == 0) && (
+            {(!teams || teams?.length === 0) && (
               <tr>
                 <td
-                  colSpan={7}
+                  colSpan={2 + judgeList.length}
                   className="whitespace-nowrap px-6 py-4 text-center"
                 >
                   Data not Found
                 </td>
               </tr>
             )}
+
             {teams?.map((team) => (
               <tr key={team.id}>
+                {/* Team Name */}
                 <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                  {team.teamName}
+                  <div className="flex items-center gap-3">
+                    <div>
+                      <div>{team.teamName}</div>
+                    </div>
+                  </div>
                 </td>
-                <td className="px-6 py-4 text-sm text-gray-500">
-                  {/* {team.scores?.reduce((acc, s) => acc + s.score, 0) || 0} */}
-                  {team.weightedScore}
+
+                {/* Judge columns */}
+                {judgeList.map((j) => {
+                  const avg = avgForJudge(team, j.judgeId);
+                  return (
+                    <td
+                      key={j.judgeId}
+                      className="px-6 py-4 text-sm text-gray-700"
+                    >
+                      {avg === null ? "-" : avg.toFixed(2)}
+                    </td>
+                  );
+                })}
+
+                {/* Total (pakai weightedScore) */}
+                <td className="px-6 py-4 text-sm text-gray-700">
+                  {team.weightedScore ?? "-"}
                 </td>
+
+                {/* Actions */}
                 <td className="px-6 py-4 text-right space-x-2">
                   <button
                     className="text-blue-600 hover:text-blue-900"
@@ -154,12 +231,16 @@ export default function TeamTable({
                       setEditData(team);
                       setShowForm(true);
                     }}
+                    title="Edit"
+                    aria-label="Edit team"
                   >
                     <Pencil size={16} />
                   </button>
                   <button
                     className="text-red-600 hover:text-red-900"
                     onClick={() => handleDelete(team.id)}
+                    title="Delete"
+                    aria-label="Delete team"
                   >
                     <Trash2 size={16} />
                   </button>
@@ -170,40 +251,25 @@ export default function TeamTable({
         </table>
       </div>
 
+      {/* Mobile list/cards */}
       <div className="md:hidden space-y-4">
         {teams?.map((team) => (
           <div
             key={team.id}
             className="rounded-lg border p-4 shadow-sm bg-white"
           >
+            {/* Header */}
             <div className="flex items-center gap-3">
-              {team.photoUrl ? (
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.photoUrl}`}
-                  alt={team.teamName}
-                  width={40}
-                  height={40}
-                  className="rounded-full object-cover h-10 w-10"
-                />
-              ) : (
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 text-xs text-gray-400">
-                  N/A
-                </div>
-              )}
               <div className="flex-1">
                 <p className="font-medium text-gray-900">{team.teamName}</p>
                 <p className="text-xs text-gray-500">{team.category}</p>
               </div>
             </div>
-            <div className="mt-2 text-sm text-gray-500">
-              Team #: {team.queueNumber}
-            </div>
-            <div className="text-sm">
-              Score: {team.scores?.reduce((acc, s) => acc + s.score, 0) || 0}
-            </div>
-            <div className="text-sm">
+
+            {/* Status & Submission */}
+            <div className="mt-2 flex items-center justify-between">
               <span
-                className={`inline-block mt-1 rounded-full px-2 py-0.5 text-xs font-medium ${
+                className={`inline-block rounded-full px-2 py-0.5 text-xs font-medium ${
                   team.paymentStatus === "paid"
                     ? "bg-green-100 text-green-800"
                     : "bg-yellow-100 text-yellow-800"
@@ -211,32 +277,72 @@ export default function TeamTable({
               >
                 {team.paymentStatus}
               </span>
+
+              {team.submissionLink && (
+                <button
+                  onClick={() =>
+                    setPreviewUrl(
+                      `${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.submissionLink}`
+                    )
+                  }
+                  className="text-xs text-blue-600 hover:underline"
+                >
+                  View Submission
+                </button>
+              )}
             </div>
-            {team.submissionLink && (
-              <button
-                onClick={() =>
-                  setPreviewUrl(
-                    `${process.env.NEXT_PUBLIC_CLIENT_PUBLIC_URL}${team.submissionLink}`
-                  )
-                }
-                className="mt-2 text-sm text-blue-600 hover:underline"
-              >
-                View Submission
-              </button>
-            )}
-            <div className="flex justify-end gap-3 pt-2">
+
+            {/* Scores per judge */}
+            <div className="mt-3">
+              <div className="text-sm">
+                <div className="mb-1">
+                  Total (weighted):{" "}
+                  <span className="font-semibold">
+                    {team.weightedScore ?? "-"}
+                  </span>
+                </div>
+
+                {judgeList.length > 0 ? (
+                  <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-xs">
+                    {judgeList.map((j) => {
+                      const avg = avgForJudge(team, j.judgeId);
+                      return (
+                        <div
+                          key={j.judgeId}
+                          className="flex items-center justify-between"
+                        >
+                          <span className="text-gray-500 truncate">
+                            {j.name}
+                          </span>
+                          <span className="font-medium">
+                            {avg === null ? "-" : avg.toFixed(2)}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="text-xs text-gray-400">No judge scores</div>
+                )}
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="flex justify-end gap-3 pt-3">
               <button
                 className="text-blue-600"
                 onClick={() => {
                   setEditData(team);
                   setShowForm(true);
                 }}
+                aria-label="Edit team"
               >
                 <Pencil size={16} />
               </button>
               <button
                 className="text-red-600"
                 onClick={() => handleDelete(team.id)}
+                aria-label="Delete team"
               >
                 <Trash2 size={16} />
               </button>
@@ -245,6 +351,7 @@ export default function TeamTable({
         ))}
       </div>
 
+      {/* Pagination */}
       {meta?.totalPages > 1 && (
         <Pagination
           paginate={{
@@ -258,6 +365,7 @@ export default function TeamTable({
         />
       )}
 
+      {/* Form (Add/Edit) */}
       {showForm && (
         <TeamForm
           initialData={editData || undefined}
@@ -280,12 +388,14 @@ export default function TeamTable({
         />
       )}
 
+      {/* Preview overlay */}
       {previewUrl && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black bg-opacity-80">
           <div className="relative max-h-full max-w-full">
             <button
               onClick={() => setPreviewUrl(null)}
               className="absolute right-2 top-2 rounded-full bg-white p-1 hover:bg-gray-200"
+              aria-label="Close preview"
             >
               <X size={20} />
             </button>

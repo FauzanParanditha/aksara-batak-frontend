@@ -10,10 +10,10 @@ interface ScoreItem {
 }
 
 const scoreCriteria: ScoreItem[] = [
-  {
-    criteria: "website_accessibility",
-    label: "Aksesibilitas Website",
-  },
+  // {
+  //   criteria: "website_accessibility",
+  //   label: "Aksesibilitas Website",
+  // },
   {
     criteria: "platform_stability",
     label: "Stabilitas & Platform",
