@@ -234,6 +234,13 @@ export default function TeamTable({
 
       {showForm && editData && (
         <JudgeScoreForm
+          initialData={{
+            scores: editData.scores.reduce(
+              (acc, score) => ({ ...acc, [score.criteria]: score.score }),
+              {}
+            ),
+            comments: editData.scores.find((s) => s.comment)?.comment || "",
+          }}
           teamName={editData.teamName}
           onClose={() => setShowForm(false)}
           onSubmit={async ({ scores, comments }) => {

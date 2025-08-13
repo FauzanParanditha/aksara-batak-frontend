@@ -41,6 +41,10 @@ const scoreCriteria: ScoreItem[] = [
 ];
 
 interface JudgeScoreFormProps {
+  initialData: {
+    scores: { [key: string]: number };
+    comments: string;
+  };
   teamName: string;
   onSubmit: (data: {
     scores: { [key: string]: number };
@@ -50,12 +54,15 @@ interface JudgeScoreFormProps {
 }
 
 export default function JudgeScoreForm({
+  initialData,
   teamName,
   onSubmit,
   onClose,
 }: JudgeScoreFormProps) {
-  const [scores, setScores] = useState<{ [key: string]: number }>({});
-  const [comments, setComments] = useState("");
+  const [scores, setScores] = useState<{ [key: string]: number }>(
+    initialData.scores || {}
+  );
+  const [comments, setComments] = useState(initialData.comments || "");
 
   const handleScoreChange = (criteria: string, value: number) => {
     setScores((prev) => ({ ...prev, [criteria]: value }));
