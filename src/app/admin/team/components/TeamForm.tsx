@@ -270,18 +270,18 @@ export default function TeamForm({
             </div>
           )}
 
-          <div className="flex justify-end gap-2">
-            {/* <button
+          {/* <div className="flex justify-end gap-2">
+            <button
               type="submit"
               className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
             >
               {isEdit ? "Update" : "Create"}
-            </button> */}
-          </div>
+            </button>
+          </div> */}
         </form>
 
         {/* --- Divider --- */}
-        {isEdit && <div className="my-6 h-px bg-gray-200" />}
+        {/* {isEdit && <div className="my-6 h-px bg-gray-200" />} */}
 
         {/* --- Mass Scoring Panel (Admin) --- */}
         {isEdit && (
@@ -299,7 +299,7 @@ export default function TeamForm({
                   <div className="text-sm text-red-600">{judgesError}</div>
                 )}
                 {!judgesLoading && !judgesError && (
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-4 gap-2">
                     {judges.map((j) => (
                       <label key={j.id} className="flex items-center gap-2">
                         <input
